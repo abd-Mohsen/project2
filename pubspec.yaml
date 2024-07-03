@@ -23,6 +23,7 @@ dependencies:
   dotted_border: ^2.1.0
   image_picker: ^1.0.4
   camera: ^0.10.5+9
+  tflite: ^1.1.2
   #opencv_dart: ^1.0.8
 
 
