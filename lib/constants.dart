@@ -6,6 +6,45 @@ String kHostIP = "http://10.0.2.2:8000";
 
 //String fontFamily = 'Alexandria';
 
+Duration kTimeOutDuration = const Duration(seconds: 25);
+Duration kTimeOutDuration2 = const Duration(seconds: 15);
+Duration kTimeOutDuration3 = const Duration(seconds: 7);
+
+AlertDialog kAboutAppDialog() => AlertDialog(
+      //todo: fix the dialog length, and add contact info for both company and dev
+      actions: [
+        TextButton(
+          onPressed: () {
+            Get.back();
+          },
+          child: Text(
+            "ok",
+            //style: tt.titleMedium?.copyWith(color: cs.primary),
+          ),
+        ),
+      ],
+      content: Column(
+        children: [
+          Scrollbar(
+            thumbVisibility: true,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "تم تطوير هذا البرنامج لصالح شركة ليتيا المغفلة الخاصة, جميع الحقوق محفوظة",
+                      //style: tt.headlineSmall!.copyWith(color: cs.onSurface),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
 AlertDialog kCloseAppDialog() => AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),

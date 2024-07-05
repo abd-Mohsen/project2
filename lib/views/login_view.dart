@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:project2/views/register_view.dart';
 import '../constants.dart';
 import '../controllers/login_controller.dart';
 import 'components/auth_field.dart';
@@ -134,7 +135,7 @@ class LoginView extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {
-                            //Get.to(() => const RegisterView());
+                            Get.to(() => const RegisterView());
                           },
                           child: Text(
                             "register here",

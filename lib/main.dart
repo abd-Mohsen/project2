@@ -6,7 +6,6 @@ import 'package:project2/controllers/locale_controller.dart';
 import 'package:project2/controllers/theme_controller.dart';
 import 'package:project2/locale.dart';
 import 'package:project2/themes.dart';
-import 'package:project2/views/home_view.dart';
 import 'package:project2/views/redirect_page.dart';
 
 late CameraDescription camera;
