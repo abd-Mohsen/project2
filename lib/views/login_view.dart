@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:project2/views/register_view.dart';
+import 'package:project2/views/reset_password_view1.dart';
 import '../constants.dart';
 import '../controllers/login_controller.dart';
 import 'components/auth_field.dart';
@@ -90,7 +91,7 @@ class LoginView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: TextButton(
                       onPressed: () {
-                        //Get.to(ResetPasswordView1());
+                        Get.to(const ResetPasswordView1());
                       },
                       child: Text(
                         "forgot password?",
