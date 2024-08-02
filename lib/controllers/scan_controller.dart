@@ -22,33 +22,32 @@ class ScanController extends GetxController {
     initializeControllerFuture = cameraController.initialize().then((_) {
       cameraController.startImageStream((CameraImage image) {
         //currentFrame = image;
-        processImage(image);
+        //processImage(image);
+        print("planes in the captured image " + image.planes.length.toString());
       });
     });
 
     super.onInit();
   }
 
-  void processImage(CameraImage image) async {
-    img.Image input = (processCameraImage(image, 300, 400));
-    //if (input == null) print("null?");
-    // Run the model on the image
+  void processImage(CameraImage capturedImage) async {
+    img.Image input = (processCameraImage(capturedImage, 300, 400));
+
     List? results = await Tflite.runModelOnFrame(
       bytesList: [input.toUint8List()],
-      imageHeight: image.height,
-      imageWidth: image.width,
+      imageHeight: capturedImage.height,
+      imageWidth: capturedImage.width,
       numResults: 1,
     );
 
-    // Handle the results
+    print(results);
     if (results != null && results.isNotEmpty) {
-      var isPaper = results[0]["label"] == "paper";
+      var isPaper = results[0]["detectedClass"] == 1;
       if (isPaper) {
-        print("Paper detected");
-      } else {
-        print("No paper detected");
+        Get.snackbar("paper detected", DateTime.now().toIso8601String());
       }
-    }
+    } else
+      print("no result");
   }
 
   List<List<List<double>>> expandDims(List<List<double>> imgNormalized) {
