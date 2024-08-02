@@ -1,14 +1,15 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project2/controllers/home_controller.dart';
+import 'package:project2/controllers/scan_controller.dart';
 
 class ScanView extends StatelessWidget {
   const ScanView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
+    return GetBuilder<ScanController>(
+      init: ScanController(),
       builder: (controller) => Scaffold(
         appBar: AppBar(title: Text('scan paper'.tr)),
         body: FutureBuilder<void>(
