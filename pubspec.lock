@@ -552,6 +552,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  processing_camera_image:
+    dependency: "direct main"
+    description:
+      name: processing_camera_image
+      sha256: "3868bafe44ab587f37837918d93a3abeb3859bd60b07414524b5ed5b0ac17d9b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.12"
   rxdart:
     dependency: transitive
     description:

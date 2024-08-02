@@ -1,12 +1,8 @@
-import 'dart:io';
-import 'dart:typed_data';
-import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as img;
 import 'package:camera/camera.dart';
 import 'package:get/get.dart';
 import 'package:tflite/tflite.dart';
 import '../main.dart';
-import 'package:opencv_4/opencv_4.dart';
 
 class HomeController extends GetxController {
   //todo: recording even in home screen, make a separate controller for scanning?
@@ -15,8 +11,8 @@ class HomeController extends GetxController {
   late CameraImage currentFrame; // Variable to store the current frame
 
   @override
-  void onInit() {
-    super.onInit();
+  void onInit() async {
+    Tflite.loadModel(model: "assets/paper_model.tflite");
     cameraController = CameraController(
       camera,
       ResolutionPreset.high,
@@ -25,21 +21,20 @@ class HomeController extends GetxController {
 
     initializeControllerFuture = cameraController.initialize().then((_) {
       cameraController.startImageStream((CameraImage image) {
-        currentFrame = image;
-        //check if paper
-        Tflite.loadModel(model: "assets/paper_model.tflite");
+        //currentFrame = image;
+        processImage(image);
       });
     });
+
+    super.onInit();
   }
 
   void processImage(CameraImage image) async {
-    CameraImage? input = (await preprocessCameraImage(image));
-    if (input == null) print("null?");
+    img.Image input = (processCameraImage(image, 300, 400));
+    //if (input == null) print("null?");
     // Run the model on the image
     List? results = await Tflite.runModelOnFrame(
-      bytesList: input!.planes.map((plane) {
-        return plane.bytes;
-      }).toList(),
+      bytesList: [input.toUint8List()],
       imageHeight: image.height,
       imageWidth: image.width,
       numResults: 1,
@@ -56,37 +51,60 @@ class HomeController extends GetxController {
     }
   }
 
-  // Future<String> saveCameraImageToFile(CameraImage image) async {
-  //   // Convert CameraImage to Image package's Image object
-  //   img.Image imageBuffer = img.Image.fromBytes(
-  //     image.width,
-  //     image.height,
-  //     image.planes[0].bytes,
-  //     format: img.Format.bgra, // or img.Format.rgb, depending on your format
-  //   );
-  //
-  //   // Encode Image object to PNG
-  //   Uint8List pngBytes = Uint8List.fromList(img.encodePng(imageBuffer));
-  //
-  //   // Get temporary directory
-  //   final Directory tempDir = await getTemporaryDirectory();
-  //
-  //   // Create a file path
-  //   final String filePath = '${tempDir.path}/temp_image.png';
-  //
-  //   // Write PNG bytes to the file
-  //   File file = File(filePath);
-  //   await file.writeAsBytes(pngBytes);
-  //
-  //   return filePath;
-  // }
+  List<List<List<double>>> expandDims(List<List<double>> imgNormalized) {
+    int height = imgNormalized.length;
+    int width = imgNormalized[0].length;
 
-  Future<CameraImage?> preprocessCameraImage(CameraImage image) async {
-    //Uint8List? result = await Cv2.cvtColor(pathString: , outputType: Cv2.COLOR_BGR2GRAY);
-    // Implement the necessary preprocessing here
-    // Convert image to the required input tensor format
-    // This typically involves resizing, normalizing, etc.
-    // Return the processed image as a list of bytes
+    // Create a new list with dimensions (1, height, width, 1)
+    List<List<List<double>>> imgExpanded = List.generate(
+      1,
+      (_) => List.generate(height, (_) => List.generate(width, (_) => 0.0, growable: false), growable: false),
+      growable: false,
+    );
+
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        imgExpanded[0][i][j] = imgNormalized[i][j];
+      }
+    }
+
+    return imgExpanded;
+  }
+
+  img.Image processCameraImage(CameraImage savedImage, int newWidth, int newHeight) {
+    // Convert CameraImage to image package's Image
+    // img.Image? resizedImage = ProcessingCameraImage().processCameraImageToRGB(
+    //   bytesPerPixelPlan1: savedImage.planes[1].bytesPerPixel,
+    //   bytesPerRowPlane0: savedImage.planes[0].bytesPerRow,
+    //   bytesPerRowPlane1: savedImage.planes[1].bytesPerRow,
+    //   height: newHeight,
+    //   plane0: savedImage.planes[0].bytes,
+    //   plane1: savedImage.planes[1].bytes,
+    //   plane2: savedImage.planes[2].bytes,
+    //   // rotationAngle: 15,
+    //   width: newWidth,
+    //   // isFlipHoriozntal: true,
+    //   // isFlipVectical: true,
+    // );
+
+    img.Image image = img.Image.fromBytes(
+      width: savedImage.planes[0].width!,
+      height: savedImage.planes[0].height!,
+      bytes: savedImage.planes[0].bytes.buffer,
+      format: img.Format.uint8,
+    );
+
+    img.Image resizedImage = img.copyResize(image, width: newWidth, height: newHeight);
+    img.Image grayscaleImage = img.grayscale(resizedImage);
+
+    for (int y = 0; y < newHeight; y++) {
+      for (int x = 0; x < newWidth; x++) {
+        img.Pixel pixel = grayscaleImage.getPixel(x, y);
+        num grayscaleValue = pixel.r;
+        pixel.setRgb(grayscaleValue / 255.0, grayscaleValue / 255.0, grayscaleValue / 255.0);
+      }
+    }
+    return grayscaleImage;
   }
 
   @override
