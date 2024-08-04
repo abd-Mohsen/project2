@@ -48,6 +48,8 @@ flutter:
   assets:
     - assets/images/
     - assets/paper_model.tflite
+    - assets/paper_model2.tflite
+    - assets/paper_model2.txt
     - assets/models/object_detection.tflite #remove if file doesnt exist
     - assets/models/object_detection.txt #remove if file doesnt exist
 

@@ -10,6 +10,7 @@ class ScanView extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorScheme cs = Theme.of(context).colorScheme;
     TextTheme tt = Theme.of(context).textTheme;
+    ScanController sC = Get.put(ScanController());
 
     return WillPopScope(
       onWillPop: () async {
@@ -17,8 +18,8 @@ class ScanView extends StatelessWidget {
         return true;
       },
       child: GetBuilder<ScanController>(
-        init: ScanController(),
         builder: (controller) => Scaffold(
+          //backgroundColor: cs.primary,
           appBar: AppBar(
             title: Text('scan paper'.tr),
             leading: IconButton(
@@ -33,21 +34,26 @@ class ScanView extends StatelessWidget {
             future: controller.initializeControllerFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                return Column(
+                return Stack(
+                  alignment: Alignment.center,
                   children: [
-                    Expanded(
-                      flex: 7,
-                      child: CameraPreview(controller.cameraController),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: GetBuilder<ScanController>(
-                        builder: (con) {
-                          return Text(
-                            con.detectedObject,
-                            style: tt.headlineLarge!.copyWith(color: cs.secondary, fontWeight: FontWeight.bold),
-                          );
-                        },
+                    CameraPreview(sC.cameraController),
+                    Positioned(
+                      bottom: MediaQuery.sizeOf(context).height / 10,
+                      //left: MediaQuery.sizeOf(context).width / 2,
+                      child: Center(
+                        child: GetBuilder<ScanController>(
+                          builder: (con) {
+                            return CircleAvatar(
+                              radius: 30,
+                              backgroundColor: con.detectedObject == "paper" ? Colors.green : Colors.red,
+                            );
+                            // return Text(
+                            //   con.detectedObject,
+                            //   style: tt.headlineLarge!.copyWith(color: cs.secondary, fontWeight: FontWeight.bold),
+                            // );
+                          },
+                        ),
                       ),
                     ),
                   ],
@@ -56,19 +62,19 @@ class ScanView extends StatelessWidget {
               return Center(child: CircularProgressIndicator());
             },
           ),
-          floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.camera_alt),
-            onPressed: () async {
-              try {
-                // await controller.initializeControllerFuture;
-                // final image = await controller.cameraController.takePicture();
-                // Get.to(DisplayPictureScreen(imagePath: image.path));
-                controller.takePic();
-              } catch (e) {
-                print(e);
-              }
-            },
-          ),
+          // floatingActionButton: FloatingActionButton(
+          //   child: Icon(Icons.camera_alt),
+          //   onPressed: () async {
+          //     try {
+          //       // await controller.initializeControllerFuture;
+          //       // final image = await controller.cameraController.takePicture();
+          //       // Get.to(DisplayPictureScreen(imagePath: image.path));
+          //       controller.takePic();
+          //     } catch (e) {
+          //       print(e);
+          //     }
+          //   },
+          // ),
         ),
       ),
     );

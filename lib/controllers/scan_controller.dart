@@ -18,8 +18,8 @@ class ScanController extends GetxController {
   void onInit() async {
     //await initializeControllerFuture;
     Tflite.loadModel(
-      model: "assets/models/object_detection.tflite",
-      labels: "assets/models/object_detection.txt",
+      model: "assets/paper_model2.tflite",
+      labels: "assets/paper_model2.txt",
     );
     cameraController = CameraController(
       camera,
@@ -29,7 +29,7 @@ class ScanController extends GetxController {
     initializeControllerFuture = cameraController.initialize().then((_) {
       cameraController.startImageStream((CameraImage image) {
         //currentFrame = image;
-        if (frames % 45 == 0) processImage(image);
+        if (frames % 30 == 0) processImage(image);
         //print("planes in the captured image " + image.planes.length.toString());
         frames++;
       });
@@ -73,14 +73,6 @@ class ScanController extends GetxController {
 
     print(results);
     detectedObject = results![0]["label"];
-    // if (results != null && results.isNotEmpty) {
-    //   var isPaper = results[0]["label"] == 1;
-    //   if (isPaper) {
-    //     Get.snackbar("paper detected", DateTime.now().toIso8601String());
-    //   }
-    // } else {
-    //   print("no result");
-    // }
     int endTime = DateTime.now().millisecondsSinceEpoch;
     print("Inference took ${endTime - startTime}ms");
     update();
