@@ -24,7 +24,7 @@ dependencies:
   dotted_border: ^2.1.0
   image_picker: ^1.0.4
   camera: ^0.10.5+9
-  #tflite: ^1.1.2
+  #tflite: ^1.1.2 todo try this for gpu
   tflite_v2: ^1.0.0
   #opencv_dart: ^1.0.8
   #opencv_4: ^1.0.0
@@ -47,11 +47,8 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/paper_model.tflite
     - assets/paper_model2.tflite
     - assets/paper_model2.txt
-    - assets/models/object_detection.tflite #remove if file doesnt exist
-    - assets/models/object_detection.txt #remove if file doesnt exist
 
   fonts:
     - family: arabic

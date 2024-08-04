@@ -13,6 +13,8 @@ class ScanController extends GetxController {
   late CameraImage currentFrame; // Variable to store the current frame
   int frames = 1;
   String detectedObject = "";
+  double confidence = 0.0;
+  int timeTaken = 0;
 
   @override
   void onInit() async {
@@ -20,16 +22,17 @@ class ScanController extends GetxController {
     Tflite.loadModel(
       model: "assets/paper_model2.tflite",
       labels: "assets/paper_model2.txt",
+      useGpuDelegate: false,
     );
     cameraController = CameraController(
       camera,
-      ResolutionPreset.high,
+      ResolutionPreset.medium,
       enableAudio: false,
     );
     initializeControllerFuture = cameraController.initialize().then((_) {
       cameraController.startImageStream((CameraImage image) {
         //currentFrame = image;
-        if (frames % 30 == 0) processImage(image);
+        if (frames % 20 == 0) processImage(image);
         //print("planes in the captured image " + image.planes.length.toString());
         frames++;
       });
@@ -70,11 +73,13 @@ class ScanController extends GetxController {
       imageWidth: capturedImage.width,
       numResults: 1,
     );
-
+    print("frames is ${capturedImage.width} * ${capturedImage.height} ");
     print(results);
     detectedObject = results![0]["label"];
+    confidence = results[0]["confidence"];
     int endTime = DateTime.now().millisecondsSinceEpoch;
-    print("Inference took ${endTime - startTime}ms");
+    timeTaken = endTime - startTime;
+    print("Inference took $timeTaken ms");
     update();
   }
 
