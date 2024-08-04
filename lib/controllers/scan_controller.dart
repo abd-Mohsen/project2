@@ -1,53 +1,89 @@
 import 'package:image/image.dart' as img;
 import 'package:camera/camera.dart';
 import 'package:get/get.dart';
-import 'package:tflite/tflite.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:tflite_v2/tflite_v2.dart';
 import '../main.dart';
+import 'dart:io';
 
 class ScanController extends GetxController {
   //todo: recording even in home screen, make a separate controller for scanning?
   late CameraController cameraController;
   late Future<void> initializeControllerFuture;
   late CameraImage currentFrame; // Variable to store the current frame
+  int frames = 1;
+  String detectedObject = "";
 
   @override
   void onInit() async {
-    Tflite.loadModel(model: "assets/paper_model.tflite");
+    //await initializeControllerFuture;
+    Tflite.loadModel(
+      model: "assets/models/object_detection.tflite",
+      labels: "assets/models/object_detection.txt",
+    );
     cameraController = CameraController(
       camera,
       ResolutionPreset.high,
       enableAudio: false,
     );
-
     initializeControllerFuture = cameraController.initialize().then((_) {
       cameraController.startImageStream((CameraImage image) {
         //currentFrame = image;
-        //processImage(image);
-        print("planes in the captured image " + image.planes.length.toString());
+        if (frames % 45 == 0) processImage(image);
+        //print("planes in the captured image " + image.planes.length.toString());
+        frames++;
       });
     });
 
     super.onInit();
   }
 
-  void processImage(CameraImage capturedImage) async {
-    img.Image input = (processCameraImage(capturedImage, 300, 400));
+  void takePic() async {
+    print("=========================================================");
+    await initializeControllerFuture;
+    XFile imageFile = await cameraController.takePicture();
+    File file = File(imageFile.path);
+    img.Image? image = img.decodeImage(await file.readAsBytes());
 
+    // Resize and preprocess the image to match model input
+    img.Image resizedImage = img.copyResize(image!, width: 300, height: 400);
+
+    final Directory tempDir = await getTemporaryDirectory();
+    String tempPath = '${tempDir.path}/temp_image.jpg';
+    File resizedFile = File(tempPath)..writeAsBytesSync(img.encodeJpg(resizedImage));
+    List? results = await Tflite.runModelOnImage(
+      path: resizedFile.path,
+      numResults: 1,
+    );
+    print("=========================================================");
+    print(results);
+  }
+
+  void processImage(CameraImage capturedImage) async {
+    int startTime = DateTime.now().millisecondsSinceEpoch;
+    //img.Image input = (processCameraImage(capturedImage, 300, 400));
     List? results = await Tflite.runModelOnFrame(
-      bytesList: [input.toUint8List()],
+      bytesList: capturedImage.planes.map((plane) {
+        return plane.bytes;
+      }).toList(),
       imageHeight: capturedImage.height,
       imageWidth: capturedImage.width,
       numResults: 1,
     );
 
     print(results);
-    if (results != null && results.isNotEmpty) {
-      var isPaper = results[0]["detectedClass"] == 1;
-      if (isPaper) {
-        Get.snackbar("paper detected", DateTime.now().toIso8601String());
-      }
-    } else
-      print("no result");
+    detectedObject = results![0]["label"];
+    // if (results != null && results.isNotEmpty) {
+    //   var isPaper = results[0]["label"] == 1;
+    //   if (isPaper) {
+    //     Get.snackbar("paper detected", DateTime.now().toIso8601String());
+    //   }
+    // } else {
+    //   print("no result");
+    // }
+    int endTime = DateTime.now().millisecondsSinceEpoch;
+    print("Inference took ${endTime - startTime}ms");
+    update();
   }
 
   List<List<List<double>>> expandDims(List<List<double>> imgNormalized) {
@@ -108,9 +144,10 @@ class ScanController extends GetxController {
 
   @override
   void dispose() {
-    cameraController.stopImageStream();
-    cameraController.dispose();
+    //todo: camera and tflite arent disposing with scan controller
     Tflite.close();
+    cameraController.dispose();
+    cameraController.stopImageStream();
     super.dispose();
   }
 }

@@ -8,6 +8,9 @@ class ScanView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme cs = Theme.of(context).colorScheme;
+    TextTheme tt = Theme.of(context).textTheme;
+
     return WillPopScope(
       onWillPop: () async {
         Get.delete<ScanController>();
@@ -22,6 +25,7 @@ class ScanView extends StatelessWidget {
               icon: Icon(Icons.arrow_back),
               onPressed: () {
                 Get.delete<ScanController>();
+                Get.back();
               },
             ),
           ),
@@ -29,24 +33,42 @@ class ScanView extends StatelessWidget {
             future: controller.initializeControllerFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                return CameraPreview(controller.cameraController);
-              } else {
-                return Center(child: CircularProgressIndicator());
+                return Column(
+                  children: [
+                    Expanded(
+                      flex: 7,
+                      child: CameraPreview(controller.cameraController),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: GetBuilder<ScanController>(
+                        builder: (con) {
+                          return Text(
+                            con.detectedObject,
+                            style: tt.headlineLarge!.copyWith(color: cs.secondary, fontWeight: FontWeight.bold),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              }
+              return Center(child: CircularProgressIndicator());
+            },
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.camera_alt),
+            onPressed: () async {
+              try {
+                // await controller.initializeControllerFuture;
+                // final image = await controller.cameraController.takePicture();
+                // Get.to(DisplayPictureScreen(imagePath: image.path));
+                controller.takePic();
+              } catch (e) {
+                print(e);
               }
             },
           ),
-          // floatingActionButton: FloatingActionButton(
-          //   child: Icon(Icons.camera_alt),
-          //   onPressed: () async {
-          //     try {
-          //       await controller.initializeControllerFuture;
-          //       final image = await controller.cameraController.takePicture();
-          //       Get.to(DisplayPictureScreen(imagePath: image.path));
-          //     } catch (e) {
-          //       print(e);
-          //     }
-          //   },
-          // ),
         ),
       ),
     );
