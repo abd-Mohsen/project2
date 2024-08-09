@@ -39,7 +39,6 @@ class ScanView extends StatelessWidget {
                   CameraPreview(sC.cameraController),
                   Positioned(
                     bottom: MediaQuery.sizeOf(context).height / 10,
-                    //left: MediaQuery.sizeOf(context).width / 2,
                     child: Center(
                       child: GetBuilder<ScanController>(
                         builder: (con) {
@@ -80,7 +79,7 @@ class ScanView extends StatelessWidget {
                 ],
               );
             }
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           },
         ),
         // floatingActionButton: FloatingActionButton(
