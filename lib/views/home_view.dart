@@ -60,13 +60,14 @@ class HomeView extends StatelessWidget {
                 Positioned.fill(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.7),
+                      color: Colors.black.withOpacity(0.65),
                     ),
                   ),
                 ),
-                Positioned(
+                PositionedDirectional(
                   bottom: 0,
-                  left: 0,
+                  start: 0,
+                  //left: 0,
                   //right: 0,
                   //top: 0,
                   child: Padding(
