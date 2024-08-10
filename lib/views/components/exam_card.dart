@@ -34,8 +34,8 @@ class ExamCard extends StatelessWidget {
         ),
         shape: RoundedRectangleBorder(
           side: BorderSide(
-            width: isSelected ? 2 : 1.5,
-            color: isSelected ? cs.secondary : cs.onBackground,
+            width: isSelected ? 2 : 1,
+            color: isSelected ? cs.secondary : cs.onBackground.withOpacity(0.6),
           ),
           borderRadius: BorderRadius.circular(10),
         ),

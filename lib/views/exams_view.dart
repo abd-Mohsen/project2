@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:project2/controllers/home_controller.dart';
 import 'package:project2/models/exam_model.dart';
 import 'package:project2/views/components/exam_card.dart';
+import 'package:project2/views/exam_view.dart';
 
 class ExamsView extends StatelessWidget {
   const ExamsView({super.key});
@@ -24,6 +25,7 @@ class ExamsView extends StatelessWidget {
       backgroundColor: cs.background,
       body: GetBuilder<HomeController>(builder: (controller) {
         return ListView.builder(
+          padding: const EdgeInsets.only(top: 4),
           itemCount: hC.exams.length,
           itemBuilder: (context, i) {
             ExamModel exam = hC.exams[i];
@@ -33,7 +35,7 @@ class ExamsView extends StatelessWidget {
                 controller.selectExam(exam);
               },
               onTapOptions: () {
-                //
+                Get.to(() => ExamView(exam: exam));
               },
               isSelected: exam.id == hC.selectedExamID,
             );
