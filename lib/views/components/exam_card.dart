@@ -19,15 +19,26 @@ class ExamCard extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorScheme cs = Theme.of(context).colorScheme;
     TextTheme tt = Theme.of(context).textTheme;
-    return ListTile(
-      title: Text(
-        exam.title,
-        style: tt.titleMedium!.copyWith(color: cs.onBackground),
-      ),
-      onTap: onTap,
-      trailing: IconButton(
-        onPressed: onTapOptions,
-        icon: Icon(Icons.more_horiz_rounded),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListTile(
+        leading: Icon(Icons.text_snippet_outlined),
+        title: Text(
+          exam.title,
+          style: tt.titleMedium!.copyWith(color: cs.onBackground),
+        ),
+        onTap: onTap,
+        trailing: IconButton(
+          onPressed: onTapOptions,
+          icon: Icon(Icons.more_vert),
+        ),
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            width: isSelected ? 2 : 1.5,
+            color: isSelected ? cs.secondary : cs.onBackground,
+          ),
+          borderRadius: BorderRadius.circular(10),
+        ),
       ),
     );
   }

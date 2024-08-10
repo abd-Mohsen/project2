@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project2/controllers/home_controller.dart';
+import 'package:project2/models/exam_model.dart';
 import 'package:project2/views/components/exam_card.dart';
 
 class ExamsView extends StatelessWidget {
@@ -21,21 +22,24 @@ class ExamsView extends StatelessWidget {
         centerTitle: true,
       ),
       backgroundColor: cs.background,
-      body: ListView.builder(
-        itemCount: hC.exams.length,
-        itemBuilder: (context, i) {
-          return ExamCard(
-            exam: hC.exams[i],
-            onTap: () {
-              //
-            },
-            onTapOptions: () {
-              //
-            },
-            isSelected: true,
-          );
-        },
-      ),
+      body: GetBuilder<HomeController>(builder: (controller) {
+        return ListView.builder(
+          itemCount: hC.exams.length,
+          itemBuilder: (context, i) {
+            ExamModel exam = hC.exams[i];
+            return ExamCard(
+              exam: exam,
+              onTap: () {
+                controller.selectExam(exam);
+              },
+              onTapOptions: () {
+                //
+              },
+              isSelected: exam.id == hC.selectedExamID,
+            );
+          },
+        );
+      }),
     );
   }
 }

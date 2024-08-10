@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
 import 'package:project2/models/exam_model.dart';
+import 'package:project2/services/local_services/exam_selection_service.dart';
 
 class HomeController extends GetxController {
   @override
   void onInit() async {
     getExams();
+    _selectedExamID = _examSelectionService.loadSelectedExamId();
     super.onInit();
   }
 
@@ -14,7 +16,17 @@ class HomeController extends GetxController {
     super.dispose();
   }
 
-  List<ExamModel> exams = [];
+  final ExamSelectionService _examSelectionService = ExamSelectionService();
+  final List<ExamModel> exams = [];
+
+  int _selectedExamID = -1;
+  int get selectedExamID => _selectedExamID;
+
+  void selectExam(ExamModel exam) {
+    _examSelectionService.saveSelectedExamId(exam.id);
+    _selectedExamID = exam.id;
+    update();
+  }
 
   void getExams() async {
     exams.addAll(
@@ -46,7 +58,7 @@ class HomeController extends GetxController {
           ],
         ),
         ExamModel(
-          id: 1,
+          id: 2,
           title: "KBS 2022-2023",
           markingSchemes: [
             MarkingSchemeModel(
