@@ -51,8 +51,8 @@ flutter:
   fonts:
     - family: arabic
       fonts:
-        - asset: assets/fonts/Alexandria.ttf
+        - asset: assets/fonts/Cairo.ttf
     - family: english
       fonts:
-        - asset: assets/fonts/Exo.ttf
+        - asset: assets/fonts/Barlow.ttf
 

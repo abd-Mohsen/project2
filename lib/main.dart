@@ -9,13 +9,12 @@ import 'package:project2/themes.dart';
 import 'package:project2/views/home_view.dart';
 import 'package:project2/views/redirect_page.dart';
 
-late CameraDescription camera;
+late List<CameraDescription> cameras;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  final cameras = await availableCameras();
-  camera = cameras.first;
+  cameras = await availableCameras();
   runApp(const MyApp());
 }
 

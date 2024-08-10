@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:project2/controllers/home_controller.dart';
 import 'package:project2/controllers/locale_controller.dart';
 import 'package:project2/controllers/theme_controller.dart';
+import 'package:project2/views/exams_view.dart';
 import 'package:project2/views/scan_view.dart';
 
 class HomeView extends StatelessWidget {
@@ -26,6 +27,12 @@ class HomeView extends StatelessWidget {
         centerTitle: true,
       ),
       backgroundColor: cs.background,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.to(() => ExamsView());
+        },
+        child: Icon(Icons.text_snippet),
+      ),
       body: ListView(
         children: [
           // Container(
@@ -75,18 +82,18 @@ class HomeView extends StatelessWidget {
           ),
           SizedBox(height: 150),
 
-          GestureDetector(
-            onTap: () {
-              Get.to(ScanView());
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 80),
+            child: GestureDetector(
+              onTap: () {
+                Get.to(() => const ScanView());
+              },
               child: DottedBorder(
                 color: cs.secondary,
                 dashPattern: [15, 0],
-                strokeWidth: 5,
+                strokeWidth: 2.0,
                 borderType: BorderType.RRect,
-                radius: Radius.circular(20),
+                radius: Radius.circular(15),
                 padding: EdgeInsets.all(8),
                 child: Center(
                   child: Padding(

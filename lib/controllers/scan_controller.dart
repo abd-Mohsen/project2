@@ -20,15 +20,17 @@ class ScanController extends GetxController {
       useGpuDelegate: false,
     );
     cameraController = CameraController(
-      camera,
+      cameras[0],
       ResolutionPreset.medium,
       enableAudio: false,
+      //imageFormatGroup: ImageFormatGroup.jpeg,
     );
     initializeControllerFuture = cameraController.initialize().then((_) {
+      //if (!mounted) return;
       cameraController.startImageStream((CameraImage image) {
-        //currentFrame = image;
         if (frames % 20 == 0) processImage(image);
         frames++;
+        if (frames > 1e6) frames = 0;
       });
     });
 
