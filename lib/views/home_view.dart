@@ -33,7 +33,7 @@ class HomeView extends StatelessWidget {
         },
         child: Icon(Icons.text_snippet),
       ),
-      body: ListView(
+      body: Column(
         children: [
           // Container(
           //   decoration: const BoxDecoration(
@@ -49,81 +49,113 @@ class HomeView extends StatelessWidget {
           //       ),
           // ),
           //),
-          SizedBox(
-            height: 100,
-            child: FittedBox(
-              fit: BoxFit.cover,
+          Expanded(
+            flex: 9,
+            child: Center(
               child: Stack(
+                alignment: Alignment.center,
                 children: [
-                  Image.asset("assets/images/banner.jpg"),
+                  FittedBox(
+                    fit: BoxFit.cover,
+                    child: Image.asset("assets/images/banner.jpg"),
+                  ),
                   Positioned.fill(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.6),
+                        color: Colors.black.withOpacity(0.7),
                       ),
                     ),
                   ),
-                  // Positioned(
-                  //   bottom: 0,
-                  //   //left: 0,
-                  //   //right: 0,
-                  //   //top: 0,
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.all(20),
-                  //     child: Text(
-                  //       "welcome",
-                  //       style: tt.headlineLarge!.copyWith(color: cs.error, fontWeight: FontWeight.bold),
-                  //     ),
-                  //   ),
-                  // ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    //right: 0,
+                    //top: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "welcome",
+                            style: tt.headlineLarge!.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "enter answers, scan, repeat!",
+                            style: tt.headlineSmall!.copyWith(color: Colors.white),
+                          ),
+                        ],
+                      ),
+
+                      //     Text.rich(
+                      //   TextSpan(
+                      //     text: "Hello",
+                      //     style: tt.headlineLarge!.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                      //     children: [
+                      //       TextSpan(
+                      //         text: "enter answers, scan, repeat!",
+                      //         style: tt.headlineMedium!.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
-          SizedBox(height: 150),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 80),
-            child: GestureDetector(
-              onTap: () {
-                Get.to(() => const ScanView());
-              },
-              child: DottedBorder(
-                color: cs.secondary,
-                dashPattern: [15, 0],
-                strokeWidth: 2.0,
-                borderType: BorderType.RRect,
-                radius: Radius.circular(15),
-                padding: EdgeInsets.all(8),
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: SizedBox(
-                            height: 100,
-                            width: 100,
-                            child: Image.asset(
-                              "assets/images/scanner.png",
-                              color: cs.onBackground,
-                            ),
+          Expanded(
+            flex: 15,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Get.to(() => const ScanView());
+                  },
+                  child: SizedBox(
+                    width: 200,
+                    child: DottedBorder(
+                      color: cs.secondary,
+                      dashPattern: const [15, 0],
+                      strokeWidth: 2.0,
+                      borderType: BorderType.RRect,
+                      radius: const Radius.circular(10),
+                      padding: const EdgeInsets.all(8),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: SizedBox(
+                                  height: 100,
+                                  width: 100,
+                                  child: Image.asset(
+                                    "assets/images/scanner.png",
+                                    color: cs.onBackground,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 8),
+                                child: Text(
+                                  "Scan",
+                                  style: tt.headlineLarge!.copyWith(color: cs.secondary, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          child: Text(
-                            "Scan",
-                            style: tt.headlineLarge!.copyWith(color: cs.secondary, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
+                const SizedBox.shrink(),
+              ],
             ),
           ),
         ],
