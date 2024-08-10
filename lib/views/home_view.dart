@@ -49,64 +49,67 @@ class HomeView extends StatelessWidget {
           //       ),
           // ),
           //),
-          Expanded(
-            flex: 9,
-            child: Center(
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  FittedBox(
-                    fit: BoxFit.cover,
-                    child: Image.asset("assets/images/banner.jpg"),
-                  ),
-                  Positioned.fill(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.7),
-                      ),
+          Center(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.asset(
+                  "assets/images/banner.jpg",
+                  fit: BoxFit.cover,
+                ),
+                Positioned.fill(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.7),
                     ),
                   ),
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    //right: 0,
-                    //top: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "welcome",
-                            style: tt.headlineLarge!.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "enter answers, scan, repeat!",
-                            style: tt.headlineSmall!.copyWith(color: Colors.white),
-                          ),
-                        ],
-                      ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  //right: 0,
+                  //top: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "welcome",
+                          style: tt.headlineLarge!.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "enter answers, scan, repeat!",
+                          style: tt.headlineSmall!.copyWith(color: Colors.white, shadows: [
+                            Shadow(
+                              offset: const Offset(3.0, 2.0),
+                              blurRadius: 8.0,
+                              color: Colors.black.withOpacity(0.7),
+                            ),
+                          ]),
+                        ),
+                      ],
+                    ),
 
-                      //     Text.rich(
-                      //   TextSpan(
-                      //     text: "Hello",
-                      //     style: tt.headlineLarge!.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-                      //     children: [
-                      //       TextSpan(
-                      //         text: "enter answers, scan, repeat!",
-                      //         style: tt.headlineMedium!.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                    ),
+                    //     Text.rich(
+                    //   TextSpan(
+                    //     text: "Hello",
+                    //     style: tt.headlineLarge!.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                    //     children: [
+                    //       TextSpan(
+                    //         text: "enter answers, scan, repeat!",
+                    //         style: tt.headlineMedium!.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           Expanded(
-            flex: 15,
+            flex: 1,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
