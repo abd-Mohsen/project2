@@ -35,20 +35,6 @@ class HomeView extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // Container(
-          //   decoration: const BoxDecoration(
-          //     image: DecorationImage(
-          //       image: AssetImage("assets/images/banner.jpg"),
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // child: BackdropFilter(
-          //   filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-          //   child: Container(
-          //       //decoration: BoxDecoration(color: Colors.white.withOpacity(1.0)),
-          //       ),
-          // ),
-          //),
           Center(
             child: Stack(
               alignment: Alignment.center,
@@ -67,9 +53,6 @@ class HomeView extends StatelessWidget {
                 PositionedDirectional(
                   bottom: 0,
                   start: 0,
-                  //left: 0,
-                  //right: 0,
-                  //top: 0,
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: Column(
@@ -91,19 +74,6 @@ class HomeView extends StatelessWidget {
                         ),
                       ],
                     ),
-
-                    //     Text.rich(
-                    //   TextSpan(
-                    //     text: "Hello",
-                    //     style: tt.headlineLarge!.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-                    //     children: [
-                    //       TextSpan(
-                    //         text: "enter answers, scan, repeat!",
-                    //         style: tt.headlineMedium!.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
                   ),
                 ),
               ],
@@ -258,7 +228,7 @@ class HomeView extends StatelessWidget {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          "all rights reserved",
+                                          "adadevs© all rights reserved",
                                           style: tt.headlineSmall!.copyWith(color: cs.onSurface),
                                         ),
                                       ),
@@ -278,7 +248,7 @@ class HomeView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               child: Text(
-                "all rights reserved",
+                "Adadevs© all rights reserved",
                 style: tt.labelMedium!.copyWith(color: cs.onSurface.withOpacity(0.6)),
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project2/models/exam_model.dart';
+import 'package:project2/views/components/marking_scheme_card.dart';
 
 class ExamView extends StatelessWidget {
   final ExamModel exam;
@@ -51,22 +52,7 @@ class ExamView extends StatelessWidget {
               itemCount: exam.markingSchemes.length,
               itemBuilder: (context, i) {
                 MarkingSchemeModel markingScheme = exam.markingSchemes[i];
-                return ExpansionTile(
-                  //todo: edit delete and add scheme
-                  title: Text(markingScheme.title),
-                  textColor: cs.secondary,
-                  iconColor: cs.secondary,
-                  children: List.generate(
-                    markingScheme.questions.length,
-                    (i) => Padding(
-                      padding: const EdgeInsets.only(bottom: 4),
-                      child: Text(
-                        "${markingScheme.questions[i].number}  -->  ${markingScheme.questions[i].answer}",
-                        style: tt.titleMedium!.copyWith(color: cs.onBackground),
-                      ),
-                    ),
-                  ),
-                );
+                return MarkingSchemeCard(markingScheme: markingScheme);
               },
             ),
           )
