@@ -69,7 +69,7 @@ class HomeController extends GetxController {
                 QuestionModel(number: 1, answer: "a"),
                 QuestionModel(number: 2, answer: "d"),
                 QuestionModel(number: 3, answer: "a"),
-                QuestionModel(number: 3, answer: "d"),
+                QuestionModel(number: 4, answer: "d"),
               ],
             ),
           ],
