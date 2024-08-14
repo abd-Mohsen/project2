@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project2/models/exam_model.dart';
+import 'package:project2/views/components/question_card.dart';
 
 class MarkingSchemeCard extends StatelessWidget {
   final MarkingSchemeModel markingScheme;
@@ -34,17 +35,28 @@ class MarkingSchemeCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         children: [
+          const QuestionCardLabels(),
           ...List.generate(
             markingScheme.questions.length,
             (i) => Padding(
               padding: const EdgeInsets.only(bottom: 4),
-              child: Text(
-                "${markingScheme.questions[i].number}  --->  ${markingScheme.questions[i].answer}",
-                style: tt.titleMedium!.copyWith(color: cs.onBackground),
+              child: QuestionCard(
+                number: markingScheme.questions[i].number,
+                answer: markingScheme.questions[i].answer,
               ),
             ),
           ),
-          const SizedBox(height: 12),
+          // ...List.generate(
+          //   50,
+          //   (i) => Padding(
+          //     padding: const EdgeInsets.only(bottom: 4),
+          //     child: QuestionCard(
+          //       number: i + 5,
+          //       answer: 'a',
+          //     ),
+          //   ),
+          // ),
+          const SizedBox(height: 4),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
