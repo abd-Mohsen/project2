@@ -12,7 +12,7 @@ class MarkingSchemeCard extends StatelessWidget {
     ColorScheme cs = Theme.of(context).colorScheme;
     TextTheme tt = Theme.of(context).textTheme;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.only(bottom: 12),
       child: ExpansionTile(
         //todo: edit and delete
         title: Text(markingScheme.title),
@@ -41,8 +41,7 @@ class MarkingSchemeCard extends StatelessWidget {
             (i) => Padding(
               padding: const EdgeInsets.only(bottom: 4),
               child: QuestionCard(
-                number: markingScheme.questions[i].number,
-                answer: markingScheme.questions[i].answer,
+                question: markingScheme.questions[i],
               ),
             ),
           ),

@@ -8,17 +8,20 @@ String loginModelToJson(List<ExamModel> data) => json.encode(List<dynamic>.from(
 class ExamModel {
   final int id;
   final String title;
+  final int questionsNumber;
   final List<MarkingSchemeModel> markingSchemes;
 
   ExamModel({
     required this.id,
     required this.title,
+    required this.questionsNumber,
     required this.markingSchemes,
   });
 
   factory ExamModel.fromJson(Map<String, dynamic> json) => ExamModel(
         id: json["id"],
         title: json["title"],
+        questionsNumber: json["questions_number"],
         markingSchemes:
             List<MarkingSchemeModel>.from(json["marking_schemes"].map((x) => MarkingSchemeModel.fromJson(x))),
       );
@@ -33,34 +36,30 @@ class ExamModel {
 class MarkingSchemeModel {
   final int id;
   final String title;
-  final int size;
   final List<QuestionModel> questions;
 
   MarkingSchemeModel({
     required this.id,
     required this.title,
-    required this.size,
     required this.questions,
   });
 
   factory MarkingSchemeModel.fromJson(Map<String, dynamic> json) => MarkingSchemeModel(
         id: json["id"],
         title: json["title"],
-        size: json["size"],
         questions: List<QuestionModel>.from(json["question"].map((x) => QuestionModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "title": title,
-        "size": size,
         "question": List<dynamic>.from(questions.map((x) => x.toJson())),
       };
 }
 
 class QuestionModel {
   final int number;
-  final String answer;
+  String answer;
 
   QuestionModel({
     required this.number,

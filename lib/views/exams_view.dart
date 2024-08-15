@@ -23,6 +23,30 @@ class ExamsView extends StatelessWidget {
         centerTitle: true,
       ),
       backgroundColor: cs.background,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Get.bottomSheet(
+          //   BottomSheet(
+          //     onClosing: () {},
+          //     builder: (context) => Container(
+          //       height: MediaQuery.of(context).size.height/0.8,
+          //       color: cs.surface,
+          //       child: GetBuilder<>(
+          //         builder: (controller) {
+          //           return ListView(
+          //             children: [
+          //               TextFormField(),
+          //               ...List.generate(length, (index) => null)
+          //             ],
+          //           );
+          //         }
+          //       ),
+          //     ),
+          //   ),
+          // );
+        },
+        child: const Icon(Icons.add),
+      ),
       body: GetBuilder<HomeController>(builder: (controller) {
         return ListView.builder(
           padding: const EdgeInsets.only(top: 4),

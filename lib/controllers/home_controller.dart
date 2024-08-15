@@ -34,11 +34,11 @@ class HomeController extends GetxController {
         ExamModel(
           id: 1,
           title: "multimedia 2023-2024",
+          questionsNumber: 3,
           markingSchemes: [
             MarkingSchemeModel(
               id: 1,
               title: "A",
-              size: 3,
               questions: [
                 QuestionModel(number: 1, answer: "a"),
                 QuestionModel(number: 2, answer: "d"),
@@ -48,7 +48,6 @@ class HomeController extends GetxController {
             MarkingSchemeModel(
               id: 2,
               title: "B",
-              size: 3,
               questions: [
                 QuestionModel(number: 1, answer: "a"),
                 QuestionModel(number: 2, answer: "d"),
@@ -60,11 +59,11 @@ class HomeController extends GetxController {
         ExamModel(
           id: 2,
           title: "KBS 2022-2023",
+          questionsNumber: 4,
           markingSchemes: [
             MarkingSchemeModel(
               id: 1,
               title: "A",
-              size: 4,
               questions: [
                 QuestionModel(number: 1, answer: "a"),
                 QuestionModel(number: 2, answer: "d"),

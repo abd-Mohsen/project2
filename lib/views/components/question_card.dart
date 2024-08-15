@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:project2/models/exam_model.dart';
 
 class QuestionCard extends StatelessWidget {
-  final int number;
-  final String answer;
-  const QuestionCard({
-    super.key,
-    required this.number,
-    required this.answer,
-  });
+  final QuestionModel question;
+  const QuestionCard({super.key, required this.question});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +18,7 @@ class QuestionCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: CircleAvatar(
               radius: 6,
-              backgroundColor: i == answer.codeUnitAt(0) - 97 ? cs.onSurface : cs.onSurface.withOpacity(0.2),
+              backgroundColor: i == question.answer.codeUnitAt(0) - 97 ? cs.onSurface : cs.onSurface.withOpacity(0.2),
             ),
           ),
         );
@@ -38,7 +34,7 @@ class QuestionCard extends StatelessWidget {
           SizedBox(
             width: 25,
             child: Text(
-              "${number.toString()}.",
+              "${question.number.toString()}.",
               style: tt.titleSmall!.copyWith(color: cs.onSurface),
             ),
           ),
