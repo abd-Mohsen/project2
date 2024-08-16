@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_utils/src/get_utils/get_utils.dart';
+import 'package:get/get.dart';
 
 class AuthField extends StatelessWidget {
   const AuthField({
@@ -50,22 +50,21 @@ class AuthField extends StatelessWidget {
 
 String? validateInput(String val, int min, int max, String type,
     {String pass = "", String rePass = "", bool canBeEmpty = false}) {
-  if (val.trim().isEmpty && !canBeEmpty) return "cannot be empty";
+  if (val.trim().isEmpty && !canBeEmpty) return "cannot be empty".tr;
 
   if (type == "username") {
-    if (!GetUtils.isUsername(val)) return "invalid username";
+    if (!GetUtils.isUsername(val)) return "invalid username".tr;
   }
   if (type == "email") {
-    if (!GetUtils.isEmail(val)) return "invalid email";
+    if (!GetUtils.isEmail(val)) return "invalid email".tr;
   }
   if (type == "phone") {
-    if (!GetUtils.isPhoneNumber(val)) return "invalid phone";
+    if (!GetUtils.isPhoneNumber(val)) return "invalid phone".tr;
   }
-  if (val.length < min) return "cannot be shorter than $min characters";
+  if (val.length < min) return "${"cannot be shorter".tr} than $min ${"characters".tr}";
+  if (val.length > max) return "${"cannot be longer".tr} than $max ${"characters".tr}";
 
-  if (val.length > max) return "cannot be longer than $max characters";
-
-  if (pass != rePass) return "passwords don't match";
+  if (pass != rePass) return "passwords don't match".tr;
 
   return null;
 }

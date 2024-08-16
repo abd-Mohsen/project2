@@ -5,6 +5,7 @@ import 'package:project2/models/exam_model.dart';
 class ExamController extends GetxController {
   late ExamModel exam;
   ExamController(this.exam);
+
   TextEditingController title = TextEditingController();
   List<QuestionModel> questions = [];
 
@@ -20,11 +21,25 @@ class ExamController extends GetxController {
     update();
   }
 
-  Future<void> addMarkingScheme() async {
-    MarkingSchemeModel newScheme = MarkingSchemeModel(id: -1, title: title.text, questions: questions);
-    //todo: make a request, pass title and questions, with loading, and prevent pressing if loading
-    //todo: create a form and validate it
-    exam.markingSchemes.add(newScheme);
+  bool _loading = false;
+  bool get loading => _loading;
+  void setLoading(bool value) {
+    _loading = value;
     update();
+  }
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool isButtonPressed = false;
+
+  Future<void> addMarkingScheme() async {
+    if (loading) return;
+    isButtonPressed = true;
+    if (!formKey.currentState!.validate()) return;
+    setLoading(true);
+    MarkingSchemeModel newScheme = MarkingSchemeModel(id: -1, title: title.text, questions: questions);
+    //todo: make a request, pass title and questions
+    //todo: make sure that all answers are selected in efficient way
+    exam.markingSchemes.add(newScheme);
+    setLoading(false);
   }
 }
