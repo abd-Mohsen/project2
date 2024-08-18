@@ -66,7 +66,7 @@ String? validateInput(
 
   if (type == "num") {
     if (!GetUtils.isNum(val)) return "enter a whole number".tr;
-    int num = 0;
+    int num = int.parse(val);
     if (minValue > maxValue) return "values are not valid".tr;
     if (num > maxValue) return "${"cannot be greater".tr} than $maxValue";
     if (num < minValue) return "${"cannot be less".tr} than $minValue";

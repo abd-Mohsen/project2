@@ -18,6 +18,13 @@ class AddExamController extends GetxController {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isButtonPressed = false;
 
+  bool _loading = false;
+  bool get loading => _loading;
+  void setLoading(bool value) {
+    _loading = value;
+    update();
+  }
+
   ClassModel? selectedClass;
   List<ClassModel> classes = [];
 
@@ -28,5 +35,11 @@ class AddExamController extends GetxController {
 
   void getClasses() async {
     //
+  }
+
+  Future addExam() async {
+    if (_loading) return;
+    isButtonPressed = true;
+    if (!formKey.currentState!.validate()) return;
   }
 }

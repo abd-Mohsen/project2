@@ -8,6 +8,7 @@ import 'package:project2/models/exam_model.dart';
 import 'package:project2/views/components/exam_card.dart';
 import 'package:project2/views/exam_view.dart';
 
+import 'components/my_button.dart';
 import 'components/my_field.dart';
 
 class ExamsView extends StatelessWidget {
@@ -51,6 +52,18 @@ class ExamsView extends StatelessWidget {
                           //   "question_number": null,
                           //   "classes_id": null
                           // }
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(
+                              child: Text(
+                                "new exam".tr,
+                                style: tt.headlineMedium!.copyWith(
+                                  color: cs.onSurface,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
                           MyField(
                             controller: controller.title,
                             title: "title".tr,
@@ -151,6 +164,20 @@ class ExamsView extends StatelessWidget {
                               },
                               //enabled: !con.enabled,
                             ),
+                          ),
+                          MyButton(
+                            onTap: () async {
+                              await controller.addExam(); // remove await if animation lags
+                            },
+                            child: controller.loading
+                                ? CircularProgressIndicator()
+                                : Text(
+                                    "add".tr,
+                                    style: tt.headlineMedium!.copyWith(
+                                      color: cs.onSecondary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                           ),
                         ],
                       ),

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:project2/controllers/exam_controller.dart';
 import 'package:project2/models/exam_model.dart';
 import 'package:project2/views/components/marking_scheme_card.dart';
+import 'package:project2/views/components/my_button.dart';
 import 'package:project2/views/components/my_field.dart';
 import 'package:project2/views/components/selectable_question_card.dart';
 
@@ -69,31 +70,20 @@ class ExamView extends StatelessWidget {
                                 question: controller.questions[i],
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 72),
-                              child: GestureDetector(
-                                onTap: () async {
-                                  await controller.addMarkingScheme();
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: cs.secondary,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8),
-                                    child: Center(
-                                      child: Text(
-                                        "add".tr,
-                                        style: tt.headlineMedium!.copyWith(
-                                          color: cs.onSecondary,
-                                        ),
+                            MyButton(
+                              onTap: () async {
+                                await controller.addMarkingScheme(); // remove await if animation lags
+                              },
+                              child: controller.loading
+                                  ? CircularProgressIndicator()
+                                  : Text(
+                                      "add".tr,
+                                      style: tt.headlineMedium!.copyWith(
+                                        color: cs.onSecondary,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                  ),
-                                ),
-                              ),
-                            )
+                            ),
                           ],
                         ),
                       );
