@@ -39,33 +39,33 @@ class LoginController extends GetxController {
   }
 
   void login() async {
+    if (_isLoading) return;
     buttonPressed = true;
     bool isValid = loginFormKey.currentState!.validate();
-    if (isValid) {
-      toggleLoading(true);
-      Get.offAll(HomeView());
-      try {
-        // LoginModel? loginData = await RemoteServices.login(email.text, password.text).timeout(kTimeOutDuration);
-        // if (loginData == null) return;
-        // _getStorage.write("token", loginData.accessToken);
-        // _getStorage.write("role", loginData.role);
-        // print(_getStorage.read("token"));
-        // if (loginData.role == "salesman") {
-        //   Get.offAll(() => const HomeView());
-        // } else if (loginData.role == "supervisor") {
-        //   Get.offAll(() => const SupervisorView());
-        // } else {
-        //   return; // admin, show a message from backend (send a header that represents the platform)
-        // }
-        // await Future.delayed(Duration(milliseconds: 800));
-        //dispose();
-      } on TimeoutException {
-        kTimeOutDialog();
-      } catch (e) {
-        print(e.toString());
-      } finally {
-        toggleLoading(false);
-      }
+    if (!isValid) return;
+    toggleLoading(true);
+    Get.offAll(HomeView());
+    try {
+      // LoginModel? loginData = await RemoteServices.login(email.text, password.text).timeout(kTimeOutDuration);
+      // if (loginData == null) return;
+      // _getStorage.write("token", loginData.accessToken);
+      // _getStorage.write("role", loginData.role);
+      // print(_getStorage.read("token"));
+      // if (loginData.role == "salesman") {
+      //   Get.offAll(() => const HomeView());
+      // } else if (loginData.role == "supervisor") {
+      //   Get.offAll(() => const SupervisorView());
+      // } else {
+      //   return; // admin, show a message from backend (send a header that represents the platform)
+      // }
+      // await Future.delayed(Duration(milliseconds: 800));
+      //dispose();
+    } on TimeoutException {
+      kTimeOutDialog();
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      toggleLoading(false);
     }
   }
 }

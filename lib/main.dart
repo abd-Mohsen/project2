@@ -2,14 +2,15 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:project2/api.dart';
 import 'package:project2/controllers/locale_controller.dart';
 import 'package:project2/controllers/theme_controller.dart';
 import 'package:project2/locale.dart';
 import 'package:project2/themes.dart';
-import 'package:project2/views/home_view.dart';
 import 'package:project2/views/redirect_page.dart';
 
 late List<CameraDescription> cameras;
+final Api api = Api();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
           translations: MyLocale(),
           locale: con.initialLang,
           debugShowCheckedModeBanner: false,
-          home: HomeView(),
+          home: const RedirectPage(),
         );
       },
     );

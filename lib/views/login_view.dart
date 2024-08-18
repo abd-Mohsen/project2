@@ -24,9 +24,9 @@ class LoginView extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: cs.background,
-          body: SingleChildScrollView(
-            child: Form(
-              key: lC.loginFormKey,
+          body: Form(
+            key: lC.loginFormKey,
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,10 +47,10 @@ class LoginView extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20),
                     child: Text(
                       'login to your account',
-                      style: tt.titleLarge!.copyWith(color: cs.onBackground),
+                      style: tt.headlineMedium!.copyWith(color: cs.onBackground),
                     ),
                   ),
                   AuthField(
@@ -87,15 +87,18 @@ class LoginView extends StatelessWidget {
                       },
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: TextButton(
-                      onPressed: () {
-                        Get.to(const ResetPasswordView1());
-                      },
-                      child: Text(
-                        "forgot password?",
-                        style: tt.labelLarge!.copyWith(color: cs.onBackground.withOpacity(0.6)),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: TextButton(
+                        onPressed: () {
+                          Get.to(const ResetPasswordView1());
+                        },
+                        child: Text(
+                          "forgot password?".tr,
+                          style: tt.labelLarge!.copyWith(color: cs.onBackground.withOpacity(0.6)),
+                        ),
                       ),
                     ),
                   ),
@@ -106,7 +109,7 @@ class LoginView extends StatelessWidget {
                           padding: const EdgeInsets.all(12),
                           margin: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: cs.primary,
+                            color: cs.secondary,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: con.isLoading
@@ -115,7 +118,7 @@ class LoginView extends StatelessWidget {
                                   padding: const EdgeInsets.all(4),
                                   child: Text(
                                     "Login",
-                                    style: tt.titleMedium!.copyWith(color: cs.onPrimary),
+                                    style: tt.titleMedium!.copyWith(color: cs.onSecondary),
                                   ),
                                 ),
                         ),
@@ -144,6 +147,15 @@ class LoginView extends StatelessWidget {
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Center(
+                      child: Text(
+                        "AdaDevs® all rights reserved",
+                        style: tt.labelMedium!.copyWith(color: cs.onBackground.withOpacity(0.6)),
+                      ),
                     ),
                   ),
                 ],

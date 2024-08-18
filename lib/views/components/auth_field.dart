@@ -28,13 +28,13 @@ class AuthField extends StatelessWidget {
     ColorScheme cs = Theme.of(context).colorScheme;
     TextTheme tt = Theme.of(context).textTheme;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       child: TextFormField(
         controller: controller,
         keyboardType: keyboardType ?? TextInputType.text,
         obscureText: obscure ?? false,
         decoration: InputDecoration(
-          border: const OutlineInputBorder(),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
           //hintText: "password".tr,
           label: Text(label),
           prefixIcon: prefixIcon,

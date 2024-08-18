@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-String kHostIP = "http://10.0.2.2:8000";
+String kHostIP = "http://192.168.1.34:8000";
 
 //String fontFamily = 'Alexandria';
+
+String kAppName = "AdaGrade";
 
 Duration kTimeOutDuration = const Duration(seconds: 25);
 Duration kTimeOutDuration2 = const Duration(seconds: 15);
