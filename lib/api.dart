@@ -31,6 +31,7 @@ class Api {
         RefreshTokenService().refreshToken();
         return getRequest(endPoint, auth: auth);
       }
+      print(response.body);
       return response.statusCode == 200 ? response.body : null;
     } on TimeoutException {
       kTimeOutDialog();

@@ -148,15 +148,19 @@ class HomeView extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  UserAccountsDrawerHeader(
-                    accountName: Text(
-                      "abd",
-                      style: tt.headlineMedium,
-                    ),
-                    accountEmail: Text(
-                      "abd@m.co",
-                      style: tt.titleMedium,
-                    ),
+                  GetBuilder<HomeController>(
+                    builder: (controller) {
+                      return UserAccountsDrawerHeader(
+                        accountName: Text(
+                          controller.currentUser?.username ?? "loading".tr,
+                          style: tt.headlineMedium,
+                        ),
+                        accountEmail: Text(
+                          controller.currentUser?.email ?? "",
+                          style: tt.titleMedium,
+                        ),
+                      );
+                    },
                   ),
                   ListTile(
                     leading: const Icon(Icons.dark_mode_outlined),

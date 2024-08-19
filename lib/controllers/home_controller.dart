@@ -15,8 +15,9 @@ class HomeController extends GetxController {
 
   @override
   void onInit() async {
-    getExams();
+    await getExams();
     _selectedExamID = _examSelectionService.loadSelectedExamId();
+    getCurrentUser();
     super.onInit();
   }
 
@@ -40,7 +41,7 @@ class HomeController extends GetxController {
     update();
   }
 
-  void getExams() async {
+  Future getExams() async {
     exams.addAll(
       [
         ExamModel(
@@ -103,6 +104,10 @@ class HomeController extends GetxController {
   //
 
   void logout() async {
-    if (await _logoutService.logout()) Get.offAll(const LoginView());
+    if (await _logoutService.logout()) {
+      Get.offAll(const LoginView());
+    } else {
+      print("logout failed");
+    }
   }
 }
