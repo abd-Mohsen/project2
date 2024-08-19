@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:project2/services/remote_services/login_service.dart';
 import 'package:project2/views/home_view.dart';
 //import 'package:get_storage/get_storage.dart';
 
@@ -14,6 +15,9 @@ class LoginController extends GetxController {
     // password.dispose();
     super.onClose();
   }
+
+  late LoginService loginService;
+  LoginController({required this.loginService});
 
   //final GetStorage _getStorage = GetStorage();
 
@@ -44,22 +48,12 @@ class LoginController extends GetxController {
     bool isValid = loginFormKey.currentState!.validate();
     if (!isValid) return;
     toggleLoading(true);
-    Get.offAll(HomeView());
     try {
-      // LoginModel? loginData = await RemoteServices.login(email.text, password.text).timeout(kTimeOutDuration);
-      // if (loginData == null) return;
-      // _getStorage.write("token", loginData.accessToken);
-      // _getStorage.write("role", loginData.role);
-      // print(_getStorage.read("token"));
-      // if (loginData.role == "salesman") {
-      //   Get.offAll(() => const HomeView());
-      // } else if (loginData.role == "supervisor") {
-      //   Get.offAll(() => const SupervisorView());
-      // } else {
-      //   return; // admin, show a message from backend (send a header that represents the platform)
-      // }
-      // await Future.delayed(Duration(milliseconds: 800));
-      //dispose();
+      if (await loginService.login(email.text, password.text)) {
+        Get.offAll(const HomeView());
+      } else {
+        print("failed to login");
+      }
     } on TimeoutException {
       kTimeOutDialog();
     } catch (e) {

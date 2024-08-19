@@ -13,10 +13,11 @@ class Api {
   String get refreshToken => _getStorage.read("refresh_token");
 
   Map<String, String> headers = {
-    "accept": "application/json",
+    "Accept": "application/json",
+    "content-type": "application/json",
   };
 
-  Future<String> getRequest(String endPoint, {bool auth = false, bool canRefresh = true}) async {
+  Future<String?> getRequest(String endPoint, {bool auth = false, bool canRefresh = true}) async {
     var response = await client.get(
       Uri.parse("$_hostIP/$endPoint"),
       headers: !auth ? headers : {...headers, "authorization": "JWT $accessToken"},
@@ -28,9 +29,9 @@ class Api {
     return response.body;
   }
 
-  Future<String> postRequest(
+  Future<String?> postRequest(
     String endPoint,
-    Map<String, dynamic> body, {
+    Map<String, String> body, {
     bool auth = false,
     bool canRefresh = true,
   }) async {
@@ -43,6 +44,7 @@ class Api {
       RefreshTokenService().refreshToken();
       return postRequest(endPoint, body, auth: auth);
     }
-    return response.body;
+    print(response.body);
+    return response.statusCode == 200 ? response.body : null;
   }
 }

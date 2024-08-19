@@ -6,6 +6,7 @@ import 'package:project2/views/register_view.dart';
 import 'package:project2/views/reset_password_view1.dart';
 import '../constants.dart';
 import '../controllers/login_controller.dart';
+import '../services/remote_services/login_service.dart';
 import 'components/auth_field.dart';
 
 class LoginView extends StatelessWidget {
@@ -15,7 +16,7 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorScheme cs = Theme.of(context).colorScheme;
     TextTheme tt = Theme.of(context).textTheme;
-    LoginController lC = Get.put(LoginController());
+    LoginController lC = Get.put(LoginController(loginService: LoginService()));
     return WillPopScope(
       onWillPop: () async {
         Get.dialog(kCloseAppDialog());
@@ -39,7 +40,7 @@ class LoginView extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: Image.asset(
-                            "assets/images/logo.png",
+                            "assets/images/${Get.isDarkMode ? "logo_dark" : "logo"}.png", //todo: for other auth pages
                             height: MediaQuery.sizeOf(context).width / 2,
                           ),
                         ),
@@ -54,12 +55,12 @@ class LoginView extends StatelessWidget {
                     ),
                   ),
                   AuthField(
-                    label: "email",
+                    label: "user name",
                     controller: lC.email,
                     keyboardType: TextInputType.emailAddress,
-                    prefixIcon: Icon(Icons.email_outlined),
+                    prefixIcon: Icon(Icons.person_outline),
                     validator: (val) {
-                      return validateInput(lC.email.text, 4, 50, "email");
+                      return validateInput(lC.email.text, 2, 50, "name");
                     },
                     onChanged: (val) {
                       if (lC.buttonPressed) lC.loginFormKey.currentState!.validate();
