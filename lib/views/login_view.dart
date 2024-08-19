@@ -33,14 +33,14 @@ class LoginView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 36),
+                    padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 48),
                     child: Hero(
                       tag: "logo",
                       child: Center(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: Image.asset(
-                            "assets/images/${Get.isDarkMode ? "logo_dark" : "logo"}.png", //todo: for other auth pages
+                            "assets/images/${Get.isDarkMode ? "logo_dark" : "logo"}.png",
                             height: MediaQuery.sizeOf(context).width / 2,
                           ),
                         ),
@@ -48,7 +48,7 @@ class LoginView extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
                     child: Text(
                       'login to your account',
                       style: tt.headlineMedium!.copyWith(color: cs.onBackground),
@@ -108,7 +108,7 @@ class LoginView extends StatelessWidget {
                       child: GestureDetector(
                         child: Container(
                           padding: const EdgeInsets.all(12),
-                          margin: const EdgeInsets.all(16),
+                          margin: const EdgeInsets.all(24),
                           decoration: BoxDecoration(
                             color: cs.secondary,
                             borderRadius: BorderRadius.circular(10),
@@ -151,7 +151,7 @@ class LoginView extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
                     child: Center(
                       child: Text(
                         "AdaDevs® all rights reserved",

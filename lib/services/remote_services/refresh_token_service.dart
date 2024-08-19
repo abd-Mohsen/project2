@@ -4,10 +4,14 @@ import 'package:get_storage/get_storage.dart';
 import 'package:project2/main.dart';
 
 class RefreshTokenService {
+  final GetStorage _getStorage = GetStorage();
   Future<void> refreshToken() async {
-    String? response = await api.getRequest("auth/jwt/refresh/");
+    Map<String, String> body = {
+      "refresh": _getStorage.read("refresh_token"),
+    };
+    String? response = await api.postRequest("auth/jwt/refresh/", body, canRefresh: false);
     if (response == null) return;
     String accessToken = jsonDecode(response)["access"];
-    GetStorage().write("access_token", accessToken);
+    _getStorage.write("access_token", accessToken);
   }
 }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:get_storage/get_storage.dart';
@@ -18,15 +19,26 @@ class Api {
   };
 
   Future<String?> getRequest(String endPoint, {bool auth = false, bool canRefresh = true}) async {
-    var response = await client.get(
-      Uri.parse("$_hostIP/$endPoint"),
-      headers: !auth ? headers : {...headers, "authorization": "JWT $accessToken"},
-    );
-    if (canRefresh && response.statusCode == 401) {
-      RefreshTokenService().refreshToken();
-      return getRequest(endPoint, auth: auth);
+    try {
+      var response = await client
+          .get(
+            Uri.parse("$_hostIP/$endPoint"),
+            headers: !auth ? headers : {...headers, "Authorization": "JWT $accessToken"},
+          )
+          .timeout(kTimeOutDuration2);
+
+      if (canRefresh && response.statusCode == 401) {
+        RefreshTokenService().refreshToken();
+        return getRequest(endPoint, auth: auth);
+      }
+      return response.statusCode == 200 ? response.body : null;
+    } on TimeoutException {
+      kTimeOutDialog();
+      return null;
+    } catch (e) {
+      print(e.toString());
+      return null;
     }
-    return response.body;
   }
 
   Future<String?> postRequest(
@@ -35,16 +47,31 @@ class Api {
     bool auth = false,
     bool canRefresh = true,
   }) async {
-    var response = await client.post(
-      Uri.parse("$_hostIP/$endPoint"),
-      headers: !auth ? headers : {...headers, "authorization": "JWT $accessToken"},
-      body: jsonEncode(body),
-    );
-    if (canRefresh && response.statusCode == 401) {
-      RefreshTokenService().refreshToken();
-      return postRequest(endPoint, body, auth: auth);
+    try {
+      var response = await client
+          .post(
+            Uri.parse("$_hostIP/$endPoint"),
+            headers: !auth
+                ? headers
+                : {
+                    ...headers,
+                    "Authorization": "JWT $accessToken",
+                  },
+            body: jsonEncode(body),
+          )
+          .timeout(kTimeOutDuration2);
+      if (canRefresh && response.statusCode == 401) {
+        RefreshTokenService().refreshToken();
+        return postRequest(endPoint, body, auth: auth, canRefresh: false);
+      }
+      print(response.body);
+      return response.statusCode == 200 ? response.body : null;
+    } on TimeoutException {
+      kTimeOutDialog();
+      return null;
+    } catch (e) {
+      print(e.toString());
+      return null;
     }
-    print(response.body);
-    return response.statusCode == 200 ? response.body : null;
   }
 }

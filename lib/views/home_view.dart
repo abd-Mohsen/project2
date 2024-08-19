@@ -4,6 +4,9 @@ import 'package:get/get.dart';
 import 'package:project2/controllers/home_controller.dart';
 import 'package:project2/controllers/locale_controller.dart';
 import 'package:project2/controllers/theme_controller.dart';
+import 'package:project2/services/local_services/exam_selection_service.dart';
+import 'package:project2/services/remote_services/logout_service.dart';
+import 'package:project2/services/remote_services/my_profile_service.dart';
 import 'package:project2/views/exams_view.dart';
 import 'package:project2/views/scan_view.dart';
 
@@ -12,7 +15,11 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeController hC = Get.put(HomeController());
+    HomeController hC = Get.put(HomeController(
+      logoutService: LogoutService(),
+      examSelectionService: ExamSelectionService(),
+      myProfileService: MyProfileService(),
+    ));
     ThemeController tC = Get.find();
     LocaleController lC = Get.find();
     ColorScheme cs = Theme.of(context).colorScheme;
@@ -109,7 +116,7 @@ class HomeView extends StatelessWidget {
                                   height: 100,
                                   width: 100,
                                   child: Image.asset(
-                                    "assets/images/scanner.png",
+                                    "assets/images/scanner2.png",
                                     color: cs.onBackground,
                                   ),
                                 ),
@@ -153,7 +160,7 @@ class HomeView extends StatelessWidget {
                   ),
                   ListTile(
                     leading: const Icon(Icons.dark_mode_outlined),
-                    title: Text("dark mode", style: tt.titleMedium!.copyWith(color: cs.onBackground)),
+                    title: Text("dark mode".tr, style: tt.titleMedium!.copyWith(color: cs.onBackground)),
                     trailing: Switch(
                       value: tC.switchValue,
                       onChanged: (bool value) {
@@ -198,7 +205,7 @@ class HomeView extends StatelessWidget {
                   ),
                   ListTile(
                     leading: const Icon(Icons.info_outline),
-                    title: Text("about app", style: tt.titleMedium!.copyWith(color: cs.onBackground)),
+                    title: Text("about app".tr, style: tt.titleMedium!.copyWith(color: cs.onBackground)),
                     onTap: () {
                       Get.dialog(
                         AlertDialog(
@@ -242,6 +249,19 @@ class HomeView extends StatelessWidget {
                       );
                     },
                   ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.logout,
+                      color: cs.error,
+                    ),
+                    title: Text(
+                      "logout".tr,
+                      style: tt.titleMedium!.copyWith(color: cs.error),
+                    ),
+                    onTap: () {
+                      hC.logout();
+                    },
+                  )
                 ],
               ),
             ),

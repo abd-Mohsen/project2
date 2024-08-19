@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-//todo: this model if from another app, take the new model
 List<UserModel> userModelFromJson(String str) =>
     List<UserModel>.from(json.decode(str).map((x) => UserModel.fromJson(x)));
 
@@ -8,45 +7,28 @@ String userModelToJson(List<UserModel> data) => json.encode(List<dynamic>.from(d
 
 class UserModel {
   final int id;
-  final String userName;
+  final String username;
   final String email;
-  final String phone;
-  final String role;
-  final UserModel? supervisor;
-  final bool isVerified;
+  final dynamic phoneNumber;
 
   UserModel({
     required this.id,
-    required this.userName,
+    required this.username,
     required this.email,
-    required this.phone,
-    required this.role,
-    required this.supervisor,
-    required this.isVerified,
+    required this.phoneNumber,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json["id"],
-        userName: json["user_name"],
+        username: json["username"],
         email: json["email"],
-        phone: json["phone"],
-        role: json["role"],
-        supervisor: json["supervisor"] != null ? UserModel.fromJson(json["supervisor"]) : null,
-        isVerified: json["is_verified"],
+        phoneNumber: json["phone_number"] ?? "0000",
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "user_name": userName,
+        "username": username,
         "email": email,
-        "phone": phone,
-        "role": role,
-        "supervisor": supervisor!.toJson(),
-        "is_verified": isVerified,
+        "phone_number": phoneNumber,
       };
-
-  @override
-  String toString() {
-    return userName;
-  }
 }

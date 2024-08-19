@@ -48,18 +48,12 @@ class LoginController extends GetxController {
     bool isValid = loginFormKey.currentState!.validate();
     if (!isValid) return;
     toggleLoading(true);
-    try {
-      if (await loginService.login(email.text, password.text)) {
-        Get.offAll(const HomeView());
-      } else {
-        print("failed to login");
-      }
-    } on TimeoutException {
-      kTimeOutDialog();
-    } catch (e) {
-      print(e.toString());
-    } finally {
-      toggleLoading(false);
+
+    if (await loginService.login(email.text, password.text)) {
+      Get.offAll(const HomeView());
+    } else {
+      print("failed to login");
     }
+    toggleLoading(false);
   }
 }

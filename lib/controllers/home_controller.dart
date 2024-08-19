@@ -1,8 +1,18 @@
 import 'package:get/get.dart';
 import 'package:project2/models/exam_model.dart';
+import 'package:project2/models/user_model.dart';
 import 'package:project2/services/local_services/exam_selection_service.dart';
+import 'package:project2/services/remote_services/logout_service.dart';
+import 'package:project2/services/remote_services/my_profile_service.dart';
+import 'package:project2/views/login_view.dart';
 
 class HomeController extends GetxController {
+  HomeController({logoutService, myProfileService, examSelectionService}) {
+    _logoutService = logoutService;
+    _myProfileService = myProfileService;
+    _examSelectionService = examSelectionService;
+  }
+
   @override
   void onInit() async {
     getExams();
@@ -16,9 +26,11 @@ class HomeController extends GetxController {
     super.dispose();
   }
 
-  final ExamSelectionService _examSelectionService = ExamSelectionService();
-  final List<ExamModel> exams = [];
+  late LogoutService _logoutService;
+  late MyProfileService _myProfileService;
+  late ExamSelectionService _examSelectionService;
 
+  final List<ExamModel> exams = [];
   int _selectedExamID = -1;
   int get selectedExamID => _selectedExamID;
 
@@ -75,5 +87,22 @@ class HomeController extends GetxController {
         ),
       ],
     );
+  }
+
+  //
+
+  UserModel? _currentUser;
+  UserModel? get currentUser => _currentUser;
+
+  void getCurrentUser() async {
+    // loading indicator
+    _currentUser = await _myProfileService.getCurrentUser();
+    update();
+  }
+
+  //
+
+  void logout() async {
+    if (await _logoutService.logout()) Get.offAll(const LoginView());
   }
 }
