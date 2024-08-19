@@ -1,10 +1,10 @@
-import 'dart:async';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import '../constants.dart';
-import '../models/user_model.dart';
+import 'package:project2/services/remote_services/register_service.dart';
+import '../views/home_view.dart';
 
 class RegisterController extends GetxController {
+  RegisterController({required this.registerService});
   @override
   void onClose() {
     // email.dispose();
@@ -27,17 +27,19 @@ class RegisterController extends GetxController {
   final password = TextEditingController();
   final rePassword = TextEditingController();
   final phone = TextEditingController();
-  String roleINEnglish = "supervisor";
-  String selectedRole = "personal";
-  UserModel? selectedSupervisor; //(show if role is 3)
+
+  String selectedRole = "personal".tr;
+  int roleId = 2;
+
+  late RegisterService registerService;
 
   GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
   bool buttonPressed = false;
 
-  bool _isLoadingRegister = false;
-  bool get isLoading => _isLoadingRegister;
-  void toggleLoadingRegister(bool value) {
-    _isLoadingRegister = value;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+  void toggleLoading(bool value) {
+    _isLoading = value;
     update();
   }
 
@@ -56,50 +58,23 @@ class RegisterController extends GetxController {
   }
 
   void setRole(String role) {
-    role == "مشرف" ? roleINEnglish = "supervisor" : roleINEnglish = "salesman";
+    role == "personal".tr ? roleId = 2 : roleId = 3;
     selectedRole = role;
     update();
   }
 
-  void setSupervisor(UserModel supervisor) {
-    selectedSupervisor = supervisor;
-    update();
-  }
-
-  List<UserModel> availableSupervisors = [];
-  Future<void> getSupervisorsNames() async {
-    List<UserModel> supervisors = [];
-    for (UserModel supervisor in supervisors) {
-      availableSupervisors.add(supervisor);
-    }
-    update();
-  }
-
-  Future register() async {
+  void register() async {
+    if (_isLoading) return;
     buttonPressed = true;
     bool isValid = registerFormKey.currentState!.validate();
     if (!isValid) return;
-    toggleLoadingRegister(true);
-    try {
-      bool success = 1 == 2;
-      // (await RemoteServices.register(
-      //   userName.text,
-      //   email.text,
-      //   password.text,
-      //   rePassword.text,
-      //   phone.text,
-      //   roleINEnglish,
-      //   selectedSupervisor?.id,
-      // ).timeout(kTimeOutDuration));
-      if (success) {
-        //
-      }
-    } on TimeoutException {
-      kTimeOutDialog();
-    } catch (e) {
-      print(e.toString());
-    } finally {
-      toggleLoadingRegister(false);
+    toggleLoading(true);
+
+    if (await registerService.register(userName.text, email.text, password.text, roleId)) {
+      Get.offAll(const HomeView()); // go to login with success msg
+    } else {
+      print("failed to register");
     }
+    toggleLoading(false);
   }
 }

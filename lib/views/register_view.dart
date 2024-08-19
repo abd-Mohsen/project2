@@ -1,7 +1,7 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project2/services/remote_services/register_service.dart';
 
 import '../controllers/register_controller.dart';
 import 'components/auth_dropdown.dart';
@@ -14,7 +14,7 @@ class RegisterView extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorScheme cs = Theme.of(context).colorScheme;
     TextTheme tt = Theme.of(context).textTheme;
-    RegisterController rC = Get.put(RegisterController());
+    RegisterController rC = Get.put(RegisterController(registerService: RegisterService()));
     return SafeArea(
       child: Scaffold(
         backgroundColor: cs.background,
@@ -26,14 +26,14 @@ class RegisterView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 36),
+                  padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 56),
                   child: Hero(
                     tag: "logo",
                     child: Center(
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
                         child: Image.asset(
-                          "assets/images/logo.png",
+                          "assets/images/${Get.isDarkMode ? "logo_dark" : "logo"}.png",
                           height: MediaQuery.sizeOf(context).width / 2,
                         ),
                       ),
@@ -41,10 +41,10 @@ class RegisterView extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
                   child: Text(
                     'register your account:',
-                    style: tt.titleLarge!.copyWith(color: cs.onBackground),
+                    style: tt.headlineMedium!.copyWith(color: cs.onBackground),
                   ),
                 ),
                 AuthField(
@@ -73,19 +73,19 @@ class RegisterView extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 8),
-                AuthField(
-                  label: "mobile phone",
-                  controller: rC.phone,
-                  keyboardType: TextInputType.phone,
-                  prefixIcon: Icon(Icons.phone_android),
-                  validator: (val) {
-                    return validateInput(rC.phone.text, 10, 10, "phone");
-                  },
-                  onChanged: (val) {
-                    if (rC.buttonPressed) rC.registerFormKey.currentState!.validate();
-                  },
-                ),
-                const SizedBox(height: 8),
+                // AuthField(
+                //   label: "mobile phone",
+                //   controller: rC.phone,
+                //   keyboardType: TextInputType.phone,
+                //   prefixIcon: Icon(Icons.phone_android),
+                //   validator: (val) {
+                //     return validateInput(rC.phone.text, 10, 10, "phone");
+                //   },
+                //   onChanged: (val) {
+                //     if (rC.buttonPressed) rC.registerFormKey.currentState!.validate();
+                //   },
+                // ),
+                // const SizedBox(height: 8),
                 GetBuilder<RegisterController>(
                   builder: (con) => AuthField(
                     controller: con.password,
@@ -137,63 +137,19 @@ class RegisterView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                GetBuilder<RegisterController>(builder: (con) {
-                  return AuthDropdown(
-                    icon: Icons.work_outline,
-                    title: "type",
-                    items: ["personal", "company"],
-                    onSelect: (String? newVal) {
-                      con.setRole(newVal!);
-                    },
-                    selectedValue: con.selectedRole,
-                  );
-                }),
-                GetBuilder<RegisterController>(builder: (con) {
-                  return Visibility(
-                    visible: con.roleINEnglish == "personal",
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-                      // child: DropdownSearch<UserModel>(
-                      //   validator: (user) {
-                      //     if (user == null && con.roleINEnglish == "salesman") return "الرجاء اختيار مشرف";
-                      //     return null;
-                      //   },
-                      //   popupProps: PopupProps.menu(
-                      //     showSearchBox: true,
-                      //     searchFieldProps: TextFieldProps(
-                      //       decoration: InputDecoration(
-                      //         fillColor: Colors.white70,
-                      //         hintText: "اسم المشرف",
-                      //         prefix: Padding(
-                      //           padding: const EdgeInsets.all(4),
-                      //           child: Icon(Icons.search, color: cs.onSurface),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      //   dropdownDecoratorProps: DropDownDecoratorProps(
-                      //     dropdownSearchDecoration: InputDecoration(
-                      //       labelText: "المشرف".tr,
-                      //       labelStyle: tt.titleMedium!.copyWith(color: cs.onBackground),
-                      //       hintText: "اختر اسم المشرف".tr,
-                      //       icon: Icon(
-                      //         Icons.supervisor_account_outlined,
-                      //         color: cs.onBackground,
-                      //       ),
-                      //     ),
-                      //   ),
-                      //   items: con.availableSupervisors,
-                      //   itemAsString: (UserModel user) => user.userName,
-                      //   onChanged: (UserModel? user) async {
-                      //     con.setSupervisor(user!);
-                      //     await Future.delayed(Duration(milliseconds: 1000));
-                      //     if (con.buttonPressed) con.registerFormKey.currentState!.validate();
-                      //   },
-                      //   //enabled: !con.enabled,
-                      // ),
-                    ),
-                  );
-                }),
+                GetBuilder<RegisterController>(
+                  builder: (con) {
+                    return AuthDropdown(
+                      icon: Icons.work_outline,
+                      title: "account type".tr,
+                      items: ["personal".tr, "business".tr],
+                      onSelect: (String? newVal) {
+                        con.setRole(newVal!);
+                      },
+                      selectedValue: con.selectedRole,
+                    );
+                  },
+                ),
                 GetBuilder<RegisterController>(
                   builder: (con) => Center(
                     child: GestureDetector(
@@ -201,7 +157,7 @@ class RegisterView extends StatelessWidget {
                         padding: const EdgeInsets.all(12),
                         margin: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: cs.primary,
+                          color: cs.secondary,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: con.isLoading
@@ -215,7 +171,7 @@ class RegisterView extends StatelessWidget {
                               ),
                       ),
                       onTap: () {
-                        //con.register();
+                        con.register();
                       },
                     ),
                   ),

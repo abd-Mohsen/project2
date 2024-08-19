@@ -65,7 +65,7 @@ class Api {
         return postRequest(endPoint, body, auth: auth, canRefresh: false);
       }
       print(response.body);
-      return response.statusCode == 200 ? response.body : null;
+      return (response.statusCode == 200 || response.statusCode == 201) ? response.body : null;
     } on TimeoutException {
       kTimeOutDialog();
       return null;

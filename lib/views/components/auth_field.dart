@@ -34,11 +34,19 @@ class AuthField extends StatelessWidget {
         keyboardType: keyboardType ?? TextInputType.text,
         obscureText: obscure ?? false,
         decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            //borderSide: BorderSide(color: cs.secondary),
+          ),
+          // focusedBorder: OutlineInputBorder(
+          //   borderRadius: BorderRadius.circular(10),
+          //   borderSide: BorderSide(color: cs.secondary),
+          // ),
           //hintText: "password".tr,
           label: Text(label),
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
+          //
         ),
         style: tt.titleMedium!.copyWith(color: cs.onBackground),
         validator: validator,
