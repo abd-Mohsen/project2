@@ -25,7 +25,7 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "project2 💻",
+          "project2📄",
           style: tt.titleLarge!.copyWith(color: cs.onPrimary, fontWeight: FontWeight.bold),
         ),
         backgroundColor: cs.primary,
@@ -93,40 +93,44 @@ class HomeView extends StatelessWidget {
                   onTap: () {
                     Get.to(() => const ScanView());
                   },
-                  child: SizedBox(
-                    width: 200,
-                    child: DottedBorder(
-                      color: cs.secondary,
-                      dashPattern: const [15, 0],
-                      strokeWidth: 2.0,
-                      borderType: BorderType.RRect,
-                      radius: const Radius.circular(10),
-                      padding: const EdgeInsets.all(8),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: SizedBox(
-                                  height: 100,
-                                  width: 100,
-                                  child: Image.asset(
-                                    "assets/images/scanner2.png",
-                                    color: cs.onBackground,
+                  child: Card(
+                    color: cs.surface,
+                    elevation: 10,
+                    child: SizedBox(
+                      width: 200,
+                      child: DottedBorder(
+                        color: cs.secondary,
+                        dashPattern: const [15, 0],
+                        strokeWidth: 2.0,
+                        borderType: BorderType.RRect,
+                        radius: const Radius.circular(10),
+                        padding: const EdgeInsets.all(8),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: SizedBox(
+                                    height: 100,
+                                    width: 100,
+                                    child: Image.asset(
+                                      "assets/images/scanner2.png",
+                                      color: cs.onSurface,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8),
-                                child: Text(
-                                  "Scan",
-                                  style: tt.headlineLarge!.copyWith(color: cs.secondary, fontWeight: FontWeight.bold),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: Text(
+                                    "Scan",
+                                    style: tt.headlineLarge!.copyWith(color: cs.secondary, fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),

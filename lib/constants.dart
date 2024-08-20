@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-String kHostIP = "http://192.168.1.34:8000";
+//String kHostIP = "http://192.168.1.34:8000";
+String kHostIP = "http://10.0.2.2:8000";
 
 //String fontFamily = 'Alexandria';
 
@@ -90,6 +91,8 @@ Future kTimeOutDialog() => Get.defaultDialog(
       middleText: "operation is taking so long, please check your internet "
               "connection or try again later."
           .tr,
+      middleTextStyle: const TextStyle(color: Colors.black),
+      titleStyle: const TextStyle(color: Colors.black),
     );
 
 TextTheme kMyTextTheme(String fontFamily) => TextTheme(
