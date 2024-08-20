@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project2/controllers/exam_controller.dart';
-import 'package:project2/models/exam_model.dart';
+import '../../models/question_model.dart';
 
 class SelectableQuestionCard extends StatelessWidget {
   final QuestionModel question;

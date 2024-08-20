@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project2/models/exam_model.dart';
+
+import '../../models/question_model.dart';
 
 class QuestionCard extends StatelessWidget {
   final QuestionModel question;

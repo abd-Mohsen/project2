@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:project2/models/exam_model.dart';
 
+import '../models/marking_scheme_model.dart';
+import '../models/question_model.dart';
+
 class ExamController extends GetxController {
   late ExamModel exam;
   ExamController(this.exam);
@@ -12,7 +15,7 @@ class ExamController extends GetxController {
   void initCreateScheme(int qNum) {
     if (questions.isNotEmpty) return;
     for (int i = 1; i <= qNum; i++) {
-      questions.add(QuestionModel(number: i, answer: "z"));
+      questions.add(QuestionModel(id: i, number: i, answer: "z"));
     }
   }
 

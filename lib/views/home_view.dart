@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:project2/controllers/home_controller.dart';
 import 'package:project2/controllers/locale_controller.dart';
 import 'package:project2/controllers/theme_controller.dart';
-import 'package:project2/services/local_services/exam_selection_service.dart';
 import 'package:project2/services/remote_services/logout_service.dart';
 import 'package:project2/services/remote_services/my_profile_service.dart';
 import 'package:project2/views/exams_view.dart';
@@ -17,7 +16,6 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     HomeController hC = Get.put(HomeController(
       logoutService: LogoutService(),
-      examSelectionService: ExamSelectionService(),
       myProfileService: MyProfileService(),
     ));
     ThemeController tC = Get.find();

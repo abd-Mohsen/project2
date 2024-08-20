@@ -29,7 +29,7 @@ class RegisterController extends GetxController {
   final phone = TextEditingController();
 
   String selectedRole = "personal".tr;
-  int roleId = 2;
+  int roleId = 2; //todo: checkout new roles
 
   late RegisterService registerService;
 

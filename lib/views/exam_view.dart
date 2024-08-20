@@ -28,7 +28,7 @@ class ExamView extends StatelessWidget {
       backgroundColor: cs.background,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          eC.initCreateScheme(exam.questionsNumber);
+          eC.initCreateScheme(exam.questionsCount);
           Get.bottomSheet(
             BottomSheet(
               onClosing: () {},

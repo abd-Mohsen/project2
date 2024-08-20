@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project2/models/exam_model.dart';
 import 'package:project2/views/components/question_card.dart';
+
+import '../../models/marking_scheme_model.dart';
 
 class MarkingSchemeCard extends StatelessWidget {
   final MarkingSchemeModel markingScheme;

@@ -2,9 +2,12 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project2/controllers/add_exam_controller.dart';
+import 'package:project2/controllers/exams_controller.dart';
 import 'package:project2/controllers/home_controller.dart';
 import 'package:project2/models/class_model.dart';
 import 'package:project2/models/exam_model.dart';
+import 'package:project2/services/local_services/exam_selection_service.dart';
+import 'package:project2/services/remote_services/exams_service.dart';
 import 'package:project2/views/components/exam_card.dart';
 import 'package:project2/views/exam_view.dart';
 
@@ -17,6 +20,12 @@ class ExamsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeController hC = Get.find();
+    ExamsController eC = Get.put(
+      ExamsController(
+        examSelectionService: ExamSelectionService(),
+        examsService: ExamsService(),
+      ),
+    );
     ColorScheme cs = Theme.of(context).colorScheme;
     TextTheme tt = Theme.of(context).textTheme;
     return Scaffold(
@@ -45,13 +54,6 @@ class ExamsView extends StatelessWidget {
                       key: controller.formKey,
                       child: ListView(
                         children: [
-                          // {
-                          //   "title": "",
-                          //   "complete_mark": null,
-                          //   "pass_mark": null,
-                          //   "question_number": null,
-                          //   "classes_id": null
-                          // }
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
@@ -190,12 +192,12 @@ class ExamsView extends StatelessWidget {
         },
         child: const Icon(Icons.add),
       ),
-      body: GetBuilder<HomeController>(builder: (controller) {
+      body: GetBuilder<ExamsController>(builder: (controller) {
         return ListView.builder(
           padding: const EdgeInsets.only(top: 4),
-          itemCount: hC.exams.length,
+          itemCount: controller.exams.length,
           itemBuilder: (context, i) {
-            ExamModel exam = hC.exams[i];
+            ExamModel exam = controller.exams[i];
             return ExamCard(
               exam: exam,
               onTap: () {
@@ -204,7 +206,7 @@ class ExamsView extends StatelessWidget {
               onTapOptions: () {
                 Get.to(() => ExamView(exam: exam));
               },
-              isSelected: exam.id == hC.selectedExamID,
+              isSelected: exam.id == controller.selectedExamID,
             );
           },
         );
