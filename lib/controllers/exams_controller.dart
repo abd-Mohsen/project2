@@ -39,6 +39,20 @@ class ExamsController extends GetxController {
     exams.addAll(newExams);
     toggleLoading(false);
   }
+
+  void addExam(ExamModel exam) {
+    exams.add(exam);
+    update();
+  }
+
+  void delete(ExamModel exam) {
+    exams.remove(exam);
+    update();
+  }
+  // void editExam(ExamModel exam){ //todo: how?
+  //   exams.add(exam);
+  //   update();
+  // }
 }
 
 // [

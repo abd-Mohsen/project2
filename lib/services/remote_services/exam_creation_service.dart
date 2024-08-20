@@ -1,9 +1,13 @@
+import 'dart:convert';
+
+import 'package:project2/models/exam_model.dart';
+
 import '../../main.dart';
 
 class ExamCreationService {
   //
 
-  Future<bool> addExam(
+  Future<ExamModel?> addExam(
     String title,
     String passMark,
     String completeMark,
@@ -17,7 +21,8 @@ class ExamCreationService {
       "question_number": qNum,
       "classes_id": classID.toString()
     };
-    if (await api.postRequest("api/exams/", body, auth: true) != null) return true;
-    return false;
+    String? json = await api.postRequest("api/exams/", body, auth: true);
+    if (json != null) return ExamModel.fromJson(jsonDecode(json));
+    return null;
   }
 }

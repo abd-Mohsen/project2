@@ -8,6 +8,8 @@ import 'package:project2/controllers/home_controller.dart';
 import 'package:project2/models/class_model.dart';
 import 'package:project2/models/exam_model.dart';
 import 'package:project2/services/local_services/exam_selection_service.dart';
+import 'package:project2/services/remote_services/classes_service.dart';
+import 'package:project2/services/remote_services/exam_creation_service.dart';
 import 'package:project2/services/remote_services/exams_service.dart';
 import 'package:project2/views/components/exam_card.dart';
 import 'package:project2/views/exam_view.dart';
@@ -49,7 +51,11 @@ class ExamsView extends StatelessWidget {
                 height: MediaQuery.of(context).size.height / 0.8,
                 color: cs.surface,
                 child: GetBuilder<AddExamController>(
-                  init: AddExamController(),
+                  init: AddExamController(
+                    examCreationService: ExamCreationService(),
+                    classesService: ClassesService(),
+                    examsController: eC,
+                  ),
                   builder: (controller) {
                     // separate controller (and add classes before exam)
                     return Form(
