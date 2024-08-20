@@ -25,8 +25,6 @@ class HomeController extends GetxController {
   late LogoutService _logoutService;
   late MyProfileService _myProfileService;
 
-  //
-
   UserModel? _currentUser;
   UserModel? get currentUser => _currentUser;
 
@@ -35,8 +33,6 @@ class HomeController extends GetxController {
     _currentUser = await _myProfileService.getCurrentUser();
     update();
   }
-
-  //
 
   void logout() async {
     if (await _logoutService.logout()) {

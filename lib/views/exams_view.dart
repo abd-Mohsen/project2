@@ -1,5 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:project2/controllers/add_exam_controller.dart';
 import 'package:project2/controllers/exams_controller.dart';
@@ -192,25 +193,29 @@ class ExamsView extends StatelessWidget {
         },
         child: const Icon(Icons.add),
       ),
-      body: GetBuilder<ExamsController>(builder: (controller) {
-        return ListView.builder(
-          padding: const EdgeInsets.only(top: 4),
-          itemCount: controller.exams.length,
-          itemBuilder: (context, i) {
-            ExamModel exam = controller.exams[i];
-            return ExamCard(
-              exam: exam,
-              onTap: () {
-                controller.selectExam(exam);
-              },
-              onTapOptions: () {
-                Get.to(() => ExamView(exam: exam));
-              },
-              isSelected: exam.id == controller.selectedExamID,
-            );
-          },
-        );
-      }),
+      body: GetBuilder<ExamsController>(
+        builder: (controller) {
+          return controller.isLoading
+              ? SpinKitFoldingCube(color: cs.onBackground)
+              : ListView.builder(
+                  padding: const EdgeInsets.only(top: 4),
+                  itemCount: controller.exams.length,
+                  itemBuilder: (context, i) {
+                    ExamModel exam = controller.exams[i];
+                    return ExamCard(
+                      exam: exam,
+                      onTap: () {
+                        controller.selectExam(exam);
+                      },
+                      onTapOptions: () {
+                        Get.to(() => ExamView(exam: exam));
+                      },
+                      isSelected: exam.id == controller.selectedExamID,
+                    );
+                  },
+                );
+        },
+      ),
     );
   }
 }

@@ -16,6 +16,13 @@ class ExamsController extends GetxController {
   late ExamSelectionService examSelectionService;
   late ExamsService examsService;
 
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+  void toggleLoading(bool value) {
+    _isLoading = value;
+    update();
+  }
+
   final List<ExamModel> exams = [];
   int _selectedExamID = -1;
   int get selectedExamID => _selectedExamID;
@@ -27,8 +34,10 @@ class ExamsController extends GetxController {
   }
 
   Future getExams() async {
+    toggleLoading(true);
     List<ExamModel> newExams = await examsService.getAllExams() ?? [];
     exams.addAll(newExams);
+    toggleLoading(false);
   }
 }
 

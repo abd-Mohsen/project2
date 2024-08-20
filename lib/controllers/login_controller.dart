@@ -1,12 +1,7 @@
-import 'dart:async';
-
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:project2/services/remote_services/login_service.dart';
 import 'package:project2/views/home_view.dart';
-//import 'package:get_storage/get_storage.dart';
-
-import '../constants.dart';
 
 class LoginController extends GetxController {
   @override
@@ -24,12 +19,11 @@ class LoginController extends GetxController {
   final email = TextEditingController();
   final password = TextEditingController();
 
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   bool buttonPressed = false;
 
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
   void toggleLoading(bool value) {
     _isLoading = value;
     update();

@@ -34,7 +34,9 @@ class ExamModel {
         passMark: json["pass_mark"],
         questionsCount: json["question_number"],
         examClass: ClassModel.fromJson(json["classes"]),
-        markingSchemes: List<MarkingSchemeModel>.from(json["forms"].map((x) => MarkingSchemeModel.fromJson(x))),
+        markingSchemes: json["forms"] == null
+            ? []
+            : List<MarkingSchemeModel>.from(json["forms"].map((x) => MarkingSchemeModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
