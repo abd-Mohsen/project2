@@ -9,6 +9,8 @@ String kHostIP = "http://10.0.2.2:8000";
 
 String kAppName = "AdaGrade";
 
+const Color kAppBarColor = Color(0xff0f1432);
+
 Duration kTimeOutDuration = const Duration(seconds: 25);
 Duration kTimeOutDuration2 = const Duration(seconds: 15);
 Duration kTimeOutDuration3 = const Duration(seconds: 7);

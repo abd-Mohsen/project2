@@ -27,7 +27,7 @@ class MyThemes {
     splashColor: Colors.transparent,
     colorScheme: const ColorScheme(
       brightness: Brightness.dark,
-      primary: Color(0xff0f1432),
+      primary: Color(0xff2a3567),
       onPrimary: Colors.white,
       secondary: Color(0xffc8871e),
       onSecondary: Colors.black,

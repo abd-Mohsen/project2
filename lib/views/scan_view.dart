@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project2/constants.dart';
 import 'package:project2/controllers/scan_controller.dart';
 
 class ScanView extends StatelessWidget {
@@ -21,6 +22,7 @@ class ScanView extends StatelessWidget {
         //backgroundColor: cs.primary,
         appBar: AppBar(
           title: Text('scan paper'.tr),
+          backgroundColor: kAppBarColor,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {

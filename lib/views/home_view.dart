@@ -1,6 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project2/constants.dart';
 import 'package:project2/controllers/home_controller.dart';
 import 'package:project2/controllers/locale_controller.dart';
 import 'package:project2/controllers/theme_controller.dart';
@@ -28,7 +29,7 @@ class HomeView extends StatelessWidget {
           "project2📄",
           style: tt.titleLarge!.copyWith(color: cs.onPrimary, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: cs.primary,
+        backgroundColor: kAppBarColor,
         centerTitle: true,
       ),
       backgroundColor: cs.background,
@@ -116,6 +117,7 @@ class HomeView extends StatelessWidget {
                                   child: SizedBox(
                                     height: 100,
                                     width: 100,
+                                    //todo: search for the animation thing
                                     child: Image.asset(
                                       "assets/images/scanner2.png",
                                       color: cs.onSurface,

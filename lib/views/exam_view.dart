@@ -7,6 +7,8 @@ import 'package:project2/views/components/my_button.dart';
 import 'package:project2/views/components/my_field.dart';
 import 'package:project2/views/components/selectable_question_card.dart';
 
+import '../constants.dart';
+
 class ExamView extends StatelessWidget {
   final ExamModel exam;
   const ExamView({super.key, required this.exam});
@@ -22,7 +24,7 @@ class ExamView extends StatelessWidget {
           "exam details".tr,
           style: tt.titleLarge!.copyWith(color: cs.onPrimary, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: cs.primary,
+        backgroundColor: kAppBarColor,
         centerTitle: true,
       ),
       backgroundColor: cs.background,

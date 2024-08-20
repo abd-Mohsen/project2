@@ -12,6 +12,7 @@ import 'package:project2/services/remote_services/exams_service.dart';
 import 'package:project2/views/components/exam_card.dart';
 import 'package:project2/views/exam_view.dart';
 
+import '../constants.dart';
 import 'components/my_button.dart';
 import 'components/my_field.dart';
 
@@ -35,7 +36,7 @@ class ExamsView extends StatelessWidget {
           "select exam".tr,
           style: tt.titleLarge!.copyWith(color: cs.onPrimary, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: cs.primary,
+        backgroundColor: kAppBarColor,
         centerTitle: true,
       ),
       backgroundColor: cs.background,
