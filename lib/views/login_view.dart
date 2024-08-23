@@ -154,7 +154,7 @@ class LoginView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     child: Center(
                       child: Text(
-                        "AdaDevs® all rights reserved",
+                        "AdaDevs® ${"all rights reserved".tr}",
                         style: tt.labelMedium!.copyWith(color: cs.onBackground.withOpacity(0.6)),
                       ),
                     ),

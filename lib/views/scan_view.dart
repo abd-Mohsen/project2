@@ -19,6 +19,7 @@ class ScanView extends StatelessWidget {
         return true;
       },
       child: Scaffold(
+        //todo: show button when it is paper (try to use full res image and downsize it)
         //backgroundColor: cs.primary,
         appBar: AppBar(
           title: Text('scan paper'.tr),

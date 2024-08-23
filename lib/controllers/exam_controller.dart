@@ -6,7 +6,7 @@ import '../models/marking_scheme_model.dart';
 import '../models/question_model.dart';
 
 class ExamController extends GetxController {
-  late ExamModel exam;
+  late ExamModel exam; //get exam from id (request) and find a way to map it to the og list
   ExamController(this.exam);
 
   TextEditingController title = TextEditingController();

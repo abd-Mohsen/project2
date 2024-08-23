@@ -65,11 +65,11 @@ class HomeView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "welcome",
+                          "welcome".tr,
                           style: tt.headlineLarge!.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          "enter answers, scan, repeat!",
+                          "select exam, scan, repeat!".tr,
                           style: tt.headlineSmall!.copyWith(color: Colors.white, shadows: [
                             Shadow(
                               offset: const Offset(3.0, 2.0),
@@ -127,7 +127,7 @@ class HomeView extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 8),
                                   child: Text(
-                                    "Scan",
+                                    "scan".tr,
                                     style: tt.headlineLarge!.copyWith(color: cs.secondary, fontWeight: FontWeight.bold),
                                   ),
                                 ),
@@ -243,7 +243,7 @@ class HomeView extends StatelessWidget {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          "adadevs© all rights reserved",
+                                          "AdaDevs® ${"all rights reserved".tr}",
                                           style: tt.headlineSmall!.copyWith(color: cs.onSurface),
                                         ),
                                       ),
@@ -276,7 +276,7 @@ class HomeView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               child: Text(
-                "Adadevs© all rights reserved",
+                "AdaDevs® ${"all rights reserved".tr}",
                 style: tt.labelMedium!.copyWith(color: cs.onSurface.withOpacity(0.6)),
               ),
             ),

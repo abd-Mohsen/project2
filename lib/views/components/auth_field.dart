@@ -69,8 +69,8 @@ String? validateInput(String val, int min, int max, String type,
   if (type == "phone") {
     if (!GetUtils.isPhoneNumber(val)) return "invalid phone".tr;
   }
-  if (val.length < min) return "${"cannot be shorter".tr} than $min ${"characters".tr}";
-  if (val.length > max) return "${"cannot be longer".tr} than $max ${"characters".tr}";
+  if (val.length < min) return "${"cannot be shorter".tr} ${"than".tr} $min ${"characters".tr}";
+  if (val.length > max) return "${"cannot be longer".tr} ${"than".tr} $max ${"characters".tr}";
 
   if (pass != rePass) return "passwords don't match".tr;
 

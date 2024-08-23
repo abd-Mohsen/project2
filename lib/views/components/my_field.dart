@@ -68,12 +68,12 @@ String? validateInput(
     if (!GetUtils.isNum(val)) return "enter a whole number".tr;
     int num = int.parse(val);
     if (minValue > maxValue) return "values are not valid".tr;
-    if (num > maxValue) return "${"cannot be greater".tr} than $maxValue";
-    if (num < minValue) return "${"cannot be less".tr} than $minValue";
+    if (num > maxValue) return "${"cannot be greater".tr} ${"than".tr} $maxValue";
+    if (num < minValue) return "${"cannot be less".tr} ${"than".tr} $minValue";
     return null;
   }
-  if (val.length < min) return "${"cannot be shorter".tr} than $min ${"characters".tr}";
-  if (val.length > max) return "${"cannot be longer".tr} than $max ${"characters".tr}";
+  if (val.length < min) return "${"cannot be shorter".tr} ${"than".tr} $min ${"characters".tr}";
+  if (val.length > max) return "${"cannot be longer".tr} ${"than".tr} $max ${"characters".tr}";
 
   return null;
 }
