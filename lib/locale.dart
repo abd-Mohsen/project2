@@ -35,7 +35,7 @@ class MyLocale extends Translations {
           "error": "error",
           "yes": "yes",
           "no": "no",
-          "new": "جديد",
+          "new": "new",
           "details": "details",
           //
           "passwords don't match": "passwords don't match",

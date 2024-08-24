@@ -78,7 +78,10 @@ class MarkingSchemesView extends StatelessWidget {
                                 await controller.addMarkingScheme(); // remove await if animation lags
                               },
                               child: controller.loading
-                                  ? SpinKitThreeBounce(color: cs.onSecondary)
+                                  ? SpinKitThreeBounce(
+                                      color: cs.onSecondary,
+                                      size: 27,
+                                    )
                                   : Text(
                                       "add".tr,
                                       style: tt.headlineMedium!.copyWith(

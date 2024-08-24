@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project2/models/exam_model.dart';
+import 'package:project2/services/remote_services/marking_scheme_creation_service.dart';
 import '../models/marking_scheme_model.dart';
 import '../models/question_model.dart';
 
 class ExamController extends GetxController {
   late ExamModel exam; //get exam from id (request) and find a way to map it to the og list
-  ExamController(this.exam);
+  ExamController({
+    required this.exam,
+    required this.markingSchemeCreationService,
+  });
+
+  late MarkingSchemeCreationService markingSchemeCreationService;
 
   TextEditingController title = TextEditingController();
   List<QuestionModel> questions = [];
@@ -59,25 +65,29 @@ class ExamController extends GetxController {
     //
     setLoading(true);
     MarkingSchemeModel newScheme = MarkingSchemeModel(title: title.text, questions: List.from(questions));
-    print(newScheme.toJson());
-    //todo: make a request, pass title and questions
+    MarkingSchemeModel? createdScheme = await markingSchemeCreationService.addMarkingScheme(exam, newScheme);
+    if (createdScheme == null) {
+      print("failed to add m.scheme");
+      setLoading(false);
+      return;
+    }
     exam.markingSchemes.add(newScheme);
     setLoading(false);
     resetAndCloseForm();
   }
 }
 
+// {
+// "exam_id": 3,
+// "form_name": "Ass",
+// "questions": [
 //  {
-//   "exam_id": 2,
-//   "form_name": "Ass",
-//   "questions": [
-//     {
-//       "question_id": 1,
-//       "answer": "a"
-//     },
-//    {
-//       "question_id": 1,
-//       "answer": "a"
-//     },
-//   ],
-//   }
+//    "question_id": 1,
+//    "answer": "a"
+//  },
+//  {
+//    "question_id": 2,
+//    "answer": "d"
+//  }
+//  ]
+// }

@@ -18,8 +18,9 @@ class MarkingSchemeModel {
       );
 
   Map<String, dynamic> toJson() => {
-        if (id != null) "id": id,
+        if (id != null) "id": id.toString(),
         "form_name": title,
-        "questions": List<dynamic>.from(questions.map((x) => x.toJson())),
+        //"questions":  List<QuestionModel>.from(questions.map((x) => x.toJson())),
+        "questions": questions,
       };
 }

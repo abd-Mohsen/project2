@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project2/controllers/exam_controller.dart';
 import 'package:project2/models/exam_model.dart';
+import 'package:project2/services/remote_services/marking_scheme_creation_service.dart';
 import 'package:project2/views/marking_schemes_view.dart';
 
 import '../constants.dart';
@@ -46,7 +47,10 @@ class ExamView extends StatelessWidget {
       ),
       backgroundColor: cs.background,
       body: GetBuilder<ExamController>(
-        init: ExamController(exam),
+        init: ExamController(
+          exam: exam,
+          markingSchemeCreationService: MarkingSchemeCreationService(),
+        ),
         builder: (controller) {
           return Column(
             children: [

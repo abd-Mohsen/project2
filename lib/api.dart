@@ -44,7 +44,7 @@ class Api {
 
   Future<String?> postRequest(
     String endPoint,
-    Map<String, String> body, {
+    Map<String, dynamic> body, {
     bool auth = false,
     bool canRefresh = true,
   }) async {
