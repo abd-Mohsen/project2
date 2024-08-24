@@ -71,7 +71,7 @@ class RegisterController extends GetxController {
     toggleLoading(true);
 
     if (await registerService.register(userName.text, email.text, password.text, roleId)) {
-      Get.offAll(const HomeView()); // go to login with success msg
+      Get.offAll(const HomeView()); // todo: go to login with success msg ( wait for admin approval)
     } else {
       print("failed to register");
     }

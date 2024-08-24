@@ -1,10 +1,10 @@
 class QuestionModel {
-  final int id;
+  final int? id;
   final int number;
   String answer;
 
   QuestionModel({
-    required this.id,
+    this.id,
     required this.number,
     required this.answer,
   });
@@ -16,8 +16,8 @@ class QuestionModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "number": number,
+        if (id != null) "id": id,
+        "question_id": number,
         "answer": answer,
       };
 }

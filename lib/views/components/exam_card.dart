@@ -25,12 +25,18 @@ class ExamCard extends StatelessWidget {
         leading: Icon(Icons.text_snippet_outlined),
         title: Text(
           exam.title,
+          maxLines: 2,
           style: tt.titleMedium!.copyWith(color: cs.onBackground),
+        ),
+        subtitle: Text(
+          exam.examClass.title,
+          maxLines: 1,
+          style: tt.titleSmall!.copyWith(color: cs.onBackground.withOpacity(0.7)),
         ),
         onTap: onTap,
         trailing: IconButton(
           onPressed: onTapOptions,
-          icon: Icon(Icons.more_vert),
+          icon: Icon(Icons.settings),
         ),
         shape: RoundedRectangleBorder(
           side: BorderSide(

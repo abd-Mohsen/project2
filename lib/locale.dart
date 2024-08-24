@@ -18,6 +18,8 @@ class MyLocale extends Translations {
           "select": "select",
           "exam": "exam",
           "exams": "exams",
+          "marking scheme": "marking scheme",
+          "marking schemes": "marking schemes",
           "cannot be empty": "cannot be empty",
           "enter a whole number": "enter a whole number",
           "values are not valid": "values are not valid",
@@ -30,14 +32,25 @@ class MyLocale extends Translations {
           "invalid username": "invalid username",
           "invalid email": "invalid email",
           "invalid phone": "invalid phone",
+          "error": "error",
+          "yes": "yes",
+          "no": "no",
+          "new": "جديد",
+          "details": "details",
+          //
           "passwords don't match": "passwords don't match",
+          "are you sure you want to quit the app?": "are you sure you want to quit the app?",
+          "your session has expired please login again": "your session has expired please login again",
+          """operation is taking so long, please check your internet 
+              connection or try again later.""": """operation is taking so long, please check your internet 
+              connection or try again later.""",
         },
         "ar": {
           "Arabic": "العربية",
           "English": "الانكليزية",
           "scan": "مسح",
           "welcome": "أهلاً بك",
-          "select exam, scan, repeat!": "أختر فحصاً, امسح, أعد مجدداً!",
+          "select exam, scan, repeat!": "أختر فحصاً, امسحه, ثم أعد مجدداً!",
           "dark mode": "الوضع المظلم",
           "about app": "حول التطبيق",
           "logout": "تسجيل خروج",
@@ -46,6 +59,8 @@ class MyLocale extends Translations {
           "select": "اختيار",
           "exam": "فحص",
           "exams": "فحوص",
+          "marking scheme": "نموذج تصحيح",
+          "marking schemes": "نماذج تصحيح",
           "cannot be empty": "لا يمكن أن يكون فارغاً",
           "enter a whole number": "أدخل عدد صحيح موجب",
           "values are not valid": "القيم غير صالحة",
@@ -58,7 +73,18 @@ class MyLocale extends Translations {
           "invalid username": "اسم مستخدم غير صالح",
           "invalid email": "بريد الكتروني غير صالح",
           "invalid phone": "رقم هاتف غير صالح",
+          "error": "خطأ",
+          "yes": "نعم",
+          "no": "لا",
+          "new": "جديد",
+          "details": "تفاصيل",
+          //
           "passwords don't match": "كلمتا المرور لا تتطابقان",
+          "are you sure you want to quit the app?": "هل تريد الخروج من التطبيق؟",
+          "your session has expired please login again": "انتهت صلاحية الجلسة, من فضلك سجل دخول مجدداً",
+          """operation is taking so long, please check your internet 
+              connection or try again later.""": "العملية أخذت وقتاً طويلا, من فضلك قم بالتحقق باتصالك بالانترنت أو "
+                  "حاول من جديد لاحقاً. "
         },
       };
 }

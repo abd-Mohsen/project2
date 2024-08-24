@@ -131,7 +131,7 @@ class ExamsView extends StatelessWidget {
                                 0,
                                 "num",
                                 minValue: 0,
-                                maxValue: 200,
+                                maxValue: 100,
                               );
                             },
                             onChanged: (s) {

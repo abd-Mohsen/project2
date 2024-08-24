@@ -44,7 +44,7 @@ class SelectableQuestionCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            width: 25,
+            width: 35,
             child: Text(
               "${question.number.toString()}.",
               style: tt.titleMedium!.copyWith(color: cs.onSurface),

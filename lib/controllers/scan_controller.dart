@@ -16,7 +16,7 @@ class ScanController extends GetxController {
   void onInit() async {
     Tflite.loadModel(
       model: "assets/paper_model2.tflite",
-      labels: "assets/paper_model2.txt",
+      labels: "assets/paper_model2.txt", //todo: replace with new model
       useGpuDelegate: false,
     );
     cameraController = CameraController(

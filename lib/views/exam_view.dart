@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:project2/controllers/exam_controller.dart';
 import 'package:project2/models/exam_model.dart';
@@ -15,13 +16,15 @@ class ExamView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //todo: delete and edit exam from here
+    //todo: show other info like num of questions
     ColorScheme cs = Theme.of(context).colorScheme;
     TextTheme tt = Theme.of(context).textTheme;
     ExamController eC = Get.put(ExamController(exam));
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "exam details".tr,
+          "${"exam".tr} ${"details".tr}",
           style: tt.titleLarge!.copyWith(color: cs.onPrimary, fontWeight: FontWeight.bold),
         ),
         backgroundColor: kAppBarColor,
@@ -44,18 +47,24 @@ class ExamView extends StatelessWidget {
                         key: controller.formKey,
                         child: ListView(
                           children: [
-                            // Padding(
-                            //   padding: const EdgeInsets.all(8.0),
-                            //   child: Center(
-                            //     child: Text(
-                            //       "new marking scheme".tr,
-                            //       style: tt.headlineMedium!.copyWith(
-                            //         color: cs.onSurface,
-                            //         fontWeight: FontWeight.bold,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 24, bottom: 24),
+                              child: Center(
+                                child: Text(
+                                  "${"new".tr} ${"marking scheme".tr}",
+                                  style: tt.headlineMedium!.copyWith(
+                                    color: cs.onSurface,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            ...List.generate(
+                              controller.questions.length,
+                              (i) => SelectableQuestionCard(
+                                question: controller.questions[i],
+                              ),
+                            ),
                             MyField(
                               controller: controller.title,
                               title: "title".tr,
@@ -66,18 +75,12 @@ class ExamView extends StatelessWidget {
                                 if (controller.isButtonPressed) controller.formKey.currentState!.validate();
                               },
                             ),
-                            ...List.generate(
-                              controller.questions.length,
-                              (i) => SelectableQuestionCard(
-                                question: controller.questions[i],
-                              ),
-                            ),
                             MyButton(
                               onTap: () async {
                                 await controller.addMarkingScheme(); // remove await if animation lags
                               },
                               child: controller.loading
-                                  ? CircularProgressIndicator()
+                                  ? SpinKitThreeBounce(color: cs.onSecondary)
                                   : Text(
                                       "add".tr,
                                       style: tt.headlineMedium!.copyWith(

@@ -1,12 +1,12 @@
 import 'package:project2/models/question_model.dart';
 
 class MarkingSchemeModel {
-  final int id;
+  final int? id;
   final String title;
   final List<QuestionModel> questions;
 
   MarkingSchemeModel({
-    required this.id,
+    this.id,
     required this.title,
     required this.questions,
   });
@@ -18,8 +18,8 @@ class MarkingSchemeModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "question": List<dynamic>.from(questions.map((x) => x.toJson())),
+        if (id != null) "id": id,
+        "form_name": title,
+        "questions": List<dynamic>.from(questions.map((x) => x.toJson())),
       };
 }
