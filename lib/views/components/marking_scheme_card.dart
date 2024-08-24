@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project2/controllers/exam_controller.dart';
 import 'package:project2/views/components/question_card.dart';
 
 import '../../models/marking_scheme_model.dart';
@@ -12,6 +13,8 @@ class MarkingSchemeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorScheme cs = Theme.of(context).colorScheme;
     TextTheme tt = Theme.of(context).textTheme;
+    ExamController eC = Get.find();
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: ExpansionTile(
@@ -71,7 +74,7 @@ class MarkingSchemeCard extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  //
+                  eC.deleteMarkingScheme(markingScheme);
                 },
                 child: Text(
                   "delete".tr,

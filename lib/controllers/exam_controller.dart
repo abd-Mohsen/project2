@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project2/models/exam_model.dart';
 import 'package:project2/services/remote_services/marking_scheme_creation_service.dart';
+import 'package:project2/services/remote_services/marking_scheme_deletion_service.dart';
 import '../models/marking_scheme_model.dart';
 import '../models/question_model.dart';
 
@@ -10,9 +11,11 @@ class ExamController extends GetxController {
   ExamController({
     required this.exam,
     required this.markingSchemeCreationService,
+    required this.markingSchemeDeletionService,
   });
 
   late MarkingSchemeCreationService markingSchemeCreationService;
+  late MarkingSchemeDeletionService markingSchemeDeletionService;
 
   TextEditingController title = TextEditingController();
   List<QuestionModel> questions = [];
@@ -64,16 +67,25 @@ class ExamController extends GetxController {
     }
     //
     setLoading(true);
-    MarkingSchemeModel newScheme = MarkingSchemeModel(title: title.text, questions: List.from(questions));
-    MarkingSchemeModel? createdScheme = await markingSchemeCreationService.addMarkingScheme(exam, newScheme);
+    MarkingSchemeModel schemeTemp = MarkingSchemeModel(title: title.text, questions: List.from(questions));
+    MarkingSchemeModel? createdScheme = await markingSchemeCreationService.addMarkingScheme(exam, schemeTemp);
     if (createdScheme == null) {
       print("failed to add m.scheme");
       setLoading(false);
       return;
     }
-    exam.markingSchemes.add(newScheme);
+    exam.markingSchemes.add(createdScheme);
     setLoading(false);
     resetAndCloseForm();
+  }
+
+  Future<void> deleteMarkingScheme(MarkingSchemeModel markingScheme) async {
+    if (await markingSchemeDeletionService.deleteMarkingScheme(markingScheme)) {
+      exam.markingSchemes.remove(markingScheme);
+      update();
+    } else {
+      print("failed to delete m.scheme");
+    }
   }
 }
 

@@ -6,8 +6,6 @@ import 'package:project2/models/marking_scheme_model.dart';
 import '../../main.dart';
 
 class MarkingSchemeCreationService {
-  //
-
   Future<MarkingSchemeModel?> addMarkingScheme(
     ExamModel exam,
     MarkingSchemeModel markingScheme,

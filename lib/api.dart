@@ -75,4 +75,28 @@ class Api {
       return null;
     }
   }
+
+  Future<bool> deleteRequest(String endPoint, {bool auth = false, bool canRefresh = true}) async {
+    try {
+      var response = await client
+          .delete(
+            Uri.parse("$_hostIP/$endPoint"),
+            headers: !auth ? headers : {...headers, "Authorization": "JWT $accessToken"},
+          )
+          .timeout(kTimeOutDuration2);
+
+      if (canRefresh && response.statusCode == 401) {
+        RefreshTokenService().refreshToken();
+        return deleteRequest(endPoint, auth: auth);
+      }
+      print(response.body + "===========" + response.statusCode.toString());
+      return response.statusCode == 204;
+    } on TimeoutException {
+      kTimeOutDialog();
+      return false;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
 }
