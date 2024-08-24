@@ -76,6 +76,40 @@ class Api {
     }
   }
 
+  Future<String?> putRequest(
+    String endPoint,
+    Map<String, dynamic> body, {
+    bool auth = false,
+    bool canRefresh = true,
+  }) async {
+    try {
+      var response = await client
+          .put(
+            Uri.parse("$_hostIP/$endPoint"),
+            headers: !auth
+                ? headers
+                : {
+                    ...headers,
+                    "Authorization": "JWT $accessToken",
+                  },
+            body: jsonEncode(body),
+          )
+          .timeout(kTimeOutDuration2);
+      if (canRefresh && response.statusCode == 401) {
+        RefreshTokenService().refreshToken();
+        return postRequest(endPoint, body, auth: auth, canRefresh: false);
+      }
+      print(response.body);
+      return (response.statusCode == 200 || response.statusCode == 201) ? response.body : null;
+    } on TimeoutException {
+      kTimeOutDialog();
+      return null;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   Future<bool> deleteRequest(String endPoint, {bool auth = false, bool canRefresh = true}) async {
     try {
       var response = await client

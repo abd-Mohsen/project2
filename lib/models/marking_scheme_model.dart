@@ -2,8 +2,8 @@ import 'package:project2/models/question_model.dart';
 
 class MarkingSchemeModel {
   final int? id;
-  final String title;
-  final List<QuestionModel> questions;
+  String title;
+  List<QuestionModel> questions;
 
   MarkingSchemeModel({
     this.id,

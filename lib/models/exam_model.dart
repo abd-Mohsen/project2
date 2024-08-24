@@ -36,7 +36,7 @@ class ExamModel {
         passMark: json["pass_mark"],
         questionsCount: json["question_number"],
         examClass: ClassModel.fromJson(json["classes"]),
-        date: json["date"] ?? DateTime.now(),
+        date: DateTime.parse(json["date"] ?? DateTime.now()),
         markingSchemes: json["forms"] == null
             ? []
             : List<MarkingSchemeModel>.from(json["forms"].map((x) => MarkingSchemeModel.fromJson(x))),

@@ -4,6 +4,7 @@ import 'package:project2/controllers/exam_controller.dart';
 import 'package:project2/models/exam_model.dart';
 import 'package:project2/services/remote_services/marking_scheme_creation_service.dart';
 import 'package:project2/services/remote_services/marking_scheme_deletion_service.dart';
+import 'package:project2/services/remote_services/marking_scheme_update_service.dart';
 import 'package:project2/views/marking_schemes_view.dart';
 
 import '../constants.dart';
@@ -52,6 +53,7 @@ class ExamView extends StatelessWidget {
           exam: exam,
           markingSchemeCreationService: MarkingSchemeCreationService(),
           markingSchemeDeletionService: MarkingSchemeDeletionService(),
+          markingSchemeUpdateService: MarkingSchemeUpdateService(),
         ),
         builder: (controller) {
           return Column(

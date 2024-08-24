@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project2/controllers/exam_controller.dart';
+import 'package:project2/views/components/marking_scheme_sheet.dart';
 import 'package:project2/views/components/question_card.dart';
 
 import '../../models/marking_scheme_model.dart';
@@ -18,7 +19,6 @@ class MarkingSchemeCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: ExpansionTile(
-        //todo: edit and delete
         title: Text(markingScheme.title),
         textColor: cs.secondary,
         collapsedTextColor: cs.onSurface,
@@ -65,7 +65,8 @@ class MarkingSchemeCard extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () {
-                  //
+                  eC.initEditScheme(markingScheme);
+                  Get.bottomSheet(MarkingSchemeSheet(markingScheme: markingScheme));
                 },
                 child: Text(
                   "edit".tr,

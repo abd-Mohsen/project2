@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:project2/models/exam_model.dart';
 import 'package:project2/services/remote_services/marking_scheme_creation_service.dart';
 import 'package:project2/services/remote_services/marking_scheme_deletion_service.dart';
+import 'package:project2/services/remote_services/marking_scheme_update_service.dart';
 import '../models/marking_scheme_model.dart';
 import '../models/question_model.dart';
 
@@ -12,25 +13,42 @@ class ExamController extends GetxController {
     required this.exam,
     required this.markingSchemeCreationService,
     required this.markingSchemeDeletionService,
+    required this.markingSchemeUpdateService,
   });
 
   late MarkingSchemeCreationService markingSchemeCreationService;
   late MarkingSchemeDeletionService markingSchemeDeletionService;
+  late MarkingSchemeUpdateService markingSchemeUpdateService;
 
   TextEditingController title = TextEditingController();
-  List<QuestionModel> questions = [];
+  List<QuestionModel> questions = []; // for add
+  List<QuestionModel> questions2 = []; //for edit
 
   void initCreateScheme(int qNum) {
+    title.text = "";
     if (questions.isNotEmpty) return;
     for (int i = 1; i <= qNum; i++) {
       questions.add(QuestionModel(number: i, answer: "z"));
     }
   }
 
+  void initEditScheme(MarkingSchemeModel markingScheme) {
+    questions2.clear();
+    title.text = markingScheme.title;
+    for (int i = 0; i < markingScheme.questions.length; i++) {
+      questions2.add(
+        QuestionModel(
+          id: markingScheme.questions[i].id,
+          number: i + 1,
+          answer: markingScheme.questions[i].answer,
+        ),
+      );
+    }
+  }
+
   void resetAndCloseForm() {
     questions.clear();
     initCreateScheme(exam.questionsCount);
-    title.text = "";
     isButtonPressed = false;
     Get.back();
   }
@@ -86,6 +104,26 @@ class ExamController extends GetxController {
     } else {
       print("failed to delete m.scheme");
     }
+  }
+
+  Future<void> editMarkingScheme(MarkingSchemeModel markingScheme) async {
+    if (loading) return;
+    isButtonPressed = true;
+    if (!formKey.currentState!.validate()) return;
+    //
+    setLoading(true);
+    markingScheme.title = title.text;
+    markingScheme.questions = List.from(questions2);
+    MarkingSchemeModel? editedScheme = await markingSchemeUpdateService.editMarkingScheme(exam, markingScheme);
+    if (editedScheme == null) {
+      print("failed to edit m.scheme");
+      setLoading(false);
+      return;
+    }
+    //markingScheme = editedScheme;
+    setLoading(false);
+    questions2.clear();
+    Get.back();
   }
 }
 
