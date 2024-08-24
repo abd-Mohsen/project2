@@ -15,6 +15,7 @@ class ExamModel {
   final int passMark;
   final int questionsCount;
   final ClassModel examClass;
+  final DateTime date;
   final List<MarkingSchemeModel> markingSchemes;
 
   ExamModel({
@@ -24,6 +25,7 @@ class ExamModel {
     required this.passMark,
     required this.questionsCount,
     required this.examClass,
+    required this.date,
     required this.markingSchemes,
   });
 
@@ -34,6 +36,7 @@ class ExamModel {
         passMark: json["pass_mark"],
         questionsCount: json["question_number"],
         examClass: ClassModel.fromJson(json["classes"]),
+        date: json["date"] ?? DateTime.now(),
         markingSchemes: json["forms"] == null
             ? []
             : List<MarkingSchemeModel>.from(json["forms"].map((x) => MarkingSchemeModel.fromJson(x))),

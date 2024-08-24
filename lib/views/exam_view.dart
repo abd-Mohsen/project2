@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:project2/controllers/exam_controller.dart';
 import 'package:project2/models/exam_model.dart';
-import 'package:project2/views/components/marking_scheme_card.dart';
-import 'package:project2/views/components/my_button.dart';
-import 'package:project2/views/components/my_field.dart';
-import 'package:project2/views/components/selectable_question_card.dart';
+import 'package:project2/views/marking_schemes_view.dart';
 
 import '../constants.dart';
 
@@ -16,11 +12,9 @@ class ExamView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //todo: delete and edit exam from here
-    //todo: show other info like num of questions
     ColorScheme cs = Theme.of(context).colorScheme;
     TextTheme tt = Theme.of(context).textTheme;
-    ExamController eC = Get.put(ExamController(exam));
+    //ExamController eC = Get.put(ExamController(exam));
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -29,128 +23,105 @@ class ExamView extends StatelessWidget {
         ),
         backgroundColor: kAppBarColor,
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              //todo: show confirmation then delete
+            },
+            icon: Icon(
+              Icons.delete,
+              color: cs.error,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              //todo: handle edit
+            },
+            icon: Icon(
+              Icons.edit,
+              color: cs.secondary,
+            ),
+          ),
+        ],
       ),
       backgroundColor: cs.background,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          eC.initCreateScheme(exam.questionsCount);
-          Get.bottomSheet(
-            BottomSheet(
-              onClosing: () {},
-              builder: (context) {
-                return Container(
-                  height: MediaQuery.of(context).size.height / 0.8,
-                  color: cs.surface,
-                  child: GetBuilder<ExamController>(
-                    builder: (controller) {
-                      return Form(
-                        key: controller.formKey,
-                        child: ListView(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 24, bottom: 24),
-                              child: Center(
-                                child: Text(
-                                  "${"new".tr} ${"marking scheme".tr}",
-                                  style: tt.headlineMedium!.copyWith(
-                                    color: cs.onSurface,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            ...List.generate(
-                              controller.questions.length,
-                              (i) => SelectableQuestionCard(
-                                question: controller.questions[i],
-                              ),
-                            ),
-                            MyField(
-                              controller: controller.title,
-                              title: "title".tr,
-                              validator: (s) {
-                                return validateInput(s!, 0, 100, "text");
-                              },
-                              onChanged: (s) {
-                                if (controller.isButtonPressed) controller.formKey.currentState!.validate();
-                              },
-                            ),
-                            MyButton(
-                              onTap: () async {
-                                await controller.addMarkingScheme(); // remove await if animation lags
-                              },
-                              child: controller.loading
-                                  ? SpinKitThreeBounce(color: cs.onSecondary)
-                                  : Text(
-                                      "add".tr,
-                                      style: tt.headlineMedium!.copyWith(
-                                        color: cs.onSecondary,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
+      body: GetBuilder<ExamController>(
+        init: ExamController(exam),
+        builder: (controller) {
+          return Column(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.text_snippet_outlined),
+                title: Text(
+                  "title".tr,
+                  style: tt.titleMedium!.copyWith(color: cs.onSurface),
+                ),
+                subtitle: Text(
+                  exam.title,
+                  style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                ),
+              ),
+              const SizedBox(height: 16),
+              ListTile(
+                leading: const Icon(Icons.access_time_outlined),
+                title: Text(
+                  "added at".tr,
+                  style: tt.titleMedium!.copyWith(color: cs.onSurface),
+                ),
+                subtitle: Text(
+                  exam.date.toIso8601String(),
+                  style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                ),
+              ),
+              const SizedBox(height: 16),
+              ListTile(
+                leading: const Icon(Icons.numbers),
+                title: Text(
+                  "number of questions".tr,
+                  style: tt.titleMedium!.copyWith(color: cs.onSurface),
+                ),
+                subtitle: Text(
+                  exam.questionsCount.toString(),
+                  style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                ),
+              ),
+              const SizedBox(height: 16),
+              ListTile(
+                leading: const Icon(Icons.credit_score_outlined),
+                title: Text(
+                  "pass score".tr,
+                  style: tt.titleMedium!.copyWith(color: cs.onSurface),
+                ),
+                subtitle: Text(
+                  "${exam.passMark.toString()} ${"of".tr} ${exam.completeMark.toString()}",
+                  style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                ),
+              ),
+              const SizedBox(height: 16),
+              ListTile(
+                leading: const Icon(Icons.abc),
+                title: Text(
+                  "marking schemes".tr,
+                  style: tt.titleMedium!.copyWith(color: cs.onSurface),
+                ),
+                subtitle: Text(
+                  "${controller.exam.markingSchemes.length} schemes",
+                  style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                ),
+                trailing: TextButton(
+                  onPressed: () {
+                    Get.to(() => MarkingSchemesView(exam: exam));
+                  },
+                  child: Text(
+                    "show".tr,
+                    style: tt.titleMedium!.copyWith(color: cs.secondary),
                   ),
-                );
-              },
-            ),
+                ),
+              ),
+              const SizedBox(height: 16),
+            ],
           );
         },
-        child: const Icon(Icons.add),
-      ),
-      body: Column(
-        children: [
-          ListTile(
-            leading: const Icon(Icons.text_snippet_outlined),
-            title: Text(
-              "title".tr,
-              style: tt.titleMedium!.copyWith(color: cs.onSurface),
-            ),
-            subtitle: Text(
-              exam.title,
-              style: tt.titleSmall!.copyWith(color: cs.onBackground),
-            ),
-          ),
-          const SizedBox(height: 16),
-          ListTile(
-            leading: const Icon(Icons.access_time_outlined),
-            title: Text(
-              "added at".tr,
-              style: tt.titleMedium!.copyWith(color: cs.onSurface),
-            ),
-            subtitle: Text(
-              DateTime.now().toIso8601String(),
-              style: tt.titleSmall!.copyWith(color: cs.onBackground),
-            ),
-          ),
-          const SizedBox(height: 16),
-          ListTile(
-            leading: const Icon(Icons.abc),
-            title: Text(
-              "marking schemes".tr,
-              style: tt.titleMedium!.copyWith(color: cs.onSurface),
-            ),
-            subtitle: Text(
-              "${exam.markingSchemes.length} schemes",
-              style: tt.titleSmall!.copyWith(color: cs.onBackground),
-            ),
-          ),
-          const SizedBox(height: 16),
-          Expanded(
-            child: GetBuilder<ExamController>(builder: (con) {
-              return ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 48),
-                itemCount: exam.markingSchemes.length,
-                itemBuilder: (context, i) {
-                  return MarkingSchemeCard(markingScheme: exam.markingSchemes[i]);
-                },
-              );
-            }),
-          )
-        ],
       ),
     );
   }
