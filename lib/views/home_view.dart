@@ -117,7 +117,7 @@ class HomeView extends StatelessWidget {
                                   child: SizedBox(
                                     height: 100,
                                     width: 100,
-                                    //todo: search for the animation thing
+                                    //search for the animation thing
                                     child: Image.asset(
                                       "assets/images/scanner2.png",
                                       color: cs.onSurface,

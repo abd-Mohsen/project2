@@ -18,7 +18,9 @@ class OTPView extends StatelessWidget {
     ColorScheme cs = Theme.of(context).colorScheme;
     TextTheme tt = Theme.of(context).textTheme;
     ResetPassController rPC = Get.find();
-    //OTPController oC = Get.put(OTPController(source == "reset" ? rPC : null)); todo: if there is an error, handle this
+    //OTPController oC = Get.put(OTPController(source == "reset" ? rPC : null));
+    //if there is an error, handle this above
+    // this
     return SafeArea(
       child: Scaffold(
         backgroundColor: cs.background,

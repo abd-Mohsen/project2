@@ -21,7 +21,7 @@ class ExamView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "${"exam".tr} ${"details".tr}",
+          "exam details".tr,
           style: tt.titleLarge!.copyWith(color: cs.onPrimary, fontWeight: FontWeight.bold),
         ),
         backgroundColor: kAppBarColor,

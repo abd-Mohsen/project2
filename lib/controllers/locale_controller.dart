@@ -24,7 +24,7 @@ class LocaleController extends GetxController {
     } else if (currentLang == "en") {
       return "English".tr;
     } else {
-      return Get.deviceLocale!.languageCode; //todo
+      return Get.deviceLocale!.languageCode;
     }
   }
 
