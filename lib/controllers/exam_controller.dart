@@ -29,7 +29,8 @@ class ExamController extends GetxController {
     setLoadingExam(true);
     ExamModel? exam = await examService.getExam(ogExam.id);
     if (exam == null) print("couldnt get exam");
-    //ogExam.markingSchemes = exam.markingSchemes;
+    print(exam!.markingSchemes);
+    ogExam.markingSchemes = List.from(exam.markingSchemes);
     setLoadingExam(false);
   }
 

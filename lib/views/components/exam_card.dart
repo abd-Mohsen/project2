@@ -34,6 +34,7 @@ class ExamCard extends StatelessWidget {
           style: tt.titleSmall!.copyWith(color: cs.onBackground.withOpacity(0.7)),
         ),
         onTap: onTap,
+        onLongPress: onTapOptions,
         trailing: IconButton(
           onPressed: onTapOptions,
           icon: Icon(Icons.settings),

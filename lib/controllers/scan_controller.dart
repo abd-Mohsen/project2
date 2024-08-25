@@ -4,6 +4,7 @@ import 'package:project2/services/local_services/exam_selection_service.dart';
 import 'package:project2/services/remote_services/scan_service.dart';
 import 'package:tflite_v2/tflite_v2.dart';
 import '../main.dart';
+import 'dart:io';
 
 class ScanController extends GetxController {
   ScanController({required this.scanService, required this.examSelectionService});
@@ -57,8 +58,8 @@ class ScanController extends GetxController {
       imageWidth: capturedImage.width,
       numResults: 1,
     );
-    print("frames is ${capturedImage.width} * ${capturedImage.height} ");
-    print(results);
+    // print("frames is ${capturedImage.width} * ${capturedImage.height} ");
+    // print(results);
     detectedObject = results![0]["label"];
     confidence = results[0]["confidence"];
     int endTime = DateTime.now().millisecondsSinceEpoch;
@@ -72,7 +73,7 @@ class ScanController extends GetxController {
     update();
   }
 
-  //todo: image picker, take photo and scan request
+  //todo: image picker
 
   void pickImage() async {
     XFile takenImage = await cameraController.takePicture();
@@ -80,7 +81,9 @@ class ScanController extends GetxController {
   }
 
   void takeImage() async {
+    //todo: solve: phone must stay on paper while correcting in backend
     XFile takenImage = await cameraController.takePicture();
+    File file = File(takenImage.path);
     int examID = examSelectionService.loadSelectedExamId();
     if (examID == -1) Get.defaultDialog(middleText: "select exam first");
     int? res = await scanService.scanPaper(takenImage, examID);
@@ -88,7 +91,8 @@ class ScanController extends GetxController {
       Get.defaultDialog(middleText: "couldnt scan");
       return;
     } else {
-      Get.defaultDialog(middleText: res.toString());
+      Get.defaultDialog(title: "your result", middleText: res.toString());
+      print(res.toString());
     }
   }
 

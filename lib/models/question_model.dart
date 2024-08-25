@@ -27,4 +27,9 @@ class QuestionModel {
         "question_id": number,
         "answer": answer,
       };
+
+  @override
+  String toString() {
+    return "{$number,$answer}";
+  }
 }

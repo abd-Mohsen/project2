@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:camera/camera.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:project2/constants.dart';
@@ -144,17 +144,14 @@ class Api {
 
     request.headers.addAll({
       ...headers,
-      ...body,
       if (auth) "Authorization": "JWT $accessToken",
     });
 
-    var stream = http.ByteStream(imageFile.openRead());
-    int length = await imageFile.length();
-    var multipartFile = http.MultipartFile(
+    request.fields.addAll(body);
+
+    var multipartFile = await http.MultipartFile.fromPath(
       'image',
-      stream,
-      length,
-      filename: "paper",
+      imageFile.path,
     );
     request.files.add(multipartFile);
 
@@ -163,13 +160,13 @@ class Api {
       RefreshTokenService().refreshToken();
       return postRequestWithImage(endPoint, imageFile, body, auth: auth);
     }
-    if (response.statusCode != 200 && response.statusCode != 201) return null;
 
     String result = "";
     response.stream.transform(utf8.decoder).listen((value) {
-      print(value); // to print response body
       result = value;
+      if (response.statusCode == 200) Get.defaultDialog(middleText: value);
     });
+    if (response.statusCode != 200 && response.statusCode != 201) return null;
     return result;
   }
 }

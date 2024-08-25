@@ -19,7 +19,8 @@ class QuestionCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: CircleAvatar(
               radius: 6,
-              backgroundColor: i == question.answer.codeUnitAt(0) - 97 ? cs.onSurface : cs.onSurface.withOpacity(0.2),
+              backgroundColor:
+                  i == question.answer.toLowerCase().codeUnitAt(0) - 97 ? cs.onSurface : cs.onSurface.withOpacity(0.2),
             ),
           ),
         );

@@ -36,11 +36,11 @@ class ScanView extends StatelessWidget {
               onPressed: () {
                 sC.toggleDebugVisibility();
               },
-              icon: Icon(Icons.video_label),
+              icon: const Icon(Icons.video_label),
             )
           ],
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Get.delete<ScanController>();
               Get.back();
@@ -106,7 +106,7 @@ class ScanView extends StatelessWidget {
                                 return GestureDetector(
                                   onTap: con.detectedObject == "paper" && con.confidence > 0.99
                                       ? () {
-                                          //
+                                          con.takeImage();
                                         }
                                       : null,
                                   child: Container(

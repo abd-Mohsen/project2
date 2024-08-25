@@ -16,7 +16,7 @@ class ExamModel {
   final int questionsCount;
   final ClassModel examClass;
   final DateTime date;
-  final List<MarkingSchemeModel> markingSchemes;
+  List<MarkingSchemeModel> markingSchemes;
 
   ExamModel({
     required this.id,
