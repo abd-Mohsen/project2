@@ -15,7 +15,7 @@ class RedirectPage extends StatefulWidget {
 class _RedirectPageState extends State<RedirectPage> {
   @override
   void initState() {
-    //todo: handle app updates from here
+    //handle app updates from here
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         GetStorage getStorage = GetStorage();

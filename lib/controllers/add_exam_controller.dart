@@ -21,7 +21,7 @@ class AddExamController extends GetxController {
 
   late ExamCreationService examCreationService;
   late ClassesService classesService;
-  late ExamsController examsController; //todo: find a cleaner way to do this
+  late ExamsController examsController; // find a cleaner way to do this
   //todo: add a fake "select template"
 
   TextEditingController title = TextEditingController();

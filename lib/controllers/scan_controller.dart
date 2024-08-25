@@ -16,7 +16,7 @@ class ScanController extends GetxController {
   void onInit() async {
     Tflite.loadModel(
       model: "assets/paper_model2.tflite",
-      labels: "assets/paper_model2.txt", //todo: replace with new model
+      labels: "assets/paper_model2.txt",
       useGpuDelegate: false,
     );
     cameraController = CameraController(
@@ -30,6 +30,7 @@ class ScanController extends GetxController {
       cameraController.startImageStream((CameraImage image) {
         if (frames % 20 == 0) processImage(image);
         frames++;
+        currentFrame = image;
         if (frames > 1e6) frames = 0;
       });
     });

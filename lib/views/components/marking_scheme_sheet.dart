@@ -31,7 +31,7 @@ class MarkingSchemeSheet extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 24, bottom: 24),
                       child: Center(
                         child: Text(
-                          "${markingScheme == null ? "new".tr : "edit".tr} ${"marking scheme".tr}",
+                          markingScheme == null ? "new marking scheme".tr : "edit marking scheme".tr,
                           style: tt.headlineMedium!.copyWith(
                             color: cs.onSurface,
                             fontWeight: FontWeight.bold,
