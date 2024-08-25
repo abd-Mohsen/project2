@@ -58,6 +58,14 @@ class ScanController extends GetxController {
     update();
   }
 
+  bool debug = false;
+  void toggleDebugVisibility() {
+    debug = !debug;
+    update();
+  }
+
+  //todo: image picker, take photo and scan request
+
   @override
   void dispose() {
     //todo: camera and tflite arent disposing with scan controller
