@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:camera/camera.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:project2/constants.dart';
@@ -132,5 +133,43 @@ class Api {
       print(e.toString());
       return false;
     }
+  }
+
+  Future<String?> postRequestWithImage(String endPoint, XFile imageFile, Map<String, String> body,
+      {bool auth = false, bool canRefresh = true}) async {
+    var request = http.MultipartRequest(
+      "POST",
+      Uri.parse("$_hostIP/$endPoint"),
+    );
+
+    request.headers.addAll({
+      ...headers,
+      ...body,
+      if (auth) "Authorization": "JWT $accessToken",
+    });
+
+    var stream = http.ByteStream(imageFile.openRead());
+    int length = await imageFile.length();
+    var multipartFile = http.MultipartFile(
+      'image',
+      stream,
+      length,
+      filename: "paper",
+    );
+    request.files.add(multipartFile);
+
+    var response = await request.send();
+    if (canRefresh && response.statusCode == 401) {
+      RefreshTokenService().refreshToken();
+      return postRequestWithImage(endPoint, imageFile, body, auth: auth);
+    }
+    if (response.statusCode != 200 && response.statusCode != 201) return null;
+
+    String result = "";
+    response.stream.transform(utf8.decoder).listen((value) {
+      print(value); // to print response body
+      result = value;
+    });
+    return result;
   }
 }

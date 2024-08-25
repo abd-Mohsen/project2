@@ -142,7 +142,7 @@ class RegisterView extends StatelessWidget {
                     return AuthDropdown(
                       icon: Icons.work_outline,
                       title: "account type".tr,
-                      items: ["personal".tr, "business".tr],
+                      items: ["customer".tr, "business account".tr],
                       onSelect: (String? newVal) {
                         con.setRole(newVal!);
                       },

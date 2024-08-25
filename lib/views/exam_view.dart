@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:project2/controllers/exam_controller.dart';
 import 'package:project2/models/exam_model.dart';
+import 'package:project2/services/remote_services/exam_service.dart';
 import 'package:project2/services/remote_services/marking_scheme_creation_service.dart';
 import 'package:project2/services/remote_services/marking_scheme_deletion_service.dart';
 import 'package:project2/services/remote_services/marking_scheme_update_service.dart';
@@ -50,85 +52,88 @@ class ExamView extends StatelessWidget {
       backgroundColor: cs.background,
       body: GetBuilder<ExamController>(
         init: ExamController(
-          exam: exam,
           markingSchemeCreationService: MarkingSchemeCreationService(),
           markingSchemeDeletionService: MarkingSchemeDeletionService(),
           markingSchemeUpdateService: MarkingSchemeUpdateService(),
+          examService: ExamService(),
+          ogExam: exam,
         ),
         builder: (controller) {
-          return Column(
-            children: [
-              ListTile(
-                leading: const Icon(Icons.text_snippet_outlined),
-                title: Text(
-                  "title".tr,
-                  style: tt.titleMedium!.copyWith(color: cs.onSurface),
-                ),
-                subtitle: Text(
-                  exam.title,
-                  style: tt.titleSmall!.copyWith(color: cs.onBackground),
-                ),
-              ),
-              const SizedBox(height: 16),
-              ListTile(
-                leading: const Icon(Icons.access_time_outlined),
-                title: Text(
-                  "added at".tr,
-                  style: tt.titleMedium!.copyWith(color: cs.onSurface),
-                ),
-                subtitle: Text(
-                  exam.date.toIso8601String(),
-                  style: tt.titleSmall!.copyWith(color: cs.onBackground),
-                ),
-              ),
-              const SizedBox(height: 16),
-              ListTile(
-                leading: const Icon(Icons.numbers),
-                title: Text(
-                  "number of questions".tr,
-                  style: tt.titleMedium!.copyWith(color: cs.onSurface),
-                ),
-                subtitle: Text(
-                  exam.questionsCount.toString(),
-                  style: tt.titleSmall!.copyWith(color: cs.onBackground),
-                ),
-              ),
-              const SizedBox(height: 16),
-              ListTile(
-                leading: const Icon(Icons.credit_score_outlined),
-                title: Text(
-                  "pass score".tr,
-                  style: tt.titleMedium!.copyWith(color: cs.onSurface),
-                ),
-                subtitle: Text(
-                  "${exam.passMark.toString()} ${"of".tr} ${exam.completeMark.toString()}",
-                  style: tt.titleSmall!.copyWith(color: cs.onBackground),
-                ),
-              ),
-              const SizedBox(height: 16),
-              ListTile(
-                leading: const Icon(Icons.abc),
-                title: Text(
-                  "marking schemes".tr,
-                  style: tt.titleMedium!.copyWith(color: cs.onSurface),
-                ),
-                subtitle: Text(
-                  "${controller.exam.markingSchemes.length} schemes",
-                  style: tt.titleSmall!.copyWith(color: cs.onBackground),
-                ),
-                trailing: TextButton(
-                  onPressed: () {
-                    Get.to(() => MarkingSchemesView(exam: exam));
-                  },
-                  child: Text(
-                    "show".tr,
-                    style: tt.titleMedium!.copyWith(color: cs.secondary),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-            ],
-          );
+          return !controller.loadingExam
+              ? Column(
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.text_snippet_outlined),
+                      title: Text(
+                        "title".tr,
+                        style: tt.titleMedium!.copyWith(color: cs.onSurface),
+                      ),
+                      subtitle: Text(
+                        exam.title,
+                        style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    ListTile(
+                      leading: const Icon(Icons.access_time_outlined),
+                      title: Text(
+                        "added at".tr,
+                        style: tt.titleMedium!.copyWith(color: cs.onSurface),
+                      ),
+                      subtitle: Text(
+                        exam.date.toIso8601String(),
+                        style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    ListTile(
+                      leading: const Icon(Icons.numbers),
+                      title: Text(
+                        "number of questions".tr,
+                        style: tt.titleMedium!.copyWith(color: cs.onSurface),
+                      ),
+                      subtitle: Text(
+                        exam.questionsCount.toString(),
+                        style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    ListTile(
+                      leading: const Icon(Icons.credit_score_outlined),
+                      title: Text(
+                        "pass score".tr,
+                        style: tt.titleMedium!.copyWith(color: cs.onSurface),
+                      ),
+                      subtitle: Text(
+                        "${exam.passMark.toString()} ${"of".tr} ${exam.completeMark.toString()}",
+                        style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    ListTile(
+                      leading: const Icon(Icons.abc),
+                      title: Text(
+                        "marking schemes".tr,
+                        style: tt.titleMedium!.copyWith(color: cs.onSurface),
+                      ),
+                      subtitle: Text(
+                        "${controller.ogExam.markingSchemes.length} schemes",
+                        style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                      ),
+                      trailing: TextButton(
+                        onPressed: () {
+                          Get.to(() => MarkingSchemesView(exam: exam));
+                        },
+                        child: Text(
+                          "show".tr,
+                          style: tt.titleMedium!.copyWith(color: cs.secondary),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                  ],
+                )
+              : Center(child: SpinKitCubeGrid(color: cs.onBackground));
         },
       ),
     );

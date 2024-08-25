@@ -28,8 +28,8 @@ class RegisterController extends GetxController {
   final rePassword = TextEditingController();
   final phone = TextEditingController();
 
-  String selectedRole = "personal".tr;
-  int roleId = 2; //todo: checkout new roles
+  String selectedRole = "customer".tr;
+  int roleId = 3;
 
   late RegisterService registerService;
 
@@ -58,7 +58,7 @@ class RegisterController extends GetxController {
   }
 
   void setRole(String role) {
-    role == "personal".tr ? roleId = 2 : roleId = 3;
+    role == "customer".tr ? roleId = 3 : roleId = 4;
     selectedRole = role;
     update();
   }

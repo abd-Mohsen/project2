@@ -1,9 +1,16 @@
 import 'package:camera/camera.dart';
 import 'package:get/get.dart';
+import 'package:project2/services/local_services/exam_selection_service.dart';
+import 'package:project2/services/remote_services/scan_service.dart';
 import 'package:tflite_v2/tflite_v2.dart';
 import '../main.dart';
 
 class ScanController extends GetxController {
+  ScanController({required this.scanService, required this.examSelectionService});
+
+  late ScanService scanService;
+  late ExamSelectionService examSelectionService;
+
   late CameraController cameraController;
   late Future<void> initializeControllerFuture;
   late CameraImage currentFrame; // Variable to store the current frame
@@ -31,6 +38,7 @@ class ScanController extends GetxController {
         if (frames % 20 == 0) processImage(image);
         frames++;
         currentFrame = image;
+        //
         if (frames > 1e6) frames = 0;
       });
     });
@@ -65,6 +73,24 @@ class ScanController extends GetxController {
   }
 
   //todo: image picker, take photo and scan request
+
+  void pickImage() async {
+    XFile takenImage = await cameraController.takePicture();
+    //maje http request
+  }
+
+  void takeImage() async {
+    XFile takenImage = await cameraController.takePicture();
+    int examID = examSelectionService.loadSelectedExamId();
+    if (examID == -1) Get.defaultDialog(middleText: "select exam first");
+    int? res = await scanService.scanPaper(takenImage, examID);
+    if (res == null) {
+      Get.defaultDialog(middleText: "couldnt scan");
+      return;
+    } else {
+      Get.defaultDialog(middleText: res.toString());
+    }
+  }
 
   @override
   void dispose() {

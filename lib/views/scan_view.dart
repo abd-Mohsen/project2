@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project2/constants.dart';
 import 'package:project2/controllers/scan_controller.dart';
+import 'package:project2/services/local_services/exam_selection_service.dart';
+import 'package:project2/services/remote_services/scan_service.dart';
 
 class ScanView extends StatelessWidget {
   const ScanView({super.key});
@@ -11,7 +13,12 @@ class ScanView extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorScheme cs = Theme.of(context).colorScheme;
     TextTheme tt = Theme.of(context).textTheme;
-    ScanController sC = Get.put(ScanController());
+    ScanController sC = Get.put(
+      ScanController(
+        examSelectionService: ExamSelectionService(),
+        scanService: ScanService(),
+      ),
+    );
 
     return WillPopScope(
       onWillPop: () async {
