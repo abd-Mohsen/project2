@@ -131,17 +131,20 @@ class ScanView extends StatelessWidget {
                           ),
                           const SizedBox(width: 16),
                           Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: cs.secondary,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 16),
-                                child: Icon(
-                                  Icons.photo,
-                                  color: cs.onSecondary,
-                                  size: 30,
+                            child: GestureDetector(
+                              onTap: () => sC.pickImage(),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: cs.secondary,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 16),
+                                  child: Icon(
+                                    Icons.photo,
+                                    color: cs.onSecondary,
+                                    size: 30,
+                                  ),
                                 ),
                               ),
                             ),

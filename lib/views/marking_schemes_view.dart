@@ -13,6 +13,7 @@ class MarkingSchemesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //todo:something is wrong with arabic font and words
     ColorScheme cs = Theme.of(context).colorScheme;
     TextTheme tt = Theme.of(context).textTheme;
     ExamController eC = Get.find();

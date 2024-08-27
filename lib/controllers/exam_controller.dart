@@ -47,8 +47,8 @@ class ExamController extends GetxController {
   late ExamService examService;
 
   TextEditingController title = TextEditingController();
-  List<QuestionModel> questions = []; // for add
-  List<QuestionModel> questions2 = []; //for edit
+  List<QuestionModel> questions = []; // for add //todo: is it allowing to pass with empty choices?
+  List<QuestionModel> questions2 = []; //for edit //todo: fix edit pre-population
 
   void initCreateScheme(int qNum) {
     title.text = "";
@@ -152,18 +152,3 @@ class ExamController extends GetxController {
     Get.back();
   }
 }
-
-// {
-// "exam_id": 3,
-// "form_name": "Ass",
-// "questions": [
-//  {
-//    "question_id": 1,
-//    "answer": "a"
-//  },
-//  {
-//    "question_id": 2,
-//    "answer": "d"
-//  }
-//  ]
-// }

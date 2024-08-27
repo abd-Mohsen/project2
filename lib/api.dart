@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:camera/camera.dart';
-import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:project2/constants.dart';
@@ -161,12 +160,10 @@ class Api {
       return postRequestWithImage(endPoint, imageFile, body, auth: auth);
     }
 
-    String result = "";
-    response.stream.transform(utf8.decoder).listen((value) {
-      result = value;
-      if (response.statusCode == 200) Get.defaultDialog(middleText: value);
-    });
-    if (response.statusCode != 200 && response.statusCode != 201) return null;
-    return result;
+    String responseBody = await response.stream.bytesToString();
+    if (response.statusCode == 200) {
+      return responseBody;
+    }
+    return null;
   }
 }

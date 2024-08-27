@@ -1,10 +1,12 @@
 import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:project2/services/local_services/exam_selection_service.dart';
 import 'package:project2/services/remote_services/scan_service.dart';
 import 'package:tflite_v2/tflite_v2.dart';
 import '../main.dart';
-import 'dart:io';
+//import 'dart:io';
 
 class ScanController extends GetxController {
   ScanController({required this.scanService, required this.examSelectionService});
@@ -14,7 +16,8 @@ class ScanController extends GetxController {
 
   late CameraController cameraController;
   late Future<void> initializeControllerFuture;
-  late CameraImage currentFrame; // Variable to store the current frame
+  late CameraImage currentFrame;
+
   int frames = 1;
   String detectedObject = "";
   double confidence = 0.0;
@@ -73,22 +76,29 @@ class ScanController extends GetxController {
     update();
   }
 
-  //todo: image picker
-
-  void pickImage() async {
-    XFile takenImage = await cameraController.takePicture();
-    //maje http request
+  Future pickImage() async {
+    XFile? selectedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (selectedImage == null) {
+      Get.snackbar("error", "no image has been selected");
+      return;
+    }
+    scanPaper(selectedImage);
   }
 
   void takeImage() async {
     //todo: solve: phone must stay on paper while correcting in backend
     XFile takenImage = await cameraController.takePicture();
-    File file = File(takenImage.path);
+    scanPaper(takenImage);
+  }
+
+  void scanPaper(XFile paperImage) async {
+    //File file = File(paperImage.path);
     int examID = examSelectionService.loadSelectedExamId();
-    if (examID == -1) Get.defaultDialog(middleText: "select exam first");
-    int? res = await scanService.scanPaper(takenImage, examID);
+    if (examID == -1) Get.snackbar("warning", "select exam first", backgroundColor: Colors.yellow);
+    //todo make selected exam -1 when deleting the selected exam
+    int? res = await scanService.scanPaper(paperImage, examID);
     if (res == null) {
-      Get.defaultDialog(middleText: "couldnt scan");
+      Get.snackbar("error", "couldn't scan", backgroundColor: Colors.yellow);
       return;
     } else {
       Get.defaultDialog(title: "your result", middleText: res.toString());

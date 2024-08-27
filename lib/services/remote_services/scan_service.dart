@@ -10,5 +10,7 @@ class ScanService {
     String? json = await api.postRequestWithImage("api/images/", imageFile, body, auth: true);
     if (json == null) return null;
     return jsonDecode(json)["mark"];
+
+    //todo: returning "200 ok" with mark 0 if paper is not aligned correctly
   }
 }
