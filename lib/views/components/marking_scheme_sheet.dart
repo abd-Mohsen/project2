@@ -34,7 +34,7 @@ class MarkingSchemeSheet extends StatelessWidget {
                           markingScheme == null ? "new marking scheme".tr : "edit marking scheme".tr,
                           style: tt.headlineMedium!.copyWith(
                             color: cs.onSurface,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
@@ -45,6 +45,7 @@ class MarkingSchemeSheet extends StatelessWidget {
                         question: markingScheme == null ? controller.questions[i] : controller.questions2[i],
                       ),
                     ),
+                    const SizedBox(height: 12),
                     MyField(
                       controller: controller.title,
                       title: "title".tr,
@@ -70,7 +71,7 @@ class MarkingSchemeSheet extends StatelessWidget {
                               markingScheme == null ? "add".tr : "edit".tr,
                               style: tt.headlineMedium!.copyWith(
                                 color: cs.onSecondary,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                     ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project2/controllers/exams_controller.dart';
 import 'package:project2/models/exam_model.dart';
+import 'package:project2/services/remote_services/exam_deletion_service.dart';
 import 'package:project2/services/remote_services/exam_service.dart';
 import 'package:project2/services/remote_services/marking_scheme_creation_service.dart';
 import 'package:project2/services/remote_services/marking_scheme_deletion_service.dart';
@@ -16,7 +18,9 @@ class ExamController extends GetxController {
     required this.markingSchemeCreationService,
     required this.markingSchemeDeletionService,
     required this.markingSchemeUpdateService,
+    required this.examDeletionService,
     required this.examService,
+    required this.examsController,
   });
 
   @override
@@ -25,12 +29,18 @@ class ExamController extends GetxController {
     super.onInit();
   }
 
+  late MarkingSchemeCreationService markingSchemeCreationService;
+  late MarkingSchemeDeletionService markingSchemeDeletionService;
+  late MarkingSchemeUpdateService markingSchemeUpdateService;
+  late ExamDeletionService examDeletionService;
+  late ExamService examService;
+  late ExamsController examsController;
+
   Future getExam() async {
     setLoadingExam(true);
     ExamModel? exam = await examService.getExam(ogExam.id);
     if (exam == null) print("couldnt get exam");
-    print(exam!.markingSchemes);
-    ogExam.markingSchemes = List.from(exam.markingSchemes);
+    ogExam.markingSchemes = List.from(exam!.markingSchemes);
     setLoadingExam(false);
   }
 
@@ -40,11 +50,6 @@ class ExamController extends GetxController {
     _loadingExam = value;
     update();
   }
-
-  late MarkingSchemeCreationService markingSchemeCreationService;
-  late MarkingSchemeDeletionService markingSchemeDeletionService;
-  late MarkingSchemeUpdateService markingSchemeUpdateService;
-  late ExamService examService;
 
   TextEditingController title = TextEditingController();
   List<QuestionModel> questions = []; // for add //todo: is it allowing to pass with empty choices?
@@ -150,5 +155,14 @@ class ExamController extends GetxController {
     setLoading(false);
     questions2.clear();
     Get.back();
+  }
+
+  Future<void> deleteExam() async {
+    if (await examDeletionService.deleteExam(ogExam)) {
+      examsController.unSelectExam();
+      examsController.delete(ogExam);
+      Get.back();
+      Get.back();
+    }
   }
 }

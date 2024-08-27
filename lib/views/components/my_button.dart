@@ -15,7 +15,7 @@ class MyButton extends StatelessWidget {
     //TextTheme tt = Theme.of(context).textTheme;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 72),
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 72),
       child: GestureDetector(
         onTap: onTap,
         child: Container(

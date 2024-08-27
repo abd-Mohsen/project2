@@ -61,6 +61,7 @@ class ScanController extends GetxController {
       imageWidth: capturedImage.width,
       numResults: 1,
     );
+    //todo: stop printing in console
     // print("frames is ${capturedImage.width} * ${capturedImage.height} ");
     // print(results);
     detectedObject = results![0]["label"];
@@ -94,8 +95,10 @@ class ScanController extends GetxController {
   void scanPaper(XFile paperImage) async {
     //File file = File(paperImage.path);
     int examID = examSelectionService.loadSelectedExamId();
-    if (examID == -1) Get.snackbar("warning", "select exam first", backgroundColor: Colors.yellow);
-    //todo make selected exam -1 when deleting the selected exam
+    if (examID == -1) {
+      Get.snackbar("warning", "select an exam first", backgroundColor: Colors.yellow);
+      return;
+    }
     int? res = await scanService.scanPaper(paperImage, examID);
     if (res == null) {
       Get.snackbar("error", "couldn't scan", backgroundColor: Colors.yellow);

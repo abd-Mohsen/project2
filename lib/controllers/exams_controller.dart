@@ -33,6 +33,11 @@ class ExamsController extends GetxController {
     update();
   }
 
+  void unSelectExam() {
+    examSelectionService.clearSelectedExamId();
+    _selectedExamID = -1;
+  }
+
   Future getExams() async {
     toggleLoading(true);
     List<ExamModel> newExams = await examsService.getAllExams() ?? [];

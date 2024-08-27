@@ -4,7 +4,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:project2/controllers/add_exam_controller.dart';
 import 'package:project2/controllers/exams_controller.dart';
-import 'package:project2/controllers/home_controller.dart';
 import 'package:project2/models/class_model.dart';
 import 'package:project2/models/exam_model.dart';
 import 'package:project2/services/local_services/exam_selection_service.dart';
@@ -23,7 +22,7 @@ class ExamsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeController hC = Get.find();
+    //HomeController hC = Get.find();
     ExamsController eC = Get.put(
       ExamsController(
         examSelectionService: ExamSelectionService(),
@@ -36,7 +35,7 @@ class ExamsView extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "select exam".tr,
-          style: tt.titleLarge!.copyWith(color: cs.onPrimary, fontWeight: FontWeight.bold),
+          style: tt.titleLarge!.copyWith(color: cs.onPrimary, fontWeight: FontWeight.w500),
         ),
         backgroundColor: kAppBarColor,
         centerTitle: true,

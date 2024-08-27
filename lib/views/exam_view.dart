@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:project2/controllers/exam_controller.dart';
+import 'package:project2/controllers/exams_controller.dart';
 import 'package:project2/models/exam_model.dart';
+import 'package:project2/services/remote_services/exam_deletion_service.dart';
 import 'package:project2/services/remote_services/exam_service.dart';
 import 'package:project2/services/remote_services/marking_scheme_creation_service.dart';
 import 'package:project2/services/remote_services/marking_scheme_deletion_service.dart';
@@ -19,19 +21,53 @@ class ExamView extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorScheme cs = Theme.of(context).colorScheme;
     TextTheme tt = Theme.of(context).textTheme;
-    //ExamController eC = Get.put(ExamController(exam));
+    ExamsController esC = Get.find();
+    ExamController eC = Get.put(
+      ExamController(
+        markingSchemeCreationService: MarkingSchemeCreationService(),
+        markingSchemeDeletionService: MarkingSchemeDeletionService(),
+        markingSchemeUpdateService: MarkingSchemeUpdateService(),
+        examDeletionService: ExamDeletionService(),
+        examService: ExamService(),
+        examsController: esC,
+        ogExam: exam,
+      ),
+    );
     return Scaffold(
       appBar: AppBar(
         title: Text(
           "exam details".tr,
-          style: tt.titleLarge!.copyWith(color: cs.onPrimary, fontWeight: FontWeight.bold),
+          style: tt.titleLarge!.copyWith(color: cs.onPrimary, fontWeight: FontWeight.w500),
         ),
         backgroundColor: kAppBarColor,
         centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {
-              //todo: show confirmation then delete
+              Get.dialog(
+                AlertDialog(
+                  title: Text(
+                    "do you wanna delete this exam?".tr,
+                    style: tt.headlineSmall!.copyWith(color: cs.onSurface),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Get.back(),
+                      child: Text(
+                        "no".tr,
+                        style: tt.titleMedium!.copyWith(color: cs.onSurface),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () => eC.deleteExam(),
+                      child: Text(
+                        "yes".tr,
+                        style: tt.titleMedium!.copyWith(color: cs.error),
+                      ),
+                    ),
+                  ],
+                ),
+              );
             },
             icon: Icon(
               Icons.delete,
@@ -51,13 +87,6 @@ class ExamView extends StatelessWidget {
       ),
       backgroundColor: cs.background,
       body: GetBuilder<ExamController>(
-        init: ExamController(
-          markingSchemeCreationService: MarkingSchemeCreationService(),
-          markingSchemeDeletionService: MarkingSchemeDeletionService(),
-          markingSchemeUpdateService: MarkingSchemeUpdateService(),
-          examService: ExamService(),
-          ogExam: exam,
-        ),
         builder: (controller) {
           return !controller.loadingExam
               ? Column(
