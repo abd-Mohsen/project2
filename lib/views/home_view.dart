@@ -23,264 +23,270 @@ class HomeView extends StatelessWidget {
     LocaleController lC = Get.find();
     ColorScheme cs = Theme.of(context).colorScheme;
     TextTheme tt = Theme.of(context).textTheme;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "project2📄",
-          style: tt.titleLarge!.copyWith(color: cs.onPrimary, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: kAppBarColor,
-        centerTitle: true,
-      ),
-      backgroundColor: cs.background,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.to(() => ExamsView());
-        },
-        child: Icon(Icons.text_snippet),
-      ),
-      body: Column(
-        children: [
-          Center(
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Image.asset(
-                  "assets/images/banner.jpg",
-                  fit: BoxFit.cover,
-                ),
-                Positioned.fill(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.65),
-                    ),
-                  ),
-                ),
-                PositionedDirectional(
-                  bottom: 0,
-                  start: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "welcome".tr,
-                          style: tt.headlineLarge!.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "select exam, scan, repeat!".tr,
-                          style: tt.headlineSmall!.copyWith(color: Colors.white, shadows: [
-                            Shadow(
-                              offset: const Offset(3.0, 2.0),
-                              blurRadius: 8.0,
-                              color: Colors.black.withOpacity(0.7),
-                            ),
-                          ]),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "project2📄",
+            style: tt.titleLarge!.copyWith(color: cs.onPrimary, fontWeight: FontWeight.bold),
           ),
-          Expanded(
-            flex: 1,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InkWell(
-                  onTap: () {
-                    Get.to(() => const ScanView());
-                  },
-                  child: Card(
-                    color: cs.surface,
-                    elevation: 10,
-                    child: SizedBox(
-                      width: 200,
-                      child: DottedBorder(
-                        color: cs.secondary,
-                        dashPattern: const [15, 0],
-                        strokeWidth: 2.0,
-                        borderType: BorderType.RRect,
-                        radius: const Radius.circular(10),
-                        padding: const EdgeInsets.all(8),
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: SizedBox(
-                                    height: 100,
-                                    width: 100,
-                                    //search for the animation thing
-                                    child: Image.asset(
-                                      "assets/images/scanner2.png",
-                                      color: cs.onSurface,
+          backgroundColor: kAppBarColor,
+          centerTitle: true,
+        ),
+        backgroundColor: cs.background,
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: cs.secondary,
+          onPressed: () {
+            Get.to(() => ExamsView());
+          },
+          child: Icon(Icons.text_snippet),
+        ),
+        body: Column(
+          children: [
+            Center(
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Image.asset(
+                    "assets/images/banner.jpg",
+                    fit: BoxFit.cover,
+                  ),
+                  Positioned.fill(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.65),
+                      ),
+                    ),
+                  ),
+                  PositionedDirectional(
+                    bottom: 0,
+                    start: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "welcome".tr,
+                            style: tt.headlineLarge!.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "select exam, scan, repeat!".tr,
+                            style: tt.headlineSmall!.copyWith(color: Colors.white, shadows: [
+                              Shadow(
+                                offset: const Offset(3.0, 2.0),
+                                blurRadius: 8.0,
+                                color: Colors.black.withOpacity(0.7),
+                              ),
+                            ]),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Get.to(() => const ScanView());
+                    },
+                    child: Card(
+                      color: cs.surface,
+                      elevation: 10,
+                      child: SizedBox(
+                        width: 200,
+                        child: DottedBorder(
+                          color: cs.secondary,
+                          dashPattern: const [15, 0],
+                          strokeWidth: 2.0,
+                          borderType: BorderType.RRect,
+                          radius: const Radius.circular(10),
+                          padding: const EdgeInsets.all(8),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: SizedBox(
+                                      height: 100,
+                                      width: 100,
+                                      //search for the animation thing
+                                      child: Image.asset(
+                                        "assets/images/scanner2.png",
+                                        color: cs.onSurface,
+                                      ),
                                     ),
                                   ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8),
+                                    child: Text(
+                                      "scan".tr,
+                                      style:
+                                          tt.headlineLarge!.copyWith(color: cs.secondary, fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox.shrink(),
+                ],
+              ),
+            ),
+          ],
+        ),
+        drawer: Drawer(
+          backgroundColor: cs.background,
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  children: [
+                    GetBuilder<HomeController>(
+                      builder: (controller) {
+                        return UserAccountsDrawerHeader(
+                          accountName: Text(
+                            controller.currentUser?.username ?? "loading".tr,
+                            style: tt.headlineMedium,
+                          ),
+                          accountEmail: Text(
+                            controller.currentUser?.email ?? "",
+                            style: tt.titleMedium,
+                          ),
+                        );
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.dark_mode_outlined),
+                      title: Text("dark mode".tr, style: tt.titleMedium!.copyWith(color: cs.onBackground)),
+                      trailing: Switch(
+                        value: tC.switchValue,
+                        onChanged: (bool value) {
+                          tC.updateTheme(value);
+                        },
+                        activeColor: cs.secondary,
+                        activeTrackColor: cs.secondary.withOpacity(0.2),
+                      ),
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.language,
+                        //color: cs.onBackground,
+                      ),
+                      title: DropdownButton(
+                        elevation: 50,
+                        iconEnabledColor: cs.onBackground,
+                        dropdownColor: Get.isDarkMode ? cs.surface : Colors.grey.shade200,
+                        hint: Text(
+                          lC.getCurrentLanguageLabel(),
+                          style: tt.labelLarge!.copyWith(color: cs.onBackground),
+                        ),
+                        //button label is updating cuz whole app is rebuilt after changing locale
+                        items: [
+                          DropdownMenuItem(
+                            value: "ar",
+                            child: Text(
+                              "Arabic".tr,
+                              style: tt.labelLarge!.copyWith(color: cs.onSurface),
+                            ),
+                          ),
+                          DropdownMenuItem(
+                            value: "en",
+                            child: Text(
+                              "English".tr,
+                              style: tt.labelLarge!.copyWith(color: cs.onSurface),
+                            ),
+                          ),
+                        ],
+                        onChanged: (val) {
+                          lC.updateLocale(val!);
+                        },
+                      ),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.info_outline),
+                      title: Text("about app".tr, style: tt.titleMedium!.copyWith(color: cs.onBackground)),
+                      onTap: () {
+                        Get.dialog(
+                          AlertDialog(
+                            icon: Icon(
+                              Icons.info_outline,
+                              color: cs.primary,
+                              size: 35,
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                child: Text(
+                                  "ok",
+                                  style: tt.titleMedium?.copyWith(color: cs.primary),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 8),
-                                  child: Text(
-                                    "scan".tr,
-                                    style: tt.headlineLarge!.copyWith(color: cs.secondary, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                            content: Column(
+                              children: [
+                                Scrollbar(
+                                  thumbVisibility: true,
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "AdaDevs® ${"all rights reserved".tr}",
+                                            style: tt.headlineSmall!.copyWith(color: cs.onSurface),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
-                  ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.logout,
+                        color: cs.error,
+                      ),
+                      title: Text(
+                        "logout".tr,
+                        style: tt.titleMedium!.copyWith(color: cs.error),
+                      ),
+                      onTap: () {
+                        hC.logout();
+                      },
+                    )
+                  ],
                 ),
-                const SizedBox.shrink(),
-              ],
-            ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                child: Text(
+                  "AdaDevs® ${"all rights reserved".tr}",
+                  style: tt.labelMedium!.copyWith(color: cs.onSurface.withOpacity(0.6)),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-      drawer: Drawer(
-        backgroundColor: cs.background,
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                children: [
-                  GetBuilder<HomeController>(
-                    builder: (controller) {
-                      return UserAccountsDrawerHeader(
-                        accountName: Text(
-                          controller.currentUser?.username ?? "loading".tr,
-                          style: tt.headlineMedium,
-                        ),
-                        accountEmail: Text(
-                          controller.currentUser?.email ?? "",
-                          style: tt.titleMedium,
-                        ),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.dark_mode_outlined),
-                    title: Text("dark mode".tr, style: tt.titleMedium!.copyWith(color: cs.onBackground)),
-                    trailing: Switch(
-                      value: tC.switchValue,
-                      onChanged: (bool value) {
-                        tC.updateTheme(value);
-                      },
-                    ),
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.language,
-                      //color: cs.onBackground,
-                    ),
-                    title: DropdownButton(
-                      elevation: 50,
-                      iconEnabledColor: cs.onBackground,
-                      dropdownColor: Get.isDarkMode ? cs.surface : Colors.grey.shade200,
-                      hint: Text(
-                        lC.getCurrentLanguageLabel(),
-                        style: tt.labelLarge!.copyWith(color: cs.onBackground),
-                      ),
-                      //button label is updating cuz whole app is rebuilt after changing locale
-                      items: [
-                        DropdownMenuItem(
-                          value: "ar",
-                          child: Text(
-                            "Arabic".tr,
-                            style: tt.labelLarge!.copyWith(color: cs.onSurface),
-                          ),
-                        ),
-                        DropdownMenuItem(
-                          value: "en",
-                          child: Text(
-                            "English".tr,
-                            style: tt.labelLarge!.copyWith(color: cs.onSurface),
-                          ),
-                        ),
-                      ],
-                      onChanged: (val) {
-                        lC.updateLocale(val!);
-                      },
-                    ),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.info_outline),
-                    title: Text("about app".tr, style: tt.titleMedium!.copyWith(color: cs.onBackground)),
-                    onTap: () {
-                      Get.dialog(
-                        AlertDialog(
-                          icon: Icon(
-                            Icons.info_outline,
-                            color: cs.primary,
-                            size: 35,
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Get.back();
-                              },
-                              child: Text(
-                                "ok",
-                                style: tt.titleMedium?.copyWith(color: cs.primary),
-                              ),
-                            ),
-                          ],
-                          content: Column(
-                            children: [
-                              Scrollbar(
-                                thumbVisibility: true,
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "AdaDevs® ${"all rights reserved".tr}",
-                                          style: tt.headlineSmall!.copyWith(color: cs.onSurface),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.logout,
-                      color: cs.error,
-                    ),
-                    title: Text(
-                      "logout".tr,
-                      style: tt.titleMedium!.copyWith(color: cs.error),
-                    ),
-                    onTap: () {
-                      hC.logout();
-                    },
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12.0),
-              child: Text(
-                "AdaDevs® ${"all rights reserved".tr}",
-                style: tt.labelMedium!.copyWith(color: cs.onSurface.withOpacity(0.6)),
-              ),
-            ),
-          ],
         ),
       ),
     );

@@ -33,137 +33,139 @@ class ExamView extends StatelessWidget {
         ogExam: exam,
       ),
     );
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "exam details".tr,
-          style: tt.titleLarge!.copyWith(color: cs.onPrimary, fontWeight: FontWeight.w500),
-        ),
-        backgroundColor: kAppBarColor,
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {
-              Get.dialog(
-                AlertDialog(
-                  title: Text(
-                    "do you wanna delete this exam?".tr,
-                    style: tt.headlineSmall!.copyWith(color: cs.onSurface),
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Get.back(),
-                      child: Text(
-                        "no".tr,
-                        style: tt.titleMedium!.copyWith(color: cs.onSurface),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () => eC.deleteExam(),
-                      child: Text(
-                        "yes".tr,
-                        style: tt.titleMedium!.copyWith(color: cs.error),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-            icon: Icon(
-              Icons.delete,
-              color: cs.error,
-            ),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "exam details".tr,
+            style: tt.titleLarge!.copyWith(color: cs.onPrimary, fontWeight: FontWeight.w500),
           ),
-          IconButton(
-            onPressed: () {
-              //todo: handle edit
-            },
-            icon: Icon(
-              Icons.edit,
-              color: cs.secondary,
-            ),
-          ),
-        ],
-      ),
-      backgroundColor: cs.background,
-      body: GetBuilder<ExamController>(
-        builder: (controller) {
-          return !controller.loadingExam
-              ? Column(
-                  children: [
-                    ListTile(
-                      leading: const Icon(Icons.text_snippet_outlined),
-                      title: Text(
-                        "title".tr,
-                        style: tt.titleMedium!.copyWith(color: cs.onSurface),
-                      ),
-                      subtitle: Text(
-                        exam.title,
-                        style: tt.titleSmall!.copyWith(color: cs.onBackground),
-                      ),
+          backgroundColor: kAppBarColor,
+          centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Get.dialog(
+                  AlertDialog(
+                    title: Text(
+                      "do you wanna delete this exam?".tr,
+                      style: tt.headlineSmall!.copyWith(color: cs.onSurface),
                     ),
-                    const SizedBox(height: 16),
-                    ListTile(
-                      leading: const Icon(Icons.access_time_outlined),
-                      title: Text(
-                        "added at".tr,
-                        style: tt.titleMedium!.copyWith(color: cs.onSurface),
-                      ),
-                      subtitle: Text(
-                        exam.date.toIso8601String(),
-                        style: tt.titleSmall!.copyWith(color: cs.onBackground),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    ListTile(
-                      leading: const Icon(Icons.numbers),
-                      title: Text(
-                        "number of questions".tr,
-                        style: tt.titleMedium!.copyWith(color: cs.onSurface),
-                      ),
-                      subtitle: Text(
-                        exam.questionsCount.toString(),
-                        style: tt.titleSmall!.copyWith(color: cs.onBackground),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    ListTile(
-                      leading: const Icon(Icons.credit_score_outlined),
-                      title: Text(
-                        "pass score".tr,
-                        style: tt.titleMedium!.copyWith(color: cs.onSurface),
-                      ),
-                      subtitle: Text(
-                        "${exam.passMark.toString()} ${"of".tr} ${exam.completeMark.toString()}",
-                        style: tt.titleSmall!.copyWith(color: cs.onBackground),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    ListTile(
-                      leading: const Icon(Icons.abc),
-                      title: Text(
-                        "marking schemes".tr,
-                        style: tt.titleMedium!.copyWith(color: cs.onSurface),
-                      ),
-                      subtitle: Text(
-                        "${controller.ogExam.markingSchemes.length} schemes",
-                        style: tt.titleSmall!.copyWith(color: cs.onBackground),
-                      ),
-                      trailing: TextButton(
-                        onPressed: () {
-                          Get.to(() => MarkingSchemesView(exam: exam));
-                        },
+                    actions: [
+                      TextButton(
+                        onPressed: () => Get.back(),
                         child: Text(
-                          "show".tr,
-                          style: tt.titleMedium!.copyWith(color: cs.secondary),
+                          "no".tr,
+                          style: tt.titleMedium!.copyWith(color: cs.onSurface),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                  ],
-                )
-              : Center(child: SpinKitCubeGrid(color: cs.onBackground));
-        },
+                      TextButton(
+                        onPressed: () => eC.deleteExam(),
+                        child: Text(
+                          "yes".tr,
+                          style: tt.titleMedium!.copyWith(color: cs.error),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+              icon: Icon(
+                Icons.delete,
+                color: cs.error,
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                //todo: handle edit
+              },
+              icon: Icon(
+                Icons.edit,
+                color: cs.secondary,
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: cs.background,
+        body: GetBuilder<ExamController>(
+          builder: (controller) {
+            return !controller.loadingExam
+                ? Column(
+                    children: [
+                      ListTile(
+                        leading: const Icon(Icons.text_snippet_outlined),
+                        title: Text(
+                          "title".tr,
+                          style: tt.titleMedium!.copyWith(color: cs.onSurface),
+                        ),
+                        subtitle: Text(
+                          exam.title,
+                          style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      ListTile(
+                        leading: const Icon(Icons.access_time_outlined),
+                        title: Text(
+                          "added at".tr, //todo: format with jiffy
+                          style: tt.titleMedium!.copyWith(color: cs.onSurface),
+                        ),
+                        subtitle: Text(
+                          exam.date.toIso8601String(),
+                          style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      ListTile(
+                        leading: const Icon(Icons.numbers),
+                        title: Text(
+                          "number of questions".tr,
+                          style: tt.titleMedium!.copyWith(color: cs.onSurface),
+                        ),
+                        subtitle: Text(
+                          exam.questionsCount.toString(),
+                          style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      ListTile(
+                        leading: const Icon(Icons.credit_score_outlined),
+                        title: Text(
+                          "pass score".tr,
+                          style: tt.titleMedium!.copyWith(color: cs.onSurface),
+                        ),
+                        subtitle: Text(
+                          "${exam.passMark.toString()} ${"of".tr} ${exam.completeMark.toString()}",
+                          style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      ListTile(
+                        leading: const Icon(Icons.abc),
+                        title: Text(
+                          "marking schemes".tr,
+                          style: tt.titleMedium!.copyWith(color: cs.onSurface),
+                        ),
+                        subtitle: Text(
+                          "${controller.ogExam.markingSchemes.length} schemes",
+                          style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                        ),
+                        trailing: TextButton(
+                          onPressed: () {
+                            Get.to(() => MarkingSchemesView(exam: exam));
+                          },
+                          child: Text(
+                            "show".tr,
+                            style: tt.titleMedium!.copyWith(color: cs.secondary, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  )
+                : Center(child: SpinKitCubeGrid(color: cs.onBackground));
+          },
+        ),
       ),
     );
   }
