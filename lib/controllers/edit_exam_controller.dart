@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:project2/controllers/exams_controller.dart';
 import 'package:project2/services/remote_services/classes_service.dart';
-import 'package:project2/services/remote_services/exam_creation_service.dart';
+import 'package:project2/services/remote_services/exam_update_service.dart';
 
 import '../models/class_model.dart';
 import '../models/exam_model.dart';
 
-class AddExamController extends GetxController {
-  AddExamController({
-    required this.examCreationService,
+class EditExamController extends GetxController {
+  EditExamController({
+    required this.examUpdateService,
     required this.classesService,
     required this.examsController,
   });
@@ -19,10 +19,10 @@ class AddExamController extends GetxController {
     super.onInit();
   }
 
-  late ExamCreationService examCreationService;
+  late ExamUpdateService examUpdateService;
   late ClassesService classesService;
   late ExamsController examsController; // find a cleaner way to do this
-  //todo: add "select template"
+  //todo: add "change template"
 
   TextEditingController title = TextEditingController();
   TextEditingController totalScore = TextEditingController(text: "100");
@@ -52,12 +52,13 @@ class AddExamController extends GetxController {
     update();
   }
 
-  Future addExam() async {
+  Future editExam(ExamModel exam) async {
     if (_loading) return;
     isButtonPressed = true;
     if (!formKey.currentState!.validate()) return;
     setLoading(true);
-    ExamModel? newExam = await examCreationService.addExam(
+    ExamModel? newExam = await examUpdateService.editExam(
+      exam.id,
       title.text,
       passScore.text,
       totalScore.text,
@@ -65,10 +66,10 @@ class AddExamController extends GetxController {
       selectedClass!.id,
     );
     if (newExam == null) {
-      print("failed to add");
+      print("failed to edit");
       return;
     }
-    examsController.addExam(newExam);
+    examsController.editExam(newExam);
     Get.back();
     setLoading(false);
     //

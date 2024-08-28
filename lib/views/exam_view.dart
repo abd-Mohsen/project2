@@ -1,17 +1,24 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:project2/controllers/edit_exam_controller.dart';
 import 'package:project2/controllers/exam_controller.dart';
 import 'package:project2/controllers/exams_controller.dart';
 import 'package:project2/models/exam_model.dart';
 import 'package:project2/services/remote_services/exam_deletion_service.dart';
 import 'package:project2/services/remote_services/exam_service.dart';
+import 'package:project2/services/remote_services/exam_update_service.dart';
 import 'package:project2/services/remote_services/marking_scheme_creation_service.dart';
 import 'package:project2/services/remote_services/marking_scheme_deletion_service.dart';
 import 'package:project2/services/remote_services/marking_scheme_update_service.dart';
 import 'package:project2/views/marking_schemes_view.dart';
 
 import '../constants.dart';
+import '../models/class_model.dart';
+import '../services/remote_services/classes_service.dart';
+import 'components/my_button.dart';
+import 'components/my_field.dart';
 
 class ExamView extends StatelessWidget {
   final ExamModel exam;
@@ -77,7 +84,160 @@ class ExamView extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                //todo: handle edit
+                //todo: ignore it, server is returning a wrong response(only title changed)
+                Get.bottomSheet(
+                  BottomSheet(
+                    onClosing: () {},
+                    builder: (context) => Container(
+                      height: MediaQuery.of(context).size.height / 0.8,
+                      color: cs.surface,
+                      child: GetBuilder<EditExamController>(
+                        init: EditExamController(
+                          examUpdateService: ExamUpdateService(),
+                          classesService: ClassesService(),
+                          examsController: esC,
+                        ),
+                        builder: (controller) {
+                          // separate controller (and add classes before exam)
+                          return Form(
+                            key: controller.formKey,
+                            child: ListView(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: Text(
+                                      "edit exam".tr,
+                                      style: tt.headlineMedium!.copyWith(
+                                        color: cs.onSurface,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                MyField(
+                                  controller: controller.title,
+                                  title: "title".tr,
+                                  validator: (s) {
+                                    return validateInput(s!, 0, 100, "text");
+                                  },
+                                  onChanged: (s) {
+                                    if (controller.isButtonPressed) controller.formKey.currentState!.validate();
+                                  },
+                                ),
+                                MyField(
+                                  controller: controller.totalScore,
+                                  keyboardType: TextInputType.number,
+                                  title: "total score".tr,
+                                  validator: (s) {
+                                    return validateInput(
+                                      s!,
+                                      0,
+                                      0,
+                                      "num",
+                                      minValue: int.parse(controller.passScore.text),
+                                      maxValue: 100,
+                                    );
+                                  },
+                                  onChanged: (s) {
+                                    if (controller.isButtonPressed) controller.formKey.currentState!.validate();
+                                  },
+                                ),
+                                MyField(
+                                  controller: controller.passScore,
+                                  keyboardType: TextInputType.number,
+                                  title: "pass score".tr,
+                                  validator: (s) {
+                                    return validateInput(
+                                      s!,
+                                      0,
+                                      0,
+                                      "num",
+                                      minValue: 0,
+                                      maxValue: int.parse(controller.totalScore.text),
+                                    );
+                                  },
+                                  onChanged: (s) {
+                                    if (controller.isButtonPressed) controller.formKey.currentState!.validate();
+                                  },
+                                ),
+                                MyField(
+                                  controller: controller.questionsNumber,
+                                  keyboardType: TextInputType.number,
+                                  title: "number of questions".tr,
+                                  validator: (s) {
+                                    return validateInput(
+                                      s!,
+                                      0,
+                                      0,
+                                      "num",
+                                      minValue: 0,
+                                      maxValue: 100,
+                                    );
+                                  },
+                                  onChanged: (s) {
+                                    if (controller.isButtonPressed) controller.formKey.currentState!.validate();
+                                  },
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                                  child: DropdownSearch<ClassModel>(
+                                    validator: (user) {
+                                      if (controller.selectedClass == null) return "select a class first".tr;
+                                      return null;
+                                    },
+                                    popupProps: PopupProps.menu(
+                                      showSearchBox: true,
+                                      searchFieldProps: TextFieldProps(
+                                        decoration: InputDecoration(
+                                          fillColor: Colors.white70,
+                                          hintText: "class title".tr,
+                                          prefix: Padding(
+                                            padding: const EdgeInsets.all(4),
+                                            child: Icon(Icons.search, color: cs.onSurface),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    dropdownDecoratorProps: DropDownDecoratorProps(
+                                      dropdownSearchDecoration: InputDecoration(
+                                        labelText: "class".tr,
+                                        labelStyle: tt.titleMedium!.copyWith(color: cs.onSurface.withOpacity(0.6)),
+                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+                                      ),
+                                    ),
+                                    items: controller.classes,
+                                    itemAsString: (ClassModel c) => c.title,
+                                    onChanged: (ClassModel? c) async {
+                                      controller.selectClass(c);
+                                      await Future.delayed(const Duration(milliseconds: 1000));
+                                      if (controller.isButtonPressed) controller.formKey.currentState!.validate();
+                                    },
+                                    //enabled: !con.enabled,
+                                  ),
+                                ),
+                                MyButton(
+                                  onTap: () async {
+                                    await controller.editExam(exam); // remove await if animation lags
+                                  },
+                                  child: controller.loading
+                                      ? CircularProgressIndicator()
+                                      : Text(
+                                          "add".tr,
+                                          style: tt.headlineMedium!.copyWith(
+                                            color: cs.onSecondary,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                );
               },
               icon: Icon(
                 Icons.edit,

@@ -54,8 +54,9 @@ class ExamsController extends GetxController {
     exams.remove(exam);
     update();
   }
-  // void editExam(ExamModel exam){ //todo: how?
-  //   exams.add(exam);
-  //   update();
-  // }
+
+  void editExam(ExamModel newExam) {
+    exams.where((exam) => exam.id == newExam.id).toList()[0] = newExam;
+    update();
+  }
 }
