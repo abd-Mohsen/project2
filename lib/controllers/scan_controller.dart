@@ -47,6 +47,13 @@ class ScanController extends GetxController {
       });
     });
 
+    // controller.initialize().then((_) {
+    //   if (!mounted) {
+    //     return;
+    //   }
+    //   update();
+    // });
+
     super.onInit();
   }
 

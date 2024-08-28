@@ -23,7 +23,7 @@ dependencies:
   permission_handler: ^10.4.5
   dotted_border: ^2.1.0
   image_picker: ^1.0.4
-  camera: ^0.10.5+9
+  camera: ^0.11.0+2
   #tflite: ^1.1.2 todo try this for gpu
   tflite_v2: ^1.0.0
   dropdown_search: ^5.0.6
