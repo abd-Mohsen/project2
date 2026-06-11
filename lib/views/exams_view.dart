@@ -24,10 +24,7 @@ class ExamsView extends StatelessWidget {
   Widget build(BuildContext context) {
     //HomeController hC = Get.find();
     ExamsController eC = Get.put(
-      ExamsController(
-        examSelectionService: ExamSelectionService(),
-        examsService: ExamsService(),
-      ),
+      ExamsController(examSelectionService: ExamSelectionService(), examsService: ExamsService()),
     );
     ColorScheme cs = Theme.of(context).colorScheme;
     TextTheme tt = Theme.of(context).textTheme;
@@ -41,7 +38,7 @@ class ExamsView extends StatelessWidget {
           backgroundColor: kAppBarColor,
           centerTitle: true,
         ),
-        backgroundColor: cs.background,
+        backgroundColor: cs.surface,
         floatingActionButton: FloatingActionButton(
           backgroundColor: cs.secondary,
           onPressed: () {
@@ -68,10 +65,7 @@ class ExamsView extends StatelessWidget {
                               child: Center(
                                 child: Text(
                                   "new exam".tr,
-                                  style: tt.headlineMedium!.copyWith(
-                                    color: cs.onSurface,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: tt.headlineMedium!.copyWith(color: cs.onSurface, fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -126,14 +120,7 @@ class ExamsView extends StatelessWidget {
                               keyboardType: TextInputType.number,
                               title: "number of questions".tr,
                               validator: (s) {
-                                return validateInput(
-                                  s!,
-                                  0,
-                                  0,
-                                  "num",
-                                  minValue: 0,
-                                  maxValue: 100,
-                                );
+                                return validateInput(s!, 0, 0, "num", minValue: 0, maxValue: 100);
                               },
                               onChanged: (s) {
                                 if (controller.isButtonPressed) controller.formKey.currentState!.validate();
@@ -159,16 +146,17 @@ class ExamsView extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                dropdownDecoratorProps: DropDownDecoratorProps(
-                                  dropdownSearchDecoration: InputDecoration(
+                                decoratorProps: DropDownDecoratorProps(
+                                  decoration: InputDecoration(
                                     labelText: "class".tr,
-                                    labelStyle: tt.titleMedium!.copyWith(color: cs.onSurface.withOpacity(0.6)),
+                                    labelStyle: tt.titleMedium!.copyWith(color: cs.onSurface.withValues(alpha: 0.6)),
                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
                                   ),
                                 ),
-                                items: controller.classes,
+                                items: (filter, loadProps) => controller.classes,
                                 itemAsString: (ClassModel c) => c.title,
-                                onChanged: (ClassModel? c) async {
+                                compareFn: (i1, i2) => i1.id == i2.id,
+                                onSelected: (ClassModel? c) async {
                                   controller.selectClass(c);
                                   await Future.delayed(const Duration(milliseconds: 1000));
                                   if (controller.isButtonPressed) controller.formKey.currentState!.validate();
@@ -204,7 +192,7 @@ class ExamsView extends StatelessWidget {
         body: GetBuilder<ExamsController>(
           builder: (controller) {
             return controller.isLoading
-                ? SpinKitFoldingCube(color: cs.onBackground)
+                ? SpinKitFoldingCube(color: cs.onSurface)
                 : ListView.builder(
                     padding: const EdgeInsets.only(top: 4),
                     itemCount: controller.exams.length,

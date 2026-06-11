@@ -61,26 +61,17 @@ class ExamView extends StatelessWidget {
                     actions: [
                       TextButton(
                         onPressed: () => Get.back(),
-                        child: Text(
-                          "no".tr,
-                          style: tt.titleMedium!.copyWith(color: cs.onSurface),
-                        ),
+                        child: Text("no".tr, style: tt.titleMedium!.copyWith(color: cs.onSurface)),
                       ),
                       TextButton(
                         onPressed: () => eC.deleteExam(),
-                        child: Text(
-                          "yes".tr,
-                          style: tt.titleMedium!.copyWith(color: cs.error),
-                        ),
+                        child: Text("yes".tr, style: tt.titleMedium!.copyWith(color: cs.error)),
                       ),
                     ],
                   ),
                 );
               },
-              icon: Icon(
-                Icons.delete,
-                color: cs.error,
-              ),
+              icon: Icon(Icons.delete, color: cs.error),
             ),
             IconButton(
               onPressed: () {
@@ -166,14 +157,7 @@ class ExamView extends StatelessWidget {
                                   keyboardType: TextInputType.number,
                                   title: "number of questions".tr,
                                   validator: (s) {
-                                    return validateInput(
-                                      s!,
-                                      0,
-                                      0,
-                                      "num",
-                                      minValue: 0,
-                                      maxValue: 100,
-                                    );
+                                    return validateInput(s!, 0, 0, "num", minValue: 0, maxValue: 100);
                                   },
                                   onChanged: (s) {
                                     if (controller.isButtonPressed) controller.formKey.currentState!.validate();
@@ -199,16 +183,19 @@ class ExamView extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    dropdownDecoratorProps: DropDownDecoratorProps(
-                                      dropdownSearchDecoration: InputDecoration(
+                                    decoratorProps: DropDownDecoratorProps(
+                                      decoration: InputDecoration(
                                         labelText: "class".tr,
-                                        labelStyle: tt.titleMedium!.copyWith(color: cs.onSurface.withOpacity(0.6)),
+                                        labelStyle: tt.titleMedium!.copyWith(
+                                          color: cs.onSurface.withValues(alpha: 0.6),
+                                        ),
                                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
                                       ),
                                     ),
-                                    items: controller.classes,
+                                    items: (filter, loadProps) => controller.classes,
                                     itemAsString: (ClassModel c) => c.title,
-                                    onChanged: (ClassModel? c) async {
+                                    compareFn: (i1, i2) => i1.id == i2.id,
+                                    onSelected: (ClassModel? c) async {
                                       controller.selectClass(c);
                                       await Future.delayed(const Duration(milliseconds: 1000));
                                       if (controller.isButtonPressed) controller.formKey.currentState!.validate();
@@ -239,14 +226,11 @@ class ExamView extends StatelessWidget {
                   ),
                 );
               },
-              icon: Icon(
-                Icons.edit,
-                color: cs.secondary,
-              ),
+              icon: Icon(Icons.edit, color: cs.secondary),
             ),
           ],
         ),
-        backgroundColor: cs.background,
+        backgroundColor: cs.surface,
         body: GetBuilder<ExamController>(
           builder: (controller) {
             return !controller.loadingExam
@@ -254,14 +238,8 @@ class ExamView extends StatelessWidget {
                     children: [
                       ListTile(
                         leading: const Icon(Icons.text_snippet_outlined),
-                        title: Text(
-                          "title".tr,
-                          style: tt.titleMedium!.copyWith(color: cs.onSurface),
-                        ),
-                        subtitle: Text(
-                          exam.title,
-                          style: tt.titleSmall!.copyWith(color: cs.onBackground),
-                        ),
+                        title: Text("title".tr, style: tt.titleMedium!.copyWith(color: cs.onSurface)),
+                        subtitle: Text(exam.title, style: tt.titleSmall!.copyWith(color: cs.onSurface)),
                       ),
                       const SizedBox(height: 16),
                       ListTile(
@@ -272,43 +250,34 @@ class ExamView extends StatelessWidget {
                         ),
                         subtitle: Text(
                           exam.date.toIso8601String(),
-                          style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                          style: tt.titleSmall!.copyWith(color: cs.onSurface),
                         ),
                       ),
                       const SizedBox(height: 16),
                       ListTile(
                         leading: const Icon(Icons.numbers),
-                        title: Text(
-                          "number of questions".tr,
-                          style: tt.titleMedium!.copyWith(color: cs.onSurface),
-                        ),
+                        title: Text("number of questions".tr, style: tt.titleMedium!.copyWith(color: cs.onSurface)),
                         subtitle: Text(
                           exam.questionsCount.toString(),
-                          style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                          style: tt.titleSmall!.copyWith(color: cs.onSurface),
                         ),
                       ),
                       const SizedBox(height: 16),
                       ListTile(
                         leading: const Icon(Icons.credit_score_outlined),
-                        title: Text(
-                          "pass score".tr,
-                          style: tt.titleMedium!.copyWith(color: cs.onSurface),
-                        ),
+                        title: Text("pass score".tr, style: tt.titleMedium!.copyWith(color: cs.onSurface)),
                         subtitle: Text(
                           "${exam.passMark.toString()} ${"of".tr} ${exam.completeMark.toString()}",
-                          style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                          style: tt.titleSmall!.copyWith(color: cs.onSurface),
                         ),
                       ),
                       const SizedBox(height: 16),
                       ListTile(
                         leading: const Icon(Icons.abc),
-                        title: Text(
-                          "marking schemes".tr,
-                          style: tt.titleMedium!.copyWith(color: cs.onSurface),
-                        ),
+                        title: Text("marking schemes".tr, style: tt.titleMedium!.copyWith(color: cs.onSurface)),
                         subtitle: Text(
                           "${controller.ogExam.markingSchemes.length} schemes",
-                          style: tt.titleSmall!.copyWith(color: cs.onBackground),
+                          style: tt.titleSmall!.copyWith(color: cs.onSurface),
                         ),
                         trailing: TextButton(
                           onPressed: () {
@@ -323,7 +292,7 @@ class ExamView extends StatelessWidget {
                       const SizedBox(height: 16),
                     ],
                   )
-                : Center(child: SpinKitCubeGrid(color: cs.onBackground));
+                : Center(child: SpinKitCubeGrid(color: cs.onSurface));
           },
         ),
       ),

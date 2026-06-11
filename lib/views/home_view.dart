@@ -15,10 +15,7 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeController hC = Get.put(HomeController(
-      logoutService: LogoutService(),
-      myProfileService: MyProfileService(),
-    ));
+    HomeController hC = Get.put(HomeController(logoutService: LogoutService(), myProfileService: MyProfileService()));
     ThemeController tC = Get.find();
     LocaleController lC = Get.find();
     ColorScheme cs = Theme.of(context).colorScheme;
@@ -33,13 +30,13 @@ class HomeView extends StatelessWidget {
           backgroundColor: kAppBarColor,
           centerTitle: true,
         ),
-        backgroundColor: cs.background,
+        backgroundColor: cs.surface,
         floatingActionButton: FloatingActionButton(
           backgroundColor: cs.secondary,
           onPressed: () {
-            Get.to(() => ExamsView());
+            Get.to(() => const ExamsView());
           },
-          child: Icon(Icons.text_snippet),
+          child: const Icon(Icons.text_snippet),
         ),
         body: Column(
           children: [
@@ -47,16 +44,9 @@ class HomeView extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  Image.asset(
-                    "assets/images/banner.jpg",
-                    fit: BoxFit.cover,
-                  ),
+                  Image.asset("assets/images/banner.jpg", fit: BoxFit.cover),
                   Positioned.fill(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.65),
-                      ),
-                    ),
+                    child: Container(decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.65))),
                   ),
                   PositionedDirectional(
                     bottom: 0,
@@ -72,13 +62,16 @@ class HomeView extends StatelessWidget {
                           ),
                           Text(
                             "select exam, scan, repeat!".tr,
-                            style: tt.headlineSmall!.copyWith(color: Colors.white, shadows: [
-                              Shadow(
-                                offset: const Offset(3.0, 2.0),
-                                blurRadius: 8.0,
-                                color: Colors.black.withOpacity(0.7),
-                              ),
-                            ]),
+                            style: tt.headlineSmall!.copyWith(
+                              color: Colors.white,
+                              shadows: [
+                                Shadow(
+                                  offset: const Offset(3.0, 2.0),
+                                  blurRadius: 8.0,
+                                  color: Colors.black.withValues(alpha: 0.7),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -102,12 +95,13 @@ class HomeView extends StatelessWidget {
                       child: SizedBox(
                         width: 200,
                         child: DottedBorder(
-                          color: cs.secondary,
-                          dashPattern: const [15, 0],
-                          strokeWidth: 2.0,
-                          borderType: BorderType.RRect,
-                          radius: const Radius.circular(10),
-                          padding: const EdgeInsets.all(8),
+                          options: RoundedRectDottedBorderOptions(
+                            color: cs.secondary,
+                            dashPattern: const [15, 0],
+                            strokeWidth: 2.0,
+                            radius: const Radius.circular(10),
+                            padding: const EdgeInsets.all(8),
+                          ),
                           child: Center(
                             child: Padding(
                               padding: const EdgeInsets.symmetric(vertical: 12),
@@ -120,18 +114,17 @@ class HomeView extends StatelessWidget {
                                       height: 100,
                                       width: 100,
                                       //search for the animation thing
-                                      child: Image.asset(
-                                        "assets/images/scanner2.png",
-                                        color: cs.onSurface,
-                                      ),
+                                      child: Image.asset("assets/images/scanner2.png", color: cs.onSurface),
                                     ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 8),
                                     child: Text(
                                       "scan".tr,
-                                      style:
-                                          tt.headlineLarge!.copyWith(color: cs.secondary, fontWeight: FontWeight.bold),
+                                      style: tt.headlineLarge!.copyWith(
+                                        color: cs.secondary,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -149,7 +142,7 @@ class HomeView extends StatelessWidget {
           ],
         ),
         drawer: Drawer(
-          backgroundColor: cs.background,
+          backgroundColor: cs.surface,
           child: Column(
             children: [
               Expanded(
@@ -158,57 +151,42 @@ class HomeView extends StatelessWidget {
                     GetBuilder<HomeController>(
                       builder: (controller) {
                         return UserAccountsDrawerHeader(
-                          accountName: Text(
-                            controller.currentUser?.username ?? "loading".tr,
-                            style: tt.headlineMedium,
-                          ),
-                          accountEmail: Text(
-                            controller.currentUser?.email ?? "",
-                            style: tt.titleMedium,
-                          ),
+                          accountName: Text(controller.currentUser?.username ?? "loading".tr, style: tt.headlineMedium),
+                          accountEmail: Text(controller.currentUser?.email ?? "", style: tt.titleMedium),
                         );
                       },
                     ),
                     ListTile(
                       leading: const Icon(Icons.dark_mode_outlined),
-                      title: Text("dark mode".tr, style: tt.titleMedium!.copyWith(color: cs.onBackground)),
+                      title: Text("dark mode".tr, style: tt.titleMedium!.copyWith(color: cs.onSurface)),
                       trailing: Switch(
                         value: tC.switchValue,
                         onChanged: (bool value) {
                           tC.updateTheme(value);
                         },
-                        activeColor: cs.secondary,
-                        activeTrackColor: cs.secondary.withOpacity(0.2),
+                        activeThumbColor: cs.secondary,
+                        activeTrackColor: cs.secondary.withValues(alpha: 0.2),
                       ),
                     ),
                     ListTile(
-                      leading: Icon(
+                      leading: const Icon(
                         Icons.language,
                         //color: cs.onBackground,
                       ),
                       title: DropdownButton(
                         elevation: 50,
-                        iconEnabledColor: cs.onBackground,
+                        iconEnabledColor: cs.onSurface,
                         dropdownColor: Get.isDarkMode ? cs.surface : Colors.grey.shade200,
-                        hint: Text(
-                          lC.getCurrentLanguageLabel(),
-                          style: tt.labelLarge!.copyWith(color: cs.onBackground),
-                        ),
+                        hint: Text(lC.getCurrentLanguageLabel(), style: tt.labelLarge!.copyWith(color: cs.onSurface)),
                         //button label is updating cuz whole app is rebuilt after changing locale
                         items: [
                           DropdownMenuItem(
                             value: "ar",
-                            child: Text(
-                              "Arabic".tr,
-                              style: tt.labelLarge!.copyWith(color: cs.onSurface),
-                            ),
+                            child: Text("Arabic".tr, style: tt.labelLarge!.copyWith(color: cs.onSurface)),
                           ),
                           DropdownMenuItem(
                             value: "en",
-                            child: Text(
-                              "English".tr,
-                              style: tt.labelLarge!.copyWith(color: cs.onSurface),
-                            ),
+                            child: Text("English".tr, style: tt.labelLarge!.copyWith(color: cs.onSurface)),
                           ),
                         ],
                         onChanged: (val) {
@@ -218,24 +196,17 @@ class HomeView extends StatelessWidget {
                     ),
                     ListTile(
                       leading: const Icon(Icons.info_outline),
-                      title: Text("about app".tr, style: tt.titleMedium!.copyWith(color: cs.onBackground)),
+                      title: Text("about app".tr, style: tt.titleMedium!.copyWith(color: cs.onSurface)),
                       onTap: () {
                         Get.dialog(
                           AlertDialog(
-                            icon: Icon(
-                              Icons.info_outline,
-                              color: cs.primary,
-                              size: 35,
-                            ),
+                            icon: Icon(Icons.info_outline, color: cs.primary, size: 35),
                             actions: [
                               TextButton(
                                 onPressed: () {
                                   Get.back();
                                 },
-                                child: Text(
-                                  "ok",
-                                  style: tt.titleMedium?.copyWith(color: cs.primary),
-                                ),
+                                child: Text("ok", style: tt.titleMedium?.copyWith(color: cs.primary)),
                               ),
                             ],
                             content: Column(
@@ -263,18 +234,12 @@ class HomeView extends StatelessWidget {
                       },
                     ),
                     ListTile(
-                      leading: Icon(
-                        Icons.logout,
-                        color: cs.error,
-                      ),
-                      title: Text(
-                        "logout".tr,
-                        style: tt.titleMedium!.copyWith(color: cs.error),
-                      ),
+                      leading: Icon(Icons.logout, color: cs.error),
+                      title: Text("logout".tr, style: tt.titleMedium!.copyWith(color: cs.error)),
                       onTap: () {
                         hC.logout();
                       },
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -282,7 +247,7 @@ class HomeView extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 12.0),
                 child: Text(
                   "AdaDevs® ${"all rights reserved".tr}",
-                  style: tt.labelMedium!.copyWith(color: cs.onSurface.withOpacity(0.6)),
+                  style: tt.labelMedium!.copyWith(color: cs.onSurface.withValues(alpha: 0.6)),
                 ),
               ),
             ],
